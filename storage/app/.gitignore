@@ -1,0 +1,7 @@
+*
+!public/
+!pic_bank/
+!meme_generated/
+!meme_created/
+!temp/
+!.gitignore
