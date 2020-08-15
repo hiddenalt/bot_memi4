@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Log;
  * Class CreateMemeConversation
  * @package App\Conversations
  *
- * TODO: translate conversation to English
  */
 class CreateMemeConversation extends Conversation
 {
@@ -30,22 +29,22 @@ class CreateMemeConversation extends Conversation
     public function askType(){
         //TODO: attachments (all types supported), voice mail, buttons
 
-        $question = Question::create("Выбери тип мема, который надо создать:")
+        $question = Question::create(__('create-meme-conversation.ask-meme-type'))
 //            ->fallback('test_error')
 //            ->callbackId('ask_reason')
             ->addButtons([
-                Button::create('Мем "Когда"')->value('meme_when')->additionalParameters([
+                Button::create(__('when-meme.title'))->value('meme_when')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create('Блочный мем')->value('meme_blocks')->additionalParameters([
+                Button::create(__('4-block-comics-meme.title'))->value('meme_blocks')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create('Мем-демотиватор')->value('meme_demotivation')->additionalParameters([
+                Button::create(__('demotivation-meme.title'))->value('meme_demotivation')->additionalParameters([
                     "color" => "primary"
                 ]),
 
 
-                Button::create('Назад')->value('back')->additionalParameters([
+                Button::create(__('menu.back'))->value('back')->additionalParameters([
                     "color" => "secondary"
                 ])
             ]);
@@ -72,7 +71,7 @@ class CreateMemeConversation extends Conversation
                         break;
 
                     default:
-                        $this->bot->reply("Таких мемов я пока что не делаю, выбери другой тип.");
+                        $this->bot->reply(__('create-meme-conversation.unsupported-meme'));
                         $this->askType();
 
                         break;

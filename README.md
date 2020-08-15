@@ -3,6 +3,7 @@
 <p align="center"><img height="256" width="256" src="https://github.com/hiddenalt/bot_memi4/blob/master/resources/images/logo.png?raw=true"></p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![gitlocalized ](https://gitlocalize.com/repo/5206/whole_project/badge.svg)](https://gitlocalize.com/repo/5206/whole_project?utm_source=badge)
 
 ## About
 **Memer the Bot** _(Bot Memich, bot_memi4)_ is a cross-platform bot focused on generating random memes. Oriented to be hosted on VK and Telegram.
@@ -155,7 +156,7 @@ TODO: documentation (dedicated wiki)
 ⚠️Localization is temporarily hardcoded to Russian language. English translations will be committed as soon as possible.
 
 ## Security Vulnerabilities
-If discover a security vulnerability, please send an e-mail to The Hiddenalt Project at [admin@hiddenalt](mailto:admin@hiddenalt.ru). All security vulnerabilities will be fixed as soon as possible.
+If discover a security vulnerability, please send an e-mail to The Hiddenalt Project at [admin@hiddenalt.ru](mailto:admin@hiddenalt.ru). All security vulnerabilities will be fixed as soon as possible.
 
 ## Licence
 Memer the Bot is free software distributed under the terms of the MIT license.

@@ -12,7 +12,6 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 /**
  * Class GenerateMemeConversation
  * @package App\Conversations
- * TODO: translate conversation to English
  */
 class GenerateMemeConversation extends Conversation
 {
@@ -33,22 +32,22 @@ class GenerateMemeConversation extends Conversation
 
         //TODO: attachments (all types supported), voice mail, buttons
 
-        $question = Question::create("Выбери тип мема, который надо сгенерировать:")
+        $question = Question::create(__("generate-meme-conversation.ask-meme-type"))
 //            ->fallback('test_error')
 //            ->callbackId('ask_reason')
             ->addButtons([
-                Button::create('Мем "Когда"')->value('meme_when')->additionalParameters([
+                Button::create(__('when-meme.title'))->value('meme_when')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create('Мем-постирония')->value('meme_postirony')->additionalParameters([
-                    "color" => "primary"
-                ]),
-
-                Button::create('Мем-демотиватор')->value('meme_demotivation')->additionalParameters([
+                Button::create(__('4-block-comics-meme.title'))->value('meme_postirony')->additionalParameters([
                     "color" => "primary"
                 ]),
 
-                Button::create('Назад')->value('back')->additionalParameters([
+                Button::create(__('demotivation-meme.title'))->value('meme_demotivation')->additionalParameters([
+                    "color" => "primary"
+                ]),
+
+                Button::create(__('menu.back'))->value('back')->additionalParameters([
                     "color" => "secondary"
                 ])
             ]);
@@ -65,7 +64,7 @@ class GenerateMemeConversation extends Conversation
                         break;
 
                     default:
-                        $this->bot->reply("Таких мемов я пока что не делаю, выбери другой тип.");
+                        $this->bot->reply(__('generate-meme-conversation.unsupported-meme'));
                         $this->askType();
 
                         break;

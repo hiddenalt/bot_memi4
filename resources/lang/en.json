@@ -1,0 +1,52 @@
+{
+  "greetings": "",
+
+  "menu.back": "Back",
+
+  "when-meme.title": "'When...' meme",
+  "4-block-comics-meme.title": "4-block comics meme",
+  "demotivation-meme.title": "Demotivator",
+
+  "create-meme-conversation.ask-meme-type": "Choose the meme to be created:",
+  "create-meme-conversation.unsupported-meme": "Can't make such meme for now, choose another category.",
+
+  "create-when-meme-conversation.step-1": "[Step 1/3]\nSend an image of a meme.",
+  "create-when-meme-conversation.step-2": "[Step 2/3]\nSend the top text of a meme.",
+  "create-when-meme-conversation.step-3": "[Step 3/3]\nSend the bottom text of a meme.",
+  "create-when-meme-conversation.done": "Here it is:",
+
+  "generate-meme-conversation.ask-meme-type": "Choose the meme to be generated:",
+  "generate-meme-conversation.unsupported-meme": "Can't make such meme for now, choose another category.",
+
+
+
+
+
+  "settings-types.font.title": "Text font",
+  "settings-types.font.description": "The font of texts in memes (for this chat only).",
+
+  "settings-types.color.title": "Text color",
+  "settings-types.color.description": "The color of texts in memes (for this chat only).",
+
+  "settings-types.shadow.color.title": "Text shadow font",
+  "settings-types.shadow.color.description": "The color of shadows of texts in memes (for this chat only).",
+
+  "settings-types.demotivation.bg.color.title": "Demotivator's background color",
+  "settings-types.demotivation.bg.color.description": "",
+
+  "settings-types.demotivation.border.color.title": "",
+  "settings-types.demotivation.border.color.description": "",
+
+  "settings-types.show-author.title": "",
+  "settings-types.show-author.description": "",
+
+
+  "unknown-command.phrase-type-menu": "",
+  "unknown-command.phrase-1": "",
+  "unknown-command.phrase-2": "",
+  "unknown-command.phrase-3": "",
+  "unknown-command.phrase-4": "",
+  "unknown-command.phrase-5": "",
+  "unknown-command.phrase-6": "",
+  "unknown-command.phrase-7": ""
+}

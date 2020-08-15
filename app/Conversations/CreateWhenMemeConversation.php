@@ -18,7 +18,6 @@ use Intervention\Image\ImageManagerStatic;
 /**
  * Class CreateWhenMemeConversation
  * @package App\Conversations
- * TODO: translate conversation to English
  */
 class CreateWhenMemeConversation extends Conversation {
 
@@ -36,7 +35,7 @@ class CreateWhenMemeConversation extends Conversation {
     }
 
     public function askPicture(){
-        return $this->askForImages("[Шаг 1/3]\nПришли картинку мема.",
+        return $this->askForImages(__("create-when-meme-conversation.step-1"),
             /** @param Image[] $images */
             function($images){
                 $this->pictureUrl = $images[0]->getUrl();
@@ -49,7 +48,7 @@ class CreateWhenMemeConversation extends Conversation {
     }
 
     public function askTopString(){
-        $question = Question::create("[Шаг 2/3]\nПришли верхний текст мема.");
+        $question = Question::create(__("create-when-meme-conversation.step-2"));
 
         return $this->ask($question, function (Answer $answer) {
 
@@ -66,7 +65,7 @@ class CreateWhenMemeConversation extends Conversation {
     }
 
     public function askBottomString(){
-        $question = Question::create("[Шаг 3/3]\nПришли нижний текст мема.");
+        $question = Question::create(__("create-when-meme-conversation.step-3"));
 
         return $this->ask($question, function (Answer $answer) {
 
@@ -96,7 +95,7 @@ class CreateWhenMemeConversation extends Conversation {
             ->draw();
 
         $url = $meme->makeTempLink();
-        $message = OutgoingMessage::create('Готово.')
+        $message = OutgoingMessage::create(__("create-when-meme-conversation.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);
