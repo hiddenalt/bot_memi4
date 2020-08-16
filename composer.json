@@ -1,11 +1,14 @@
 {
-    "name": "botman/studio",
-    "description": "BotMan Chatbot framework.",
+    "name": "hiddenalt/bot_memi4",
+    "description": "A cross-platform bot focused on generating random memes",
     "keywords": [
-        "botman",
-        "chatbot",
-        "framework",
-        "laravel"
+        "bot",
+        "chat-bot",
+        "meme",
+        "memes",
+        "telegram",
+        "vk",
+        "vkontakte"
     ],
     "license": "MIT",
     "type": "project",
@@ -25,7 +28,7 @@
         "league/flysystem": "^1.0",
         "nuwave/lighthouse": "^4.16",
         "ralouphie/mimey": "^2.1",
-        "yageorgiy/botman-vk-community-callback-driver": "^1.6"
+        "yageorgiy/botman-vk-community-callback-driver": "^1.6.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",

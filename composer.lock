@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b9ede3f5f6a6b75339bd8f891d72c24",
+    "content-hash": "fce4431e2fea92814b7548f77842aa03",
     "packages": [
         {
             "name": "botman/botman",
@@ -5769,16 +5769,16 @@
         },
         {
             "name": "yageorgiy/botman-vk-community-callback-driver",
-            "version": "dev-master",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yageorgiy/botman-vk-community-callback-driver.git",
-                "reference": "d61924db29e0b83b858e33a88b77a03c1767146a"
+                "reference": "36a9ba88d8eb9adb2f60a1943965dbc09c1692a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yageorgiy/botman-vk-community-callback-driver/zipball/d61924db29e0b83b858e33a88b77a03c1767146a",
-                "reference": "d61924db29e0b83b858e33a88b77a03c1767146a",
+                "url": "https://api.github.com/repos/yageorgiy/botman-vk-community-callback-driver/zipball/36a9ba88d8eb9adb2f60a1943965dbc09c1692a0",
+                "reference": "36a9ba88d8eb9adb2f60a1943965dbc09c1692a0",
                 "shasum": ""
             },
             "require": {
@@ -5834,7 +5834,7 @@
                 "vk",
                 "vkontakte"
             ],
-            "time": "2020-08-14T17:06:05+00:00"
+            "time": "2020-08-16T18:24:57+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
