@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-/.idea
+/.idea/*
 /.vagrant
 /.discovery
 Homestead.json
@@ -13,3 +13,6 @@ npm-debug.log
 
 ngrok.bat
 ssh.bat
+
+# PHPStorm run/debug configurations
+!.idea/runConfigurations
