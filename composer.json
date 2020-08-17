@@ -28,7 +28,8 @@
         "league/flysystem": "^1.0",
         "nuwave/lighthouse": "^4.16",
         "ralouphie/mimey": "^2.1",
-        "yageorgiy/botman-vk-community-callback-driver": "^1.6.1"
+        "yageorgiy/botman-vk-community-callback-driver": "^1.6.1",
+        "opis/closure": "^3.4.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",
