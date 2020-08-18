@@ -21,20 +21,20 @@ class CreateLastseensTable extends Migration
                 "self_memes",
                 "self_money",
 
-                "wordbank", // Слов в словаре
-                "picbank", // Картинок в словаре
+                "wordbank",
+                "picbank",
 
-                "wordbank_props", // Слов в предложке
-                "picbank_props", // Картинок в предложке
+                "wordbank_props",
+                "picbank_props",
 
-                "wordbank_props_new", // Новых слов в предложке
-                "picbank_props_new", // Новых картинок в преложке
+                "wordbank_props_new",
+                "picbank_props_new",
 
-                "wordbank_props_accepted", // Принятых слов в предложке
-                "picbank_props_accepted", // Принятых слов в предложке
+                "wordbank_props_accepted",
+                "picbank_props_accepted",
 
-                "wordbank_props_denied", // Отклоненных слов в предложке
-                "picbank_props_denied", // Отклоненных картинок в предложке
+                "wordbank_props_denied",
+                "picbank_props_denied"
             ]);
             $table->string("value")->default(0);
             $table->timestamps();

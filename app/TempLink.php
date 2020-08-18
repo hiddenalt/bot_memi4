@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string path
  * @property string access_token
- * TODO: delete
  */
 class TempLink extends Model
 {

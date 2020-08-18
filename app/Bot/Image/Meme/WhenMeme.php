@@ -92,6 +92,10 @@ class WhenMeme extends Meme {
         $this->baseImage->resize($image->width(), $image->height());
         $image->insert($this->baseImage);
 
+        $maxLinesTopText            = 5; // Max lines for top text
+        $maxLinesBottomText         = 5; // Max lines for bottom text
+        $widthWrap                  = $image->width() - 50;
+
         $size = 40;
         $offsetY = 10;
         $offset = 2;
@@ -100,7 +104,6 @@ class WhenMeme extends Meme {
         $textBrush = new TextBrush($image);
 
         // Configure common for top & bottom texts
-        $textBrush->setText($this->topText);
         $textBrush->setX($image->width() / 2);
         $textBrush->setY($offsetY);
         $textBrush->setSize($size);
@@ -111,18 +114,23 @@ class WhenMeme extends Meme {
         $textBrush->setVerticalAlign("top");
         $textBrush->setLinesOffset($offset);
 
+        $textBrush->setText($this->topText);
+        $textBrush->wrapText($widthWrap, $maxLinesTopText);
+
         // Draw top text
-        $textBrush->drawTextWithShadowByLines();
+        $textBrush->drawTextWithShadowByLine();
 
 
 
         // Configure the bottom text
-        $textBrush->setText($this->bottomText);
         $textBrush->setY($image->height() - $offsetY);
         $textBrush->setVerticalAlign("bottom");
 
+        $textBrush->setText($this->bottomText);
+        $textBrush->wrapText($widthWrap, $maxLinesBottomText);
+
         // Draw bottom text
-        $textBrush->drawTextWithShadowByLines();
+        $textBrush->drawTextWithShadowByLine();
 
 
         return $this;

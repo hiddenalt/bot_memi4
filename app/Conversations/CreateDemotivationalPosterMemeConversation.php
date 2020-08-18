@@ -2,40 +2,23 @@
 
 namespace App\Conversations;
 
+use App\Bot\Image\Meme\DemotivationalMeme;
 use App\Bot\Image\Meme\WhenMeme;
-use App\TempLink;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use BotMan\BotMan\Messages\Outgoing\Question;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 use Intervention\Image\ImageManagerStatic;
 
-/**
- * Class CreateWhenMemeConversation
- * @package App\Conversations
- */
-class CreateWhenMemeConversation extends Conversation {
-
+class CreateDemotivationalPosterMemeConversation extends Conversation
+{
     public string $pictureUrl = "";
     public string $topText = "";
     public string $bottomText = "";
 
-    /**
-     * Start the conversation.
-     *
-     * @return mixed
-     */
-    public function run(){
-        $this->askPicture();
-    }
-
     public function askPicture(){
-        return $this->askForImages(__("create-when-meme-conversation.step-1"),
+        return $this->askForImages(__("create-demotivational-poster-meme-conversation.step-1"),
             /** @param Image[] $images */
             function($images){
                 $this->pictureUrl = $images[0]->getUrl();
@@ -48,7 +31,7 @@ class CreateWhenMemeConversation extends Conversation {
     }
 
     public function askTopString(){
-        $question = Question::create(__("create-when-meme-conversation.step-2"));
+        $question = Question::create(__("create-demotivational-poster-meme-conversation.step-2"));
 
         return $this->ask($question, function (Answer $answer) {
 
@@ -65,7 +48,7 @@ class CreateWhenMemeConversation extends Conversation {
     }
 
     public function askBottomString(){
-        $question = Question::create(__("create-when-meme-conversation.step-3"));
+        $question = Question::create(__("create-demotivational-poster-meme-conversation.step-3"));
 
         return $this->ask($question, function (Answer $answer) {
 
@@ -81,17 +64,16 @@ class CreateWhenMemeConversation extends Conversation {
         });
     }
 
-
-
     public function sendMeme(){
         $this->bot->types();
 
-        $meme = new WhenMeme();
+        $meme = new DemotivationalMeme();
 
+        // TODO: custom options
         $meme
             ->setBaseImage(ImageManagerStatic::make($this->pictureUrl))
-            ->setTopText($this->topText)
-            ->setBottomText($this->bottomText)
+            ->setTitle($this->topText)
+            ->setSubtitle($this->bottomText)
             ->draw();
 
         $url = $meme->makeTempLink();
@@ -100,5 +82,14 @@ class CreateWhenMemeConversation extends Conversation {
 
         $this->bot->reply($message);
         $this->bot->startConversation(new CreateMemeConversation());
+    }
+
+    /**
+     * Start the conversation.
+     *
+     * @return void
+     */
+    public function run(): void{
+        $this->askPicture();
     }
 }

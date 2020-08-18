@@ -2,12 +2,10 @@
 
 namespace App\Conversations;
 
-use App\Bot\PictureGenerator\DemotivationMeme;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class CreateMemeConversation
@@ -19,27 +17,24 @@ class CreateMemeConversation extends Conversation
     /**
      * Start the conversation.
      *
-     * @return mixed
+     * @return void
      */
-    public function run()
-    {
+    public function run(): void{
         $this->askType();
     }
 
-    public function askType(){
+    public function askType(): CreateMemeConversation {
         //TODO: attachments (all types supported), voice mail, buttons
 
         $question = Question::create(__('create-meme-conversation.ask-meme-type'))
-//            ->fallback('test_error')
-//            ->callbackId('ask_reason')
             ->addButtons([
-                Button::create(__('when-meme.title'))->value('meme_when')->additionalParameters([
+                Button::create(__('when-meme.title'))->value('when-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create(__('4-block-comics-meme.title'))->value('meme_blocks')->additionalParameters([
+                Button::create(__('4-block-comics-meme.title'))->value('4-block-comics-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create(__('demotivation-meme.title'))->value('meme_demotivation')->additionalParameters([
+                Button::create(__('demotivational-poster-meme.title'))->value('demotivational-poster-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
 
@@ -53,20 +48,17 @@ class CreateMemeConversation extends Conversation
             if ($answer->isInteractiveMessageReply()) {
                 $selectedValue = $answer->getValue();
 
-//                $this->bot->reply();
-//                Log::info($selectedValue);
-
                 switch($selectedValue){
 
-                    case "meme_when":
+                    case "when-meme":
                         $this->askWhenMeme();
                         break;
 
-                    case "meme_blocks":
+                    case "4-block-comics-meme":
                         $this->askBlocksMeme();
                         break;
 
-                    case "meme_demotivation":
+                    case "demotivational-poster-meme":
                         $this->askDemotivationMeme();
                         break;
 
@@ -83,13 +75,13 @@ class CreateMemeConversation extends Conversation
     }
 
 
-    public function askWhenMeme(){
+    public function askWhenMeme(): void{
         $this->bot->startConversation(new CreateWhenMemeConversation());
     }
-    public function askDemotivationMeme(){
-        $this->bot->startConversation(new CreateDemotivationMemeConversation());
+    public function askDemotivationMeme(): void{
+        $this->bot->startConversation(new CreateDemotivationalPosterMemeConversation());
     }
-    public function askBlocksMeme(){
+    public function askBlocksMeme(): void{
         $this->bot->startConversation(new CreateBlocksMemeConversation());
     }
 }

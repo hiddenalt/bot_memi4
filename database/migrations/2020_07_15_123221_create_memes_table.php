@@ -16,22 +16,22 @@ class CreateMemesTable extends Migration
         Schema::create('memes', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            // Категория мемов
+            // Meme category
             $table->enum("category", [
-                "meme_generated",            // Сгенерированные ботом
-                "meme_created"               // Созданные пользователями
+                "meme_generated",       // Generated for MemeDB
+                "meme_created"          // Temp-created memes
             ]);
 
-            // Тип мема
+            // Meme type
             $table->enum("type", [
-                "demotivation",
+                "demotivational",
                 "when",
                 "blocks"
             ]);
 
             $table->boolean("is_public"); //->default("false");
-            $table->text("filename"); // Имя файла в соответствующем хранилище
-            $table->text("owner_id"); // Владелец генерации/созданного мема
+            $table->text("filename");
+            $table->text("owner_id");
 
             $table->timestamps();
         });

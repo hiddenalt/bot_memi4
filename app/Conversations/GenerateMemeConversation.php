@@ -19,31 +19,27 @@ class GenerateMemeConversation extends Conversation
     /**
      * Start the conversation
      */
-    public function run()
-    {
+    public function run(): void{
         $this->askType();
     }
 
     /**
      * First question
      */
-    public function askType()
-    {
+    public function askType(){
 
         //TODO: attachments (all types supported), voice mail, buttons
 
         $question = Question::create(__("generate-meme-conversation.ask-meme-type"))
-//            ->fallback('test_error')
-//            ->callbackId('ask_reason')
             ->addButtons([
-                Button::create(__('when-meme.title'))->value('meme_when')->additionalParameters([
+                Button::create(__('when-meme.title'))->value('when-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create(__('4-block-comics-meme.title'))->value('meme_postirony')->additionalParameters([
+                Button::create(__('4-block-comics-meme.title'))->value('4-block-comics-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
 
-                Button::create(__('demotivation-meme.title'))->value('meme_demotivation')->additionalParameters([
+                Button::create(__('demotivational-poster-meme.title'))->value('demotivational-poster-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
 
@@ -59,7 +55,7 @@ class GenerateMemeConversation extends Conversation
 
                 switch($selectedValue){
 
-                    case "meme_when":
+                    case "when-meme":
                         $this->sendWhenMeme();
                         break;
 
@@ -77,7 +73,7 @@ class GenerateMemeConversation extends Conversation
 
 
     public function sendWhenMeme(){
-
+        // TODO: generate meme
     }
 
 }
