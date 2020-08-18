@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Bot\PictureGenerator;
+namespace App\Bot\Image\Meme;
 
 
 use Intervention\Image\Image;
 
-class DemotivationMeme extends Meme{
+class DemotivationalMeme extends Meme{
 
     /**
      * @var Image
@@ -23,9 +23,9 @@ class DemotivationMeme extends Meme{
 
     /**
      * @param Image $baseImage
-     * @return DemotivationMeme
+     * @return DemotivationalMeme
      */
-    public function setBaseImage(Image $baseImage): DemotivationMeme {
+    public function setBaseImage(Image $baseImage): DemotivationalMeme {
         $this->baseImage = $baseImage;
         return $this;
     }
@@ -39,9 +39,9 @@ class DemotivationMeme extends Meme{
 
     /**
      * @param string $header
-     * @return DemotivationMeme
+     * @return DemotivationalMeme
      */
-    public function setHeader(string $header): DemotivationMeme {
+    public function setHeader(string $header): DemotivationalMeme {
         $this->header = $header;
         return $this;
     }
@@ -55,9 +55,9 @@ class DemotivationMeme extends Meme{
 
     /**
      * @param string $subtitle
-     * @return DemotivationMeme
+     * @return DemotivationalMeme
      */
-    public function setSubtitle(string $subtitle): DemotivationMeme {
+    public function setSubtitle(string $subtitle): DemotivationalMeme {
         $this->subtitle = $subtitle;
         return $this;
     }
@@ -68,7 +68,7 @@ class DemotivationMeme extends Meme{
 
     /**
      * Drawing the meme
-     * @return DemotivationMeme
+     * @return DemotivationalMeme
      */
     public function draw() {
 

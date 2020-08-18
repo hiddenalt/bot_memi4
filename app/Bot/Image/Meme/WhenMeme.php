@@ -1,12 +1,10 @@
 <?php
 
 
-namespace App\Bot\PictureGenerator;
+namespace App\Bot\Image\Meme;
 
 
-use Illuminate\Support\Facades\Log;
-use Intervention\Image\AbstractFont;
-use Intervention\Image\Gd\Font;
+use App\Bot\Image\Brush\TextBrush;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
 
@@ -98,35 +96,33 @@ class WhenMeme extends Meme {
         $offsetY = 10;
         $offset = 2;
 
+        // Text brush for drawing texts
+        $textBrush = new TextBrush($image);
+
+        // Configure common for top & bottom texts
+        $textBrush->setText($this->topText);
+        $textBrush->setX($image->width() / 2);
+        $textBrush->setY($offsetY);
+        $textBrush->setSize($size);
+        $textBrush->setFontFile("impact.ttf");
+        $textBrush->setTextColor("#fff");
+        $textBrush->setShadowColor("#000");
+        $textBrush->setAlign("center");
+        $textBrush->setVerticalAlign("top");
+        $textBrush->setLinesOffset($offset);
+
         // Draw top text
-        $this->drawTextWithShadowByLines(
-            $this->image,
-            $this->topText,
-            $image->width() / 2,
-            $offsetY,
-            $size,
-            "impact.ttf",
-            "#fff",
-            "#000",
-            "center",
-            "top",
-            $offset
-        );
+        $textBrush->drawTextWithShadowByLines();
+
+
+
+        // Configure the bottom text
+        $textBrush->setText($this->bottomText);
+        $textBrush->setY($image->height() - $offsetY);
+        $textBrush->setVerticalAlign("bottom");
 
         // Draw bottom text
-        $this->drawTextWithShadowByLines(
-            $this->image,
-            $this->bottomText,
-            $image->width() / 2,
-            $image->height() - $offsetY,
-            $size,
-            "impact.ttf",
-            "#fff",
-            "#000",
-            "center",
-            "bottom",
-            $offset
-        );
+        $textBrush->drawTextWithShadowByLines();
 
 
         return $this;

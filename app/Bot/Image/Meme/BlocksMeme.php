@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Bot\PictureGenerator;
+namespace App\Bot\Image\Meme;
 
 
 use Intervention\Image\Image;
