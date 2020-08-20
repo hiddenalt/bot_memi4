@@ -23,6 +23,9 @@ class TextBrush extends Brush {
     protected string $align = "center";
     protected string $verticalAlign = "top";
     protected int $linesOffset = 2;
+    protected bool $wrapText = false;
+    protected int $wrapTextMaxWidth = -1;
+    protected int $wrapTextMaxLines = -1;
 
     /**
      * @return string
@@ -36,6 +39,7 @@ class TextBrush extends Brush {
      */
     public function setText(string $text): void {
         $this->text = $text;
+        $this->wrapText();
     }
 
     /**
@@ -165,6 +169,48 @@ class TextBrush extends Brush {
     }
 
     /**
+     * @return int
+     */
+    public function getWrapTextMaxWidth(): int {
+        return $this->wrapTextMaxWidth;
+    }
+
+    /**
+     * @param int $wrapTextMaxWidth
+     */
+    public function setWrapTextMaxWidth(int $wrapTextMaxWidth): void {
+        $this->wrapTextMaxWidth = $wrapTextMaxWidth;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWrapTextMaxLines(): int {
+        return $this->wrapTextMaxLines;
+    }
+
+    /**
+     * @param int $wrapTextMaxLines
+     */
+    public function setWrapTextMaxLines(int $wrapTextMaxLines): void {
+        $this->wrapTextMaxLines = $wrapTextMaxLines;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWrapText(): bool {
+        return $this->wrapText;
+    }
+
+    /**
+     * @param bool $wrapText
+     */
+    public function setWrapText(bool $wrapText): void {
+        $this->wrapText = $wrapText;
+    }
+
+    /**
      * @return string
      */
     public function getFullTextFontPath(): string{
@@ -196,6 +242,10 @@ class TextBrush extends Brush {
             $font->align($align);
             $font->valign($valign);
         });
+
+//        $layer->rectangle($textX - 10, $textY, $textX + 10, $textY + 1, function ($draw) {
+//            $draw->border(1, '#79b8ff');
+//        });
     }
 
     /**
@@ -274,6 +324,10 @@ class TextBrush extends Brush {
         $lines = explode("\n", $text);
         $linesCount = count($lines);
 
+        // TODO: verticalAlign rebase & optimization
+        $_ = $this->verticalAlign;
+        $this->verticalAlign = "center";
+
         for($i = 0; $i < $linesCount; $i++){
             $valign_offset = 0;
             switch($valign){
@@ -287,7 +341,7 @@ class TextBrush extends Brush {
                     break;
 
                 case "bottom":
-                    $valign_offset = -( ( ($linesCount - $i - 1) * $size ) - $textOffset);
+                    $valign_offset = -(($linesCount - $i - 1) * $size) - $textOffset;
                     break;
             }
 
@@ -299,6 +353,7 @@ class TextBrush extends Brush {
         }
         $this->text = $text;
         $this->y = $y;
+        $this->verticalAlign = $_;
     }
 
     /**
@@ -338,10 +393,13 @@ class TextBrush extends Brush {
      * TODO: optimization with Collection
      * TODO: ellipsis if text sliced
      * TODO: characters limit (~512 (?))
-     * @param int $width
-     * @param int $maxLines
      */
-    public function wrapText(int $width = -1, int $maxLines = -1) {
+    protected function wrapText() {
+
+        if(!$this->wrapText) return;
+
+        $width = $this->wrapTextMaxWidth;
+        $maxLines = $this->wrapTextMaxLines;
 
         if($width <= 0)
             $width = $this->target_image->getWidth();

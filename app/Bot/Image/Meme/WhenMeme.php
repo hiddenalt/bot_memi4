@@ -97,7 +97,7 @@ class WhenMeme extends Meme {
         $widthWrap                  = $image->width() - 50;
 
         $size = 40;
-        $offsetY = 10;
+        $offsetY = 30;
         $offset = 2;
 
         // Text brush for drawing texts
@@ -114,8 +114,12 @@ class WhenMeme extends Meme {
         $textBrush->setVerticalAlign("top");
         $textBrush->setLinesOffset($offset);
 
+        // Wrapping the texts
+        $textBrush->setWrapText(true);
+        $textBrush->setWrapTextMaxWidth($widthWrap);
+        $textBrush->setWrapTextMaxLines($maxLinesTopText);
+
         $textBrush->setText($this->topText);
-        $textBrush->wrapText($widthWrap, $maxLinesTopText);
 
         // Draw top text
         $textBrush->drawTextWithShadowByLine();
@@ -126,8 +130,9 @@ class WhenMeme extends Meme {
         $textBrush->setY($image->height() - $offsetY);
         $textBrush->setVerticalAlign("bottom");
 
+        $textBrush->setWrapTextMaxLines($maxLinesBottomText);
+
         $textBrush->setText($this->bottomText);
-        $textBrush->wrapText($widthWrap, $maxLinesBottomText);
 
         // Draw bottom text
         $textBrush->drawTextWithShadowByLine();

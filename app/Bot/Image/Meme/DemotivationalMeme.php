@@ -7,8 +7,6 @@ namespace App\Bot\Image\Meme;
 use App\Bot\Image\Brush\TextBrush;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
-use Psy\Util\Str;
-use Symfony\Component\String\UnicodeString;
 
 class DemotivationalMeme extends Meme{
 
@@ -88,16 +86,16 @@ class DemotivationalMeme extends Meme{
         $imageHeight = $image->getHeight();
 
         // TODO: customization
-        $borderSize                   = 5;                      // Border size in px
-        $margin                       = 50;                     // Edges offset
-        $padding                      = 4;                      // Offset between border and image
-        $borderBottomOffset           = 50;                     // Border bottom offset
-        $titleBottomPadding           = 65;                     // Title bottom padding
-        $lineBottomPadding            = 5;                      // Each line bottom padding (title & subtitle)
-        $textWrapMaxWidth             = $imageWidth - 20;       // Max width for wrapping the texts (title & subtitle)
+        $borderSize                   = 5;                              // Border size in px
+        $margin                       = 50;                             // Edges offset
+        $padding                      = 7;                              // Offset between border and image
+        $borderBottomOffset           = 40;                             // Border bottom offset
+        $titleBottomPadding           = 25;                             // Title bottom padding
+        $lineBottomPadding            = 20;                             // Each line bottom padding (title & subtitle)
+        $textWrapMaxWidth             = $imageWidth - ($margin * 2);    // Max width for wrapping the texts (title & subtitle)
 
-        $maxTitleLines                = 3;                      // Max value of lines in title
-        $maxSubTitleLines             = 5;                      // Max value of lines in subtitle
+        $maxTitleLines                = 3;                              // Max value of lines in title
+        $maxSubTitleLines             = 5;                              // Max value of lines in subtitle
 
         $bottomOffset = 0;
 
@@ -106,7 +104,7 @@ class DemotivationalMeme extends Meme{
 
         /* Configure & draw subtitle */
         $textBrush->setSize(24);                            // TODO: custom subtitle font size
-        $textBrush->setFontFile("arial.ttf");            // TODO: custom subtitle font file
+        $textBrush->setFontFile("times_new_roman.ttf");  // TODO: custom subtitle font file
         $textBrush->setTextColor("#fff");               // TODO: custom subtitle font color
         $textBrush->setAlign("center");
         $textBrush->setVerticalAlign("bottom");
@@ -114,16 +112,23 @@ class DemotivationalMeme extends Meme{
         $textBrush->setX($imageWidth / 2);
         $textBrush->setY($imageHeight - $margin);
 
+        // Wrapping for title
+        $textBrush->setWrapText(true);
+        $textBrush->setWrapTextMaxLines($maxSubTitleLines);
+        $textBrush->setWrapTextMaxWidth($textWrapMaxWidth);
 
-        // TODO: optimization
+
         $textBrush->setText($this->subtitle);
-        $textBrush->wrapText($textWrapMaxWidth, $maxSubTitleLines);
-        $bottomOffset += $textBrush->getHeightByLine() + $titleBottomPadding;
+        $bottomOffset += $textBrush->getHeightByLine() + $titleBottomPadding;   // TODO: extra space fix
         $textBrush->drawTextByLine();
 
 
 
         /* Configure & draw title */
+
+        // Wrapping for title
+        $textBrush->setWrapTextMaxLines($maxTitleLines);
+
 
         $textBrush->setSize(72);                            // TODO: custom title font size
         // $textBrush->setFontFile("arial.ttf");                // TODO: custom title font file
@@ -131,10 +136,8 @@ class DemotivationalMeme extends Meme{
         $textBrush->setY($imageHeight - $margin - $bottomOffset);
 
 
-        // TODO: optimization
         $textBrush->setText($this->title);
-        $textBrush->wrapText($textWrapMaxWidth, $maxTitleLines);
-        $bottomOffset += $textBrush->getHeightByLine() + $borderBottomOffset;
+        $bottomOffset += $textBrush->getHeightByLine() + $borderBottomOffset;   // TODO: extra space fix
         $textBrush->drawTextByLine();
 
 
