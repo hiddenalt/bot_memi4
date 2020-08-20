@@ -6,12 +6,10 @@ namespace App\Bot\Image\Brush;
 
 use Closure;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Intervention\Image\AbstractFont;
 use Intervention\Image\Gd\Font;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
-use Nexmo\Message\Text;
 
 class TextBrush extends Brush {
 
@@ -345,7 +343,7 @@ class TextBrush extends Brush {
      */
     public function wrapText(int $width = -1, int $maxLines = -1) {
 
-        if($width)
+        if($width <= 0)
             $width = $this->target_image->getWidth();
 
         $size = $this->size;
