@@ -97,7 +97,7 @@ class WhenMeme extends Meme {
         $widthWrap                  = $image->width() - 50;
 
         $size = 40;
-        $offsetY = 30;
+        $offsetY = 0;   // TODO: fix extra bottom offset (?)
         $offset = 2;
 
         // Text brush for drawing texts
@@ -122,7 +122,7 @@ class WhenMeme extends Meme {
         $textBrush->setText($this->topText);
 
         // Draw top text
-        $textBrush->drawTextWithShadowByLine();
+        $textBrush->drawTextByLine();
 
 
 
@@ -135,7 +135,7 @@ class WhenMeme extends Meme {
         $textBrush->setText($this->bottomText);
 
         // Draw bottom text
-        $textBrush->drawTextWithShadowByLine();
+        $textBrush->drawTextByLine();
 
 
         return $this;

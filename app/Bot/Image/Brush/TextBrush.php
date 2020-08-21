@@ -4,7 +4,6 @@
 namespace App\Bot\Image\Brush;
 
 
-use Closure;
 use Illuminate\Support\Collection;
 use Intervention\Image\AbstractFont;
 use Intervention\Image\Gd\Font;
@@ -13,6 +12,8 @@ use Intervention\Image\ImageManagerStatic;
 
 class TextBrush extends Brush {
 
+    const SHADOWLESS = "";
+
     protected string $text = "generic";
     protected int $x = 1;
     protected int $y = 1;
@@ -20,6 +21,7 @@ class TextBrush extends Brush {
     protected string $fontFile = "impact.ttf";
     protected string $textColor = "#fff";
     protected string $shadowColor = "#000";
+    protected int $shadowDepth = 2;
     protected string $align = "center";
     protected string $verticalAlign = "top";
     protected int $linesOffset = 2;
@@ -127,6 +129,20 @@ class TextBrush extends Brush {
     }
 
     /**
+     * @return int
+     */
+    public function getShadowDepth(): int {
+        return $this->shadowDepth;
+    }
+
+    /**
+     * @param int $shadowDepth
+     */
+    public function setShadowDepth(int $shadowDepth): void {
+        $this->shadowDepth = $shadowDepth;
+    }
+
+    /**
      * @return string
      */
     public function getAlign(): string {
@@ -223,6 +239,7 @@ class TextBrush extends Brush {
      */
 
     public function drawText(Image $layer = null): void{
+        $image              = $this->target_image;
         $text               = $this->text;
         $textX              = $this->x;
         $textY              = $this->y;
@@ -232,8 +249,33 @@ class TextBrush extends Brush {
         $align              = $this->align;
         $valign             = $this->verticalAlign;
 
-        if($layer == null) $layer = $this->target_image;
 
+        // Shadow layer
+        if($layer == null)
+            $layer = ImageManagerStatic::canvas( $image->width(), $image->height(), array(0, 0, 0, 0) );
+
+        // Shadow (if set)
+        if($this->shadowColor != TextBrush::SHADOWLESS){
+
+            $shadowColor        = $this->shadowColor;
+            $shadowDepth        = $this->shadowDepth;
+
+            for( $x = -$shadowDepth; $x <= $shadowDepth; $x++ ) {
+                for( $y = -$shadowDepth; $y <= $shadowDepth; $y++ ) {
+                    $layer->text($text, $textX + $x, $textY + $y, function(AbstractFont $font) use($size, $fullFontPath, $shadowColor, $align, $valign) {
+                        // TODO: custom font choice
+                        $font->file($fullFontPath);
+                        $font->size($size);
+                        $font->color($shadowColor);
+                        $font->align($align);
+                        $font->valign($valign);
+                    });
+                }
+            }
+        }
+
+
+        // Text
         $layer->text($text, $textX, $textY, function(AbstractFont $font) use($size, $fullFontPath, $textColor, $align, $valign) {
             // TODO: custom font choice
             $font->file($fullFontPath);
@@ -243,97 +285,47 @@ class TextBrush extends Brush {
             $font->valign($valign);
         });
 
+        $image->insert($layer);
+
 //        $layer->rectangle($textX - 10, $textY, $textX + 10, $textY + 1, function ($draw) {
 //            $draw->border(1, '#79b8ff');
 //        });
     }
 
     /**
-     * Draw text with shadow
-     * @param Image|null $textLayer
-     * @return void
+     * Draw text by line
      */
-    public function drawTextWithShadow(Image $textLayer = null): void{
-
+    public function drawTextByLine(){
         $image              = $this->target_image;
-        $textX              = $this->x;
-        $textY              = $this->y;
-        $textColor          = $this->textColor;
-        $shadowColor        = $this->shadowColor;
-
-        // Shadow layer
-        if($textLayer == null)
-            $textLayer = ImageManagerStatic::canvas( $image->width(), $image->height(), array(0, 0, 0, 0) );
-
-        // Shadow
-        $this->setTextColor($shadowColor);
-        for( $x = -2; $x <= 2; $x++ ) {
-            for( $y = -2; $y <= 2; $y++ ) {
-                $this->x = $textX + $x;
-                $this->y = $textY + $y;
-                $this->drawText($textLayer);
-            }
-        }
-
-        // Blur the layer
-        // $textLayer->blur(15); // freezes the code
-
-        $this->x = $textX;
-        $this->y = $textY;
-        $this->textColor = $textColor;
-
-        // Text
-        $this->drawText($textLayer);
-
-        $image->insert($textLayer);
-    }
-
-
-    /**
-     * Same as drawTextWithShadow() but draws each line as a dedicated one
-     * @param Image|null $layer
-     */
-    public function drawTextWithShadowByLine(Image $layer = null){
-        $this->byLine(function(int $index) use($layer){
-            $this->drawTextWithShadow($layer);
-        });
-    }
-
-    /**
-     * Same as drawText() but draws each line as a dedicated one
-     * @param Image|null $layer
-     */
-    public function drawTextByLine(Image $layer = null){
-        $this->byLine(function(int $index) use($layer){
-            $this->drawText($layer);
-        });
-    }
-
-    /**
-     * Do the stuff by line
-     * @param callable $callback
-     * TODO: optimization (?)
-     */
-    public function byLine(callable $callback){
         $text               = $this->text;
         $valign             = $this->verticalAlign;
+        $align              = $this->align;
         $size               = $this->size;
         $textOffset         = $this->linesOffset;
+        $fontFile           = $this->fontFile;
+        $x                  = $this->x;
         $y                  = $this->y;
 
         $lines = explode("\n", $text);
         $linesCount = count($lines);
 
-        // TODO: verticalAlign rebase & optimization
-        $_ = $this->verticalAlign;
-        $this->verticalAlign = "center";
-
         for($i = 0; $i < $linesCount; $i++){
-            $valign_offset = 0;
+
+            $lineBrush = new TextBrush($image);
+            $lineBrush->setFontFile($fontFile);
+            $lineBrush->setSize($size);
+            $lineBrush->setText($lines[$i]);
+            $lineBrush->setAlign($align);
+            $lineBrush->setVerticalAlign("center");
+
+            // Line dimensions info
+            $info = $lineBrush->getFontBoxSize();
+            $height = round($info["height"]);
+
             switch($valign){
                 case "top":
                 default:
-                    $valign_offset = ($size * $i) + $textOffset;
+                    $y += $height + $textOffset;
                     break;
 
                 case "middle":
@@ -341,50 +333,63 @@ class TextBrush extends Brush {
                     break;
 
                 case "bottom":
-                    $valign_offset = -(($linesCount - $i - 1) * $size) - $textOffset;
+                    $y -= $height + $textOffset;
                     break;
             }
 
-            $this->text = $lines[$i];
-            $this->y = $y + $valign_offset;
+            $lineBrush->setX($x);
+            $lineBrush->setY($y);
+            $lineBrush->drawText();
 
-            // Call the task and bind `$this` to current TextBrush
-            Closure::bind($callback, $this)($i);
         }
-        $this->text = $text;
-        $this->y = $y;
-        $this->verticalAlign = $_;
     }
 
     /**
      * Font box size for calculating the positions
+     * @param int $line
      * @return array;
      */
-    public function getFontBoxSize(){
-        $font = new Font($this->text);
+    public function getFontBoxSize(int $line = -1){
+
+        $text = $this->text;
+
+        if($line != -1)
+            $text = explode("\n", $this->text)[$line];
+
+        $font = new Font($text);
         $font->file($this->getFullTextFontPath());
         $font->size($this->size);
-        $font->valign('top');
+        $font->valign($this->verticalAlign);
 
         return (array) $font->getBoxSize();
     }
 
     /**
-     * Get height of text rendered with drawTextWithShadowByLines()-like methods
-     * TODO: optimization (?)
-     * @return int
+     * Get the height of the text drawn by lines (via drawTextByLine())
      */
-    public function getHeightByLine(){
+    public function getFontBoxHeightByLine(){
+        $image              = $this->target_image;
+        $text               = $this->text;
+        $size               = $this->size;
+        $fontFile           = $this->fontFile;
+        $offset             = $this->linesOffset;
+        $valign             = $this->verticalAlign;
+
+        $lines = explode("\n", $text);
+        $linesCount = count($lines);
+
         $height = 0;
-        $textOffset = $this->linesOffset;
+        foreach($lines as $line){
+            $testBrush = new TextBrush($image);
+            $testBrush->setFontFile($fontFile);
+            $testBrush->setSize($size);
+            $testBrush->setText($line);
+            $testBrush->setVerticalAlign($valign);
 
-        $this->byLine(function(int $i) use(&$height, $textOffset){
-            $font_info = $this->getFontBoxSize();
-            $font_height = $font_info['height'];
-            $height += $font_height + $textOffset;
-        });
+            $height += ($testBrush->getFontBoxSize()["height"]);
+        }
 
-        return $height;
+        return $height + $linesCount * $offset;
     }
 
     /**

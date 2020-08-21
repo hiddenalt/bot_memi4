@@ -89,9 +89,9 @@ class DemotivationalMeme extends Meme{
         $borderSize                   = 5;                              // Border size in px
         $margin                       = 50;                             // Edges offset
         $padding                      = 7;                              // Offset between border and image
-        $borderBottomOffset           = 40;                             // Border bottom offset
-        $titleBottomPadding           = 25;                             // Title bottom padding
-        $lineBottomPadding            = 20;                             // Each line bottom padding (title & subtitle)
+        $borderBottomOffset           = 25;                             // Border bottom offset
+        $titleBottomPadding           = 10;                             // Title bottom padding
+        $lineBottomPadding            = 5;                              // Each line bottom padding (title & subtitle)
         $textWrapMaxWidth             = $imageWidth - ($margin * 2);    // Max width for wrapping the texts (title & subtitle)
 
         $maxTitleLines                = 3;                              // Max value of lines in title
@@ -103,48 +103,60 @@ class DemotivationalMeme extends Meme{
         $textBrush = new TextBrush($image);
 
         /* Configure & draw subtitle */
-        $textBrush->setSize(24);                            // TODO: custom subtitle font size
-        $textBrush->setFontFile("times_new_roman.ttf");  // TODO: custom subtitle font file
-        $textBrush->setTextColor("#fff");               // TODO: custom subtitle font color
+        $textBrush->setShadowColor(TextBrush::SHADOWLESS); // TODO: custom shadow color
+        $textBrush->setSize(24);                                  // TODO: custom subtitle font size
+        $textBrush->setFontFile("times_new_roman.ttf");        // TODO: custom subtitle font file
+        $textBrush->setTextColor("#fff");                     // TODO: custom subtitle font color
         $textBrush->setAlign("center");
         $textBrush->setVerticalAlign("bottom");
         $textBrush->setLinesOffset($lineBottomPadding);
         $textBrush->setX($imageWidth / 2);
         $textBrush->setY($imageHeight - $margin);
 
-        // Wrapping for title
+        // Wrapping for subtitle
         $textBrush->setWrapText(true);
         $textBrush->setWrapTextMaxLines($maxSubTitleLines);
         $textBrush->setWrapTextMaxWidth($textWrapMaxWidth);
 
-
+        // Drawing subtitle
         $textBrush->setText($this->subtitle);
-        $bottomOffset += $textBrush->getHeightByLine() + $titleBottomPadding;   // TODO: extra space fix
         $textBrush->drawTextByLine();
+
+        $bottomOffset +=
+            $textBrush->getFontBoxHeightByLine() +
+            $titleBottomPadding;
 
 
 
         /* Configure & draw title */
-
-        // Wrapping for title
-        $textBrush->setWrapTextMaxLines($maxTitleLines);
-
-
         $textBrush->setSize(72);                            // TODO: custom title font size
         // $textBrush->setFontFile("arial.ttf");                // TODO: custom title font file
         // $textBrush->setTextColor("#fff");                    // TODO: custom title font color
         $textBrush->setY($imageHeight - $margin - $bottomOffset);
 
+        // Wrapping for title
+        $textBrush->setWrapTextMaxLines($maxTitleLines);
 
+        // Drawing title
         $textBrush->setText($this->title);
-        $bottomOffset += $textBrush->getHeightByLine() + $borderBottomOffset;   // TODO: extra space fix
         $textBrush->drawTextByLine();
+
+        $bottomOffset +=
+            $textBrush->getFontBoxHeightByLine() +
+            // Necessary for some reason :/
+            ($textBrush->getFontBoxSize(0)["height"] / 2) +
+            $borderBottomOffset;
 
 
 
 
         // Border lines of poster
-        $image->rectangle($margin, $margin, $imageWidth - $margin, $imageHeight - $margin - $bottomOffset, function ($draw) use($borderSize) {
+        $image->rectangle(
+            $margin,
+            $margin,
+            $imageWidth - $margin,
+            $imageHeight - $margin - $bottomOffset,
+            function ($draw) use ($borderSize) {
             // TODO: custom border colors
             // TODO: custom border width
             $draw->border($borderSize, '#fff');
