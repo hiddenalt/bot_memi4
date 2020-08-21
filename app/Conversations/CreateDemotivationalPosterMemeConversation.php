@@ -3,7 +3,6 @@
 namespace App\Conversations;
 
 use App\Bot\Image\Meme\DemotivationalMeme;
-use App\Bot\Image\Meme\WhenMeme;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -14,8 +13,8 @@ use Intervention\Image\ImageManagerStatic;
 class CreateDemotivationalPosterMemeConversation extends Conversation
 {
     public string $pictureUrl = "";
-    public string $topText = "";
-    public string $bottomText = "";
+    public string $title = "";
+    public string $subtitle = "";
 
     public function askPicture(){
         return $this->askForImages(__("create-demotivational-poster-meme-conversation.step-1"),
@@ -40,7 +39,7 @@ class CreateDemotivationalPosterMemeConversation extends Conversation
             if($text == ""){
                 $this->askTopString();
             } else {
-                $this->topText = $text;
+                $this->title = $text;
                 $this->askBottomString();
             }
 
@@ -57,7 +56,7 @@ class CreateDemotivationalPosterMemeConversation extends Conversation
             if($text == ""){
                 $this->askTopString();
             } else {
-                $this->bottomText = $text;
+                $this->subtitle = $text;
                 $this->sendMeme();
             }
 
@@ -72,12 +71,12 @@ class CreateDemotivationalPosterMemeConversation extends Conversation
         // TODO: custom options
         $meme
             ->setBaseImage(ImageManagerStatic::make($this->pictureUrl))
-            ->setTitle($this->topText)
-            ->setSubtitle($this->bottomText)
+            ->setTitle($this->title)
+            ->setSubtitle($this->subtitle)
             ->draw();
 
         $url = $meme->makeTempLink();
-        $message = OutgoingMessage::create(__("create-when-meme-conversation.done"))
+        $message = OutgoingMessage::create(__("create-demotivational-poster-meme-conversation.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);

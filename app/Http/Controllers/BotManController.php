@@ -2,36 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversations\CreateMemeConversation;
+use App\Conversations\GenerateMemeConversation;
 use BotMan\BotMan\BotMan;
-use Illuminate\Http\Request;
-use App\Conversations\ExampleConversation;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
+use BotMan\BotMan\Messages\Outgoing\Question;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 
 class BotManController extends Controller
 {
     /**
      * Place your BotMan logic here.
      */
-    public function handle()
-    {
+    public function handle(){
         $botman = app('botman');
 
         $botman->listen();
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
-    public function tinker()
-    {
+    public function tinker(){
         return view('tinker');
     }
 
+
     /**
-     * Loaded through routes/botman.php
-     * @param  BotMan $bot
+     * Send main menu
+     * @param BotMan $bot
      */
-    public function startConversation(BotMan $bot)
-    {
-        $bot->startConversation(new ExampleConversation());
+    public function sendMenu(BotMan $bot){
+
+        // TODO: specify the keyboard color only for VK platform (dedicated additional parameter)
+
+        $question = Question::create(__("menu.title"))
+            ->addButtons([
+                Button::create(__("menu.options.generate-meme"))->value("generate_meme")->additionalParameters([
+                    "color" => "positive"
+                ]),
+                Button::create(__("menu.options.create-meme"))->value("create_meme")->additionalParameters([
+                    "color" => "positive"
+                ]),
+                Button::create(__("menu.options.settings"))->value("settings")->additionalParameters([
+                    "color" => "primary"
+                ])
+            ]);
+
+        $bot->reply($question);
     }
+
+    /**
+     * Starts a new conversation on generating memes
+     * @param BotMan $bot
+     */
+    public function startGenerateMemeConversation(BotMan $bot){
+        $bot->startConversation(new GenerateMemeConversation());
+    }
+
+    /**
+     * Starts a new conversation on creating user-made memes
+     * @param BotMan $bot
+     */
+    public function startCreateMemeConversation(BotMan $bot){
+        $bot->startConversation(new CreateMemeConversation());
+    }
+
 }

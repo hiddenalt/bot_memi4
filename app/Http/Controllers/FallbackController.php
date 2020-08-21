@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use BotMan\BotMan\BotMan;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Collection;
 
 class FallbackController extends Controller
 {
@@ -14,19 +13,19 @@ class FallbackController extends Controller
      * @param Botman $bot
      * @return void
      */
-    public function index(Botman $bot)
-    {
-        // TODO: translate to English
-        $phrase = "Напиши 'меню' для вывода главного меню.";
+    public function index(Botman $bot){
+        $phrase = __("unknown-command.phrase-type-menu");
 
-        $bot->randomReply([
-            "Извини, но я тебя не понял =(" . " ". $phrase,
-            "???" . " ". $phrase,
-            "Такую команду я не нашел... =(" . " ". $phrase,
-            "Прости, до меня не дошло, не понимаю твою команду." . " ". $phrase,
-            "Не понял =(" . " ". $phrase,
-            "Эм... ну... я даже не знаю, что тебе ответить." . " ". $phrase,
-            "Ну... хорошо, но я тебя всё-равно не понял." . " ". $phrase
-        ]);
+        $reply = (new Collection([
+            __("unknown-command.phrase-1"),
+            __("unknown-command.phrase-2"),
+            __("unknown-command.phrase-3"),
+            __("unknown-command.phrase-4"),
+            __("unknown-command.phrase-5"),
+            __("unknown-command.phrase-6"),
+            __("unknown-command.phrase-7")
+        ]))->random();
+
+        $bot->reply($reply . " " . $phrase);
     }
 }

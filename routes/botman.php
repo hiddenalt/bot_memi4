@@ -1,13 +1,9 @@
 <?php
-use BotMan\BotMan\BotMan;
-use BotMan\BotMan\Messages\Attachments\Image;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
-use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
-use BotMan\BotMan\Messages\Outgoing\Question;
-//use BotMan\BotMan\Messages\Attachments\Location;
 
-// TODO: make logic non-static
-// TODO: translate routes to English
+use App\Http\Controllers\BotManController;
+use App\Http\Middleware\RegisterConversation;
+use BotMan\BotMan\BotMan;
+use BotMan\Drivers\VK\VkCommunityCallbackDriver;
 
 /** @var BotMan $botman */
 $botman = resolve('botman');
@@ -16,58 +12,46 @@ $botman = resolve('botman');
  * Listeners
  */
 
-$botman->on("confirmation", function($payload, Botman $bot){
-    echo("b8818710");
+// VK driver-specific confirmation event handler
+$botman->group(['driver' => [VkCommunityCallbackDriver::class]], function(BotMan $bot) {
+    $bot->on("confirmation", function($payload, Botman $bot){
+        echo(env("VK_CONFIRMATION_TOKEN"));
+    });
 });
 
 
 
-/** ================================================================================================================= */
-$botman->middleware->received(new \App\Http\Middleware\RegisterConversation());
-/** ================================================================================================================= */
 
+$botman->middleware->received(new RegisterConversation());
 
 /**
  * Command listeners
  */
 
 // Menu
-/**
- * @param BotMan $bot
- */
-$menu = function(BotMan $bot) {
+// TODO: improve patterns for cancelling the conversations (see translation files)
+$botman->hears(
+    __("pattern.cancel-conversation", [".*(cancel|back)"]),
+    BotManController::class . "@sendMenu"
+)->stopsConversation();
 
-    $question = Question::create("Меню")
-    ->addButtons([
-        Button::create('☺ Сгенерировать мем')->value("generate_meme")->additionalParameters([
-            "color" => "positive"
-        ]),
-        Button::create('🖌 Создать мем')->value("create_meme")->additionalParameters([
-            "color" => "positive"
-        ]),
-        Button::create('⚙ Настройки')->value("settings")->additionalParameters([
-            "color" => "primary"
-        ])
-    ]);
-
-    $bot->reply($question);
-};
-$botman->hears('.*(завершить|закрыть|назад|отмена|back)', $menu)->stopsConversation();
-$botman->hears('.*(меню|start|начать)', $menu);
+$botman->hears(
+    __("pattern.menu-start", [".*(start|menu|main menu|main_menu)"]),
+    BotManController::class . "@sendMenu"
+);
 
 
 // Generating the meme
-$botman->hears('.*((сгенерировать|сгенерируй|генерь|сделай|сделать|придумай|придумать|давай|ебаш|хуярь).*(мем|мемас|мемчик|мемасик|мэм|мэмасик|мэмчик)|generate_meme)',
-    function(BotMan $bot) {
-        $bot->startConversation(new \App\Conversations\GenerateMemeConversation());
-    }
+$botman->hears(
+    __("pattern.generate-meme-conversation"),
+    BotManController::class . "@startGenerateMemeConversation"
 );
 
-// Manually creating memes
-$botman->hears('.*((создать|сделать|собрать|загрузить|новый|мой|свой).*(мем|мемас|мемчик|мемасик|мэм|мэмасик|мэмчик)|create_meme)', function(BotMan $bot) {
-    $bot->startConversation(new \App\Conversations\CreateMemeConversation());
-});
+// Manually created memes by users
+$botman->hears(
+    __("pattern.create-meme-conversation"),
+    BotManController::class . "@startCreateMemeConversation"
+);
 
 
-/** ================================================================================================================= */
 $botman->fallback('App\Http\Controllers\FallbackController@index');
