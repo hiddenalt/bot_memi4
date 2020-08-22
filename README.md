@@ -6,9 +6,11 @@
 [![gitlocalized ](https://gitlocalize.com/repo/5206/whole_project/badge.svg)](https://gitlocalize.com/repo/5206/whole_project?utm_source=badge)
 
 ## About
-**Memer the Bot** _(Bot Memich, bot_memi4)_ is a cross-platform bot focused on generating random memes. Oriented to be hosted on VK and Telegram.
+**Memer the Bot** _(Bot Memich)_ is a cross-platform bot focused on generating random memes. Oriented to be hosted on VK and Telegram.
 
-This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](https://vk.com/bot_memi4). Built with Laravel, Botman, Lighthouse and Vue.js.
+Built with Laravel, Botman, Lighthouse and Vue.js.
+
+This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](https://vk.com/bot_memi4).
 
 ## Implemented features
 
@@ -50,22 +52,27 @@ This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](h
         </tr>
         <tr>
             <td>Creating user-made memes 'When...'</td>
-            <td>✅ Beta</td>
+            <td>✅ Stable</td>
             <td>
                 <ul>
                     <li>Feature of creating memes with custom image & text.</li>
                     <li>✅ = custom image support</li>
                     <li>✅ = UTF-8 support</li>
                     <li>❌ = emoji support</li>
+                    <li>❌ = ellipsis if text is sliced</li>
                 </ul>
             </td>
         </tr>
         <tr>
             <td>Creating user-made demotivators</td>
-            <td>❌ Not implemented yet</td>
+            <td>✅ Stable</td>
             <td>
                 <ul>
                     <li>Feature of creating memes with custom demotivator image & text.</li>
+                    <li>✅ = custom image support</li>
+                    <li>✅ = UTF-8 support</li>
+                    <li>❌ = emoji support</li>
+                    <li>❌ = ellipsis if text is sliced</li>
                 </ul>
             </td>
         </tr>
@@ -149,14 +156,35 @@ This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](h
     </tbody>
 </table>
 
-## Documentation Wiki
+See ["Ideas to be implemented" board](https://github.com/hiddenalt/bot_memi4/projects/1) for viewing the upcoming features.
+
+## Requirements
+
+- PHP 7.4.x+
+- MySQL 5.6+
+- Multi-thread web-server (Apache/Nginx)
+
+## Configure the bot
+
+TODO: configure the bot section
+
+## Documentation (Wiki)
 TODO: documentation (dedicated wiki)
 
+
 ## Localization
-⚠️Localization is temporarily hardcoded to Russian language. English translations will be committed as soon as possible.
+
+[![gitlocalized ](https://gitlocalize.com/repo/5206/ru/badge.svg)](https://gitlocalize.com/repo/5206/ru?utm_source=badge)
+
+- __Source language__: English
+- __Target languages__: Russian 
+
+If you have better translation of source/target languages, your pull requests are welcome.
+
+See [localization project page](https://gitlocalize.com/repo/5206) for the detailed localization list.
 
 ## Security Vulnerabilities
-If discover a security vulnerability, please send an e-mail to The Hiddenalt Project at [admin@hiddenalt.ru](mailto:admin@hiddenalt.ru). All security vulnerabilities will be fixed as soon as possible.
+If you discover a security vulnerability, please send an e-mail to The Hiddenalt Project at [admin@hiddenalt.ru](mailto:admin@hiddenalt.ru). All security vulnerabilities will be fixed as soon as possible.
 
-## Licence
+## License
 Memer the Bot is free software distributed under the terms of the MIT license.
