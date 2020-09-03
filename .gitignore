@@ -12,7 +12,7 @@ npm-debug.log
 .env
 
 ngrok.bat
-ssh.bat
+ssh.sh
 
 # PHPStorm run/debug configurations
 !.idea/runConfigurations

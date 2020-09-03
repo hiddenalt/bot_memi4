@@ -81,7 +81,7 @@ class DemotivationalMeme extends Meme{
      */
     public function draw() {
 
-        $image = $this->image;
+        $image = $this->canvas;
         $imageWidth = $image->getWidth();
         $imageHeight = $image->getHeight();
 

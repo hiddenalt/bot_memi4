@@ -11,17 +11,17 @@ use Intervention\Image\Image;
 abstract class Meme {
 
     /**
-     * Meme image instance
+     * Meme canvas instance
      * @var Image
      */
-    protected Image $image;
+    protected Image $canvas;
 
     /**
      * Meme constructor.
      * @param Image $image
      */
     public function __construct(Image $image) {
-        $this->image = $image; // Setting the template image (size, etc.)
+        $this->canvas = $image; // Setting the template image (size, etc.)
     }
 
 
@@ -38,8 +38,8 @@ abstract class Meme {
      * Getting the image
      * @return Image
      */
-    public function getImage(): Image{
-        return $this->image;
+    public function getCanvas(): Image{
+        return $this->canvas;
     }
 
 
@@ -152,7 +152,7 @@ abstract class Meme {
         $filename = uniqid($this->influencedBy."_".$this->getType()."_", true) . ".jpg";
 
         $storage = Storage::disk($this->category);
-        $storage->put($filename, $this->image->encode("jpg", 90));
+        $storage->put($filename, $this->canvas->encode("jpg", 90));
 
         $this->filename = $filename;
 

@@ -20,7 +20,7 @@ This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](h
     <tbody>
         <tr>
             <th align="center">Name</th>
-            <th align="center">Status (beta/stable)</th>
+            <th align="center">Status (beta/stable/basic)</th>
             <th align="center">Comments</th>
         </tr>
         <tr>
@@ -42,11 +42,11 @@ This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](h
             </td>
         </tr>
         <tr>
-            <td>Generating 4-block comics</td>
+            <td>Generating 4-frame comics</td>
             <td>❌ Not implemented yet</td>
             <td>
                 <ul>
-                    <li>Feature of randomly generating simple 4-block comics with 4 images & labels according to data-sets.</li>
+                    <li>Feature of randomly generating simple comics with 4 images & labels according to data-sets.</li>
                 </ul>
             </td>
         </tr>
@@ -77,11 +77,11 @@ This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](h
             </td>
         </tr>
         <tr>
-            <td>Creating user-made 4-block comics</td>
+            <td>Creating user-made 4-frame comics</td>
             <td>❌ Not implemented yet</td>
             <td>
                 <ul>
-                    <li>Feature of creating memes with custom 4 images & labels.</li>
+                    <li>Feature of creating comics with custom 4 images & labels.</li>
                 </ul>
             </td>
         </tr>
@@ -123,10 +123,10 @@ This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](h
         </tr>
         <tr>
             <td>Localization</td>
-            <td>❌ Not implemented yet</td>
+            <td>🔸 Basic implementation</td>
             <td>
                 <ul>
-                    <li>Bot multi-language support.</li>
+                    <li>Bot multi-language support. See 'Localization section' for more info.</li>
                 </ul>
             </td>
         </tr>

@@ -14,20 +14,30 @@
   "menu.options.settings": "⚙ Settings",
 
   "when-meme.title": "'When...' meme",
-  "4-block-comics-meme.title": "4-block comics meme",
+  "4-frame-comics-meme.title": "4-frame comics meme",
   "demotivational-poster-meme.title": "Demotivational meme",
 
   "create-meme-conversation.ask-meme-type": "Choose the meme to be created:",
   "create-meme-conversation.unsupported-meme": "Can't make such meme for now, choose another category.",
 
   "create-when-meme-conversation.step-1": "[Step 1/3]\nSend an image of a meme.",
-  "create-when-meme-conversation.step-2": "[Step 2/3]\nSend the top text of a meme.",
-  "create-when-meme-conversation.step-3": "[Step 3/3]\nSend the bottom text of a meme.",
+  "create-when-meme-conversation.step-2": "[Step 2/3]\nSend top text of a meme.",
+  "create-when-meme-conversation.step-3": "[Step 3/3]\nSend bottom text of a meme.",
   "create-when-meme-conversation.done": "Here it is:",
 
+  "create-comics-meme-conversation.step-1": "[Step 1/8]\nSend image of the 1st frame.",
+  "create-comics-meme-conversation.step-2": "[Step 2/8]\nSend image of the 2nd frame.",
+  "create-comics-meme-conversation.step-3": "[Step 3/8]\nSend image of the 3rd frame.",
+  "create-comics-meme-conversation.step-4": "[Step 4/8]\nSend image of the 4th frame.",
+  "create-comics-meme-conversation.step-5": "[Step 5/8]\nSend text of the 1st frame.",
+  "create-comics-meme-conversation.step-6": "[Step 6/8]\nSend text of the 2nd frame.",
+  "create-comics-meme-conversation.step-7": "[Step 7/8]\nSend text of the 3rd frame.",
+  "create-comics-meme-conversation.step-8": "[Step 8/8]\nSend text of the 4th frame.",
+  "create-comics-meme-conversation.done": "Here it is:",
+
   "create-demotivational-poster-meme-conversation.step-1": "[Step 1/3]\nSend an image of a meme.",
-  "create-demotivational-poster-meme-conversation.step-2": "[Step 2/3]\nSend the title of a meme.",
-  "create-demotivational-poster-meme-conversation.step-3": "[Step 3/3]\nSend the subtitle of a meme.",
+  "create-demotivational-poster-meme-conversation.step-2": "[Step 2/3]\nSend title of a meme.",
+  "create-demotivational-poster-meme-conversation.step-3": "[Step 3/3]\nSend subtitle of a meme.",
   "create-demotivational-poster-meme-conversation.done": "Here it is:",
 
   "generate-meme-conversation.ask-meme-type": "Choose the meme to be generated:",
@@ -56,7 +66,7 @@
   "settings-types.show-author.description": "Mention you in a meme's description, everyone will see messaging platform, ID, Name and Surname (or just username).\nNote: mentioning is applied only for generated memes, user-made memes are not public.",
 
 
-  "unknown-command.phrase-type-menu": "Type 'menu' to view menu options.",
+  "unknown-command.phrase-type-menu": "\nType 'menu' to view menu options.",
   "unknown-command.phrase-1": "Sorry, but I didn't understand you \uD83D\uDE12",
   "unknown-command.phrase-2": "I can't find the right pattern to answer your request \uD83D\uDE12",
   "unknown-command.phrase-3": "Incorrect command.",

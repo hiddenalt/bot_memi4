@@ -86,7 +86,7 @@ class WhenMeme extends Meme {
      * @return WhenMeme
      */
     public function draw() {
-        $image = $this->image;
+        $image = $this->canvas;
 
         // Resize to the meme's width & height
         $this->baseImage->resize($image->width(), $image->height());

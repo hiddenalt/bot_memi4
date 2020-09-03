@@ -26,7 +26,7 @@ class CreateMemesTable extends Migration
             $table->enum("type", [
                 "demotivational",
                 "when",
-                "blocks"
+                "comics"
             ]);
 
             $table->boolean("is_public"); //->default("false");

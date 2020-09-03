@@ -31,7 +31,7 @@ class CreateMemeConversation extends Conversation
                 Button::create(__('when-meme.title'))->value('when-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create(__('4-block-comics-meme.title'))->value('4-block-comics-meme')->additionalParameters([
+                Button::create(__('4-frame-comics-meme.title'))->value('4-frame-comics-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
                 Button::create(__('demotivational-poster-meme.title'))->value('demotivational-poster-meme')->additionalParameters([
@@ -54,7 +54,7 @@ class CreateMemeConversation extends Conversation
                         $this->askWhenMeme();
                         break;
 
-                    case "4-block-comics-meme":
+                    case "4-frame-comics-meme":
                         $this->askBlocksMeme();
                         break;
 
@@ -82,6 +82,6 @@ class CreateMemeConversation extends Conversation
         $this->bot->startConversation(new CreateDemotivationalPosterMemeConversation());
     }
     public function askBlocksMeme(): void{
-        $this->bot->startConversation(new CreateBlocksMemeConversation());
+        $this->bot->startConversation(new CreateSimpleComicsMemeConversation());
     }
 }
