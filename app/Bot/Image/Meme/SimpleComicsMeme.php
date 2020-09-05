@@ -4,6 +4,8 @@
 namespace App\Bot\Image\Meme;
 
 
+use App\Bot\Image\Brush\TextBrush;
+use Intervention\Image\AbstractShape;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
 
@@ -190,7 +192,9 @@ class SimpleComicsMeme extends Meme {
         $image = $this->canvas;
         $width = $image->getWidth();
         $height = $image->getHeight();
-        $linesSize = 6;
+        $linesSize = 3;
+        $textBottomOffset = 10;
+        $lineBottomPadding = 5; // TODO: custom lineBottomPadding
 
         // TODO: custom border color
         // TODO: custom text shadow color
@@ -200,38 +204,69 @@ class SimpleComicsMeme extends Meme {
 
         // Image 1
         $frame = $this->frameImage1;
-        $frame->resize($width / 2, $height / 2);
+        $frame->resize(($width / 2) - $linesSize, ($height / 2) - $linesSize);
         $image->insert($frame, 'top-left', 0, 0);
 
         // Image 2
         $frame = $this->frameImage2;
-        $frame->resize($width / 2, $height / 2);
-        $image->insert($frame, 'top-left', $width / 2, 0);
+        $frame->resize(($width / 2) - $linesSize, ($height / 2) - $linesSize);
+        $image->insert($frame, 'top-left', ($width / 2) + $linesSize, 0);
 
         // Image 3
         $frame = $this->frameImage3;
-        $frame->resize($width / 2, $height / 2);
-        $image->insert($frame, 'top-left', 0, $height / 2);
+        $frame->resize(($width / 2) - $linesSize, ($height / 2) - $linesSize);
+        $image->insert($frame, 'top-left', 0, ($height / 2) + $linesSize);
 
         // Image 4
         $frame = $this->frameImage4;
-        $frame->resize($width / 2, $height / 2);
-        $image->insert($frame, 'top-left', $width / 2, $height / 2);
-
-        // TODO: labels rendering
-
+        $frame->resize(($width / 2) - $linesSize, ($height / 2) - $linesSize);
+        $image->insert($frame, 'top-left', ($width / 2) + $linesSize, ($height / 2) + $linesSize);
 
         // First line
-        $image->line(($width / 2) - $linesSize, 0, ($width / 2) - $linesSize, $height, function ($draw) {
-            $draw->color('#000');
+        $image->rectangle(($width / 2) - $linesSize, 0, ($width / 2) + $linesSize, $height, function (AbstractShape $draw) {
+            $draw->background('#000');
         });
 
         // Second line
-        $image->line(0, ($height / 2) - $linesSize, $width, ($height / 2) + $linesSize, function ($draw) {
-            $draw->color('#000');
+        $image->rectangle(0, ($height / 2) - $linesSize, $width, ($height / 2) + $linesSize, function (AbstractShape $draw) {
+            $draw->background('#000');
         });
 
-//        $textBrush = new TextBrush($image);
+        $textBrush = new TextBrush($image);
+
+        $texts = [];
+        $texts[0][0] = $this->frameLabel1;
+        $texts[0][1] = $this->frameLabel2;
+        $texts[1][0] = $this->frameLabel3;
+        $texts[1][1] = $this->frameLabel4;
+
+        for($i = 0; $i < 2; $i++){
+            for($y = 0 ; $y < 2; $y++){
+                $textBrush->setShadowColor("#000");                 // TODO: custom shadow color
+                $textBrush->setSize(22);                                  // TODO: custom font size
+                $textBrush->setFontFile("arial.ttf");                   // TODO: custom font file
+                $textBrush->setTextColor("#fff");                     // TODO: custom font color
+                $textBrush->setAlign("center");
+                $textBrush->setVerticalAlign("bottom");
+                $textBrush->setLinesOffset($lineBottomPadding);
+
+                // TODO: rebase
+                $textBrush->setX(($width / 4) + $y * ($width / 2));
+                if($y == 1) $textBrush->setX($width - ($width / 4));
+                $textBrush->setY((($height / 2) + $i * ($height / 2)) - $textBottomOffset - (($i == 0) ? $linesSize : 0));
+
+                $textBrush->setWrapText(true);
+                $textBrush->setWrapTextMaxLines(16);
+                $textBrush->setWrapTextMaxWidth(($width / 2) - 10);
+
+                $textBrush->setText($texts[$i][$y]);
+                $textBrush->drawTextByLine();
+            }
+        }
+
+
+
+
 
         return $this;
     }

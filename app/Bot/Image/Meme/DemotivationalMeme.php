@@ -5,6 +5,7 @@ namespace App\Bot\Image\Meme;
 
 
 use App\Bot\Image\Brush\TextBrush;
+use Intervention\Image\AbstractShape;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
 
@@ -89,9 +90,9 @@ class DemotivationalMeme extends Meme{
         $borderSize                   = 5;                              // Border size in px
         $margin                       = 50;                             // Edges offset
         $padding                      = 7;                              // Offset between border and image
-        $borderBottomOffset           = 25;                             // Border bottom offset
-        $titleBottomPadding           = 10;                             // Title bottom padding
-        $lineBottomPadding            = 5;                              // Each line bottom padding (title & subtitle)
+        $borderBottomOffset           = 20;                             // Border bottom offset
+        $titleBottomPadding           = 25;                             // Title bottom padding
+        $lineBottomPadding            = 10;                              // Each line bottom padding (title & subtitle)
         $textWrapMaxWidth             = $imageWidth - ($margin * 2);    // Max width for wrapping the texts (title & subtitle)
 
         $maxTitleLines                = 3;                              // Max value of lines in title
@@ -156,11 +157,12 @@ class DemotivationalMeme extends Meme{
             $margin,
             $imageWidth - $margin,
             $imageHeight - $margin - $bottomOffset,
-            function ($draw) use ($borderSize) {
-            // TODO: custom border colors
-            // TODO: custom border width
-            $draw->border($borderSize, '#fff');
-        });
+            function (AbstractShape $draw) use ($borderSize) {
+                // TODO: custom border colors
+                // TODO: custom border width
+                $draw->border($borderSize, '#fff');
+            }
+        );
 
         // Poster image
         $w = $image->width()  - ($margin + $borderSize + $padding) * 2;

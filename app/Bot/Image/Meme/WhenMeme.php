@@ -97,8 +97,8 @@ class WhenMeme extends Meme {
         $widthWrap                  = $image->width() - 50;
 
         $size = 40;
-        $offsetY = 0;   // TODO: fix extra bottom offset (?)
-        $offset = 2;
+        $offsetY = 5;
+        $offset = 5;
 
         // Text brush for drawing texts
         $textBrush = new TextBrush($image);

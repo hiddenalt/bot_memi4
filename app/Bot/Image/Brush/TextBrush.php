@@ -285,11 +285,13 @@ class TextBrush extends Brush {
             $font->valign($valign);
         });
 
-        $image->insert($layer);
 
-//        $layer->rectangle($textX - 10, $textY, $textX + 10, $textY + 1, function ($draw) {
-//            $draw->border(1, '#79b8ff');
+
+//        $layer->rectangle($textX - 30, $textY, $textX + 30, $textY + 1, function ($draw) {
+//            $draw->border(1, '#ff00bf');
 //        });
+
+        $image->insert($layer);
     }
 
     /**
@@ -306,8 +308,19 @@ class TextBrush extends Brush {
         $x                  = $this->x;
         $y                  = $this->y;
 
+//        $image->rectangle($x - 60, $y, $x + 60, $y + 1, function ($draw) {
+//            $draw->border(1, '#79b8ff');
+//        });
+
         $lines = explode("\n", $text);
         $linesCount = count($lines);
+
+        // Reverse array for bottom $valign rendering
+        switch($valign){
+            case "bottom":
+                $lines = array_reverse($lines);
+                break;
+        }
 
         for($i = 0; $i < $linesCount; $i++){
 
@@ -316,16 +329,20 @@ class TextBrush extends Brush {
             $lineBrush->setSize($size);
             $lineBrush->setText($lines[$i]);
             $lineBrush->setAlign($align);
-            $lineBrush->setVerticalAlign("center");
+            $lineBrush->setVerticalAlign("bottom");
 
             // Line dimensions info
             $info = $lineBrush->getFontBoxSize();
             $height = round($info["height"]);
 
+            $lineBrush->setX($x);
+            $lineBrush->setY($y);
+
             switch($valign){
                 case "top":
                 default:
                     $y += $height + $textOffset;
+                    $lineBrush->setY($y);   // Refresh Y coords
                     break;
 
                 case "middle":
@@ -337,10 +354,7 @@ class TextBrush extends Brush {
                     break;
             }
 
-            $lineBrush->setX($x);
-            $lineBrush->setY($y);
             $lineBrush->drawText();
-
         }
     }
 
