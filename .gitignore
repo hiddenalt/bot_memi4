@@ -16,3 +16,8 @@ ssh.sh
 
 # PHPStorm run/debug configurations
 !.idea/runConfigurations
+
+# Lighthouse Auto-generated
+_lighthouse_ide_helper.php
+programmatic-types.graphql
+schema-directives.graphql
