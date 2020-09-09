@@ -17,6 +17,9 @@ ssh.sh
 # PHPStorm run/debug configurations
 !.idea/runConfigurations
 
+# Laravel Passport encryption keys
+.rnd
+
 # Lighthouse Auto-generated
 _lighthouse_ide_helper.php
 programmatic-types.graphql
