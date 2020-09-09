@@ -14,13 +14,8 @@ $botman = resolve('botman');
 
 // VK driver-specific confirmation event handler
 $botman->group(['driver' => [VkCommunityCallbackDriver::class]], function(BotMan $bot) {
-    $bot->on("confirmation", function($payload, Botman $bot){
-        echo(env("VK_CONFIRMATION_TOKEN"));
-    });
+    $bot->on("confirmation", BotManController::class . "@VKConfirmationToken");
 });
-
-
-
 
 $botman->middleware->received(new RegisterConversation());
 

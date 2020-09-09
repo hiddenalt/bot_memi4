@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-
 /*
 |--------------------------------------------------------------------------
 | Console Routes
@@ -16,6 +14,7 @@ use Illuminate\Foundation\Inspiring;
 
 /**
  * Clearing the log files
+ * TODO: move to controller
  */
 Artisan::command('logs:clear', function() {
     foreach(scandir(storage_path('logs')) as $key => $value){

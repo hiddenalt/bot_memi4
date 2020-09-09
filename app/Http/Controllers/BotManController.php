@@ -69,4 +69,14 @@ class BotManController extends Controller
         $bot->startConversation(new CreateMemeConversation());
     }
 
+
+    /**
+     * Echo the validation token for VK
+     * @param $payload
+     * @param BotMan $bot
+     */
+    public function VKConfirmationToken($payload, Botman $bot){
+        echo(env("VK_CONFIRMATION_TOKEN"));
+    }
+
 }

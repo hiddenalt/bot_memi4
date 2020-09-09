@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class FrontendController extends Controller
 {
-    // For admin application
-    public function admin()
-    {
+    // Admin application
+    public function admin(){
+        // TODO: whitelist
         return view('admin');
     }
-    // For public application
-    public function app()
-    {
+
+    // Public application
+    public function app(){
         return view('app');
     }
 }
