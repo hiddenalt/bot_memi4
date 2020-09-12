@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConversationSettingTable extends Migration
+class CreateUserConversationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateConversationSettingTable extends Migration
      */
     public function up()
     {
-        Schema::create('conversation_setting', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('user_conversation', function (Blueprint $table) {
+            $table->increments('id');
+            $table->bigInteger("user_id")->unsigned();
             $table->bigInteger("conversation_id")->unsigned();
-            $table->enum('type', \App\Http\Controllers\BotSettings::getSettingsTypes());
-            $table->string("value")->default(0);
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
         });
     }
@@ -31,8 +31,6 @@ class CreateConversationSettingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conversation_setting');
-        //TODO: foreign keys
-//        $table->dropForeign('user_id'); $table->dropIndex('user_id'); $table->dropColumn('user_id')
+        Schema::dropIfExists('user_conversation');
     }
 }
