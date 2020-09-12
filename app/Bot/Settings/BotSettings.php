@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 
-class BotSettingsController extends Controller
-{
+class BotSettings {
 
     /**
      * @return array
