@@ -4,6 +4,7 @@ namespace App;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class Meme
@@ -30,4 +31,20 @@ class Meme extends Model
      * @var bool
      */
 //    public $incrementing = true;
+
+    /**
+     * Deletes meme both from directory and database
+     * @throws \Exception
+     */
+    public function forget(){
+        $filename = $this->filename;
+        $category = $this->category;
+
+        $disk = Storage::disk($category);
+        if(!$disk->exists($filename))
+            return;
+
+        $disk->delete($filename);
+        $this->delete();
+    }
 }
