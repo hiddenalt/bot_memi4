@@ -166,6 +166,9 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         Intervention\Image\ImageServiceProvider::class,
+
+        // User Permissions
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*
