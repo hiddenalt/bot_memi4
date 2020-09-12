@@ -33,6 +33,7 @@
         "nuwave/lighthouse": "^4.16",
         "opis/closure": "^3.4.2",
         "ralouphie/mimey": "^2.1",
+        "spatie/laravel-permission": "2.38.0",
         "symfony/string": "^5.1",
         "yageorgiy/botman-vk-community-callback-driver": "^1.6.1"
     },
