@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateWordbankTable extends Migration
 {
@@ -16,7 +16,6 @@ class CreateWordbankTable extends Migration
         Schema::create('wordbank', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger("bank_id")->unsigned()->default(1);
-            $table->bigInteger("conversation_id")->unsigned();
             $table->mediumText("text");
             $table->enum("type", [
                 "undefined",

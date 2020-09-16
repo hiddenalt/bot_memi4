@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePicbankTable extends Migration
 {
@@ -16,7 +16,6 @@ class CreatePicbankTable extends Migration
         Schema::create('picbank', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger("bank_id")->unsigned()->default(1);
-            $table->bigInteger("conversation_id")->unsigned();
             $table->longText("path");
             $table->enum("status", [
                 "pending",
