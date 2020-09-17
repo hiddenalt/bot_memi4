@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBanksListTable extends Migration
 {
@@ -16,6 +16,7 @@ class CreateBanksListTable extends Migration
         Schema::create('banks_list', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text("title");
+            $table->text("description");
             $table->bigInteger("conversation_id")->unsigned();
             $table->boolean("is_private")->default(1);
             $table->timestamps();
