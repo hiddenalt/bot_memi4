@@ -32,7 +32,6 @@ class CreateWordbankTable extends Migration
             ]);
             $table->timestamps();
 
-            $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
             $table->foreign('bank_id')->references('id')->on('banks_list')->onDelete('cascade');
         });
     }
