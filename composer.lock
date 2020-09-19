@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6071b434d1b74ab1bfdde4f213e3cda",
+    "content-hash": "63e923e01a57a2d53fcb1a7711e64c5f",
     "packages": [
         {
             "name": "botman/botman",
@@ -2774,16 +2774,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.9.1",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "88e519766fc58bd46b8265561fb79b54e2e00b28"
+                "reference": "1c13d05035deff45f1230ca68bd7d74d621762d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/88e519766fc58bd46b8265561fb79b54e2e00b28",
-                "reference": "88e519766fc58bd46b8265561fb79b54e2e00b28",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1c13d05035deff45f1230ca68bd7d74d621762d9",
+                "reference": "1c13d05035deff45f1230ca68bd7d74d621762d9",
                 "shasum": ""
             },
             "require": {
@@ -2822,7 +2822,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2020-08-30T16:15:20+00:00"
+            "time": "2020-09-19T14:52:48+00:00"
         },
         {
             "name": "nuwave/lighthouse",
@@ -7055,16 +7055,16 @@
         },
         {
             "name": "yageorgiy/botman-vk-community-callback-driver",
-            "version": "1.6.2",
+            "version": "1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yageorgiy/botman-vk-community-callback-driver.git",
-                "reference": "7717528c3f47fd9e20dca7ae6be1883a4fc82fbd"
+                "reference": "1ed5196b1eac93383b83cffcee525656a3640993"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yageorgiy/botman-vk-community-callback-driver/zipball/7717528c3f47fd9e20dca7ae6be1883a4fc82fbd",
-                "reference": "7717528c3f47fd9e20dca7ae6be1883a4fc82fbd",
+                "url": "https://api.github.com/repos/yageorgiy/botman-vk-community-callback-driver/zipball/1ed5196b1eac93383b83cffcee525656a3640993",
+                "reference": "1ed5196b1eac93383b83cffcee525656a3640993",
                 "shasum": ""
             },
             "require": {
@@ -7120,7 +7120,7 @@
                 "vk",
                 "vkontakte"
             ],
-            "time": "2020-09-18T21:20:54+00:00"
+            "time": "2020-09-19T16:50:53+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
