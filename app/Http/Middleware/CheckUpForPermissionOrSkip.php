@@ -2,18 +2,29 @@
 
 namespace App\Http\Middleware;
 
+use App\Conversation;
+use App\User;
 use BotMan\BotMan\BotMan;
-use BotMan\BotMan\Exceptions\Base\BotManException;
 use BotMan\BotMan\Interfaces\Middleware\Captured;
 use BotMan\BotMan\Interfaces\Middleware\Heard;
 use BotMan\BotMan\Interfaces\Middleware\Matching;
 use BotMan\BotMan\Interfaces\Middleware\Received;
 use BotMan\BotMan\Interfaces\Middleware\Sending;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
-use Illuminate\Support\Facades\DB;
 
-class RegisterConversation implements Received, Captured, Matching, Heard, Sending
+class CheckUpForPermissionOrSkip implements Received, Captured, Matching, Heard, Sending
 {
+    private string $permission = "";
+
+    /**
+     * CheckUpForPermissionOrSkip constructor.
+     * @param string $permission
+     */
+    public function __construct(string $permission) {
+        $this->permission = $permission;
+    }
+
+
     /**
      * Handle a captured message.
      *
@@ -36,34 +47,9 @@ class RegisterConversation implements Received, Captured, Matching, Heard, Sendi
      * @param $next
      *
      * @return mixed
-     * @throws BotManException
      */
     public function received(IncomingMessage $message, $next, BotMan $bot)
     {
-        // TODO: better implementation
-
-        $conversation_id = $message->getConversationIdentifier();
-        $recipient = $message->getRecipient();
-
-        // Registering the conversation
-        $exists = DB::table("conversations")->where([
-            ["conversation_id", $conversation_id],
-            ["local_id", $recipient]
-        ])->exists();
-
-        if(!$exists){
-            DB::table("conversations")->insert([
-                [
-                    "conversation_id" => $conversation_id,
-                    "local_id" => $recipient,
-                    "created_at" => now(),
-                    "updated_at" => now()
-                ]
-            ]);
-
-            $bot->say(__("greetings"), $recipient);
-        }
-
         return $next($message);
     }
 
@@ -75,6 +61,21 @@ class RegisterConversation implements Received, Captured, Matching, Heard, Sendi
      */
     public function matching(IncomingMessage $message, $pattern, $regexMatched)
     {
+        /** @var User $user */
+//        $user = System::getUserFromConversation($message->getConversationIdentifier());
+
+        /** @var Conversation $conversation */
+        $conversation = Conversation::all()->where("conversation_id", $message->getConversationIdentifier())->first();
+
+        if($conversation == null)
+            return false;
+
+        /** @var User $user */
+        $user = $conversation->user();
+
+        if($user == null || (!$user->hasPermissionTo($this->permission) && !$user->isSuperAdmin()))
+            return false;
+
         return $regexMatched;
     }
 

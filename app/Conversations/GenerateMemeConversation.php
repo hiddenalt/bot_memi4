@@ -2,18 +2,15 @@
 
 namespace App\Conversations;
 
-use BotMan\BotMan\Messages\Incoming\IncomingMessage;
-use Illuminate\Foundation\Inspiring;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
-use BotMan\BotMan\Messages\Conversations\Conversation;
+use BotMan\BotMan\Messages\Outgoing\Question;
 
 /**
  * Class GenerateMemeConversation
  * @package App\Conversations
  */
-class GenerateMemeConversation extends Conversation
+class GenerateMemeConversation extends BackFunctionConversation
 {
 
     /**
@@ -54,6 +51,10 @@ class GenerateMemeConversation extends Conversation
 //                $selectedText = $answer->getText();
 
                 switch($selectedValue){
+
+                    case "back":
+                        $this->moveBack();
+                        break;
 
                     case "when-meme":
                         $this->sendWhenMeme();

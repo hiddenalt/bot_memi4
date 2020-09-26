@@ -65,7 +65,7 @@ class StorageController extends Controller {
      * @throws Exception
      */
     public function memeResponse(){
-        $access = $this->request->get("access_token");
+//        $access = $this->request->get("access_token");
         switch($this->storage){
             case "meme_created":
                 // TODO: access validation for created memes
@@ -78,7 +78,7 @@ class StorageController extends Controller {
         }
 
         /** @var Meme $meme */
-        $meme = Meme::all()->where("filename", $this->filename)->first();
+        $meme = Meme::query()->where("filename", $this->filename)->first();
         if($meme == null) abort(404);
 
         $response = $this->serializeResponse();

@@ -20,4 +20,16 @@ class Conversation extends Model
      */
     protected $table = 'conversations';
 
+    /**
+     * Get the users that owns the conversation.
+     * Note: 1 user = 1 conversation!
+     * @return User|null
+     */
+    public function user()
+    {
+        return $this->belongsToMany('App\User', 'user_has_conversation')->first();
+    }
+
+    // TODO: get native conversation name
+
 }

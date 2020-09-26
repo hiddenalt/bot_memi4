@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversations\AdminMenuConversation;
 use App\Conversations\CreateMemeConversation;
 use App\Conversations\GenerateMemeConversation;
 use BotMan\BotMan\BotMan;
@@ -53,12 +54,13 @@ class BotManController extends Controller
         $bot->reply($question);
     }
 
+
     /**
      * Starts a new conversation on generating memes
      * @param BotMan $bot
      */
     public function startGenerateMemeConversation(BotMan $bot){
-        $bot->startConversation(new GenerateMemeConversation());
+        $bot->startConversation(new GenerateMemeConversation(null));
     }
 
     /**
@@ -66,9 +68,16 @@ class BotManController extends Controller
      * @param BotMan $bot
      */
     public function startCreateMemeConversation(BotMan $bot){
-        $bot->startConversation(new CreateMemeConversation());
+        $bot->startConversation(new CreateMemeConversation(null));
     }
 
+    /**
+     * Show admin menu
+     * @param BotMan $bot
+     */
+    public function adminMenu(BotMan $bot){
+        $bot->startConversation(new AdminMenuConversation(null));
+    }
 
     /**
      * Echo the validation token for VK

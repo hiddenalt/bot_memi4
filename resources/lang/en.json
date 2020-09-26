@@ -1,10 +1,14 @@
 {
   "greetings": "He-hey, howdy! Nice to meet you.",
 
-  "pattern.cancel-conversation": ".*(cancel|back)",
+  "pattern.cancel-conversation": ".*cancel",
   "pattern.menu-start": ".*(start|menu|main menu|main_menu)",
   "pattern.create-meme-conversation": ".*((create|make|new|my|draw|construct|build).*(a meme|meme|the meme|meme|mem|cool pic|pic|picture)|create_meme)",
   "pattern.generate-meme-conversation": ".*((generate|gen|imagine|ai|send|do).*(a meme|meme|the meme|meme|mem|cool pic|pic|picture)|generate_meme)",
+  "pattern.admin-menu": ".*(admin|adm|admn|adn|manage|admin menu|moderate|moderator|administrator)",
+
+  "pagination.previous": "<< Previous",
+  "pagination.next": "Next >>",
 
   "menu.title": "Main menu:",
   "menu.back": "Back",
@@ -66,6 +70,14 @@
   "settings-types.show-author.description": "Mention you in a meme's description, everyone will see messaging platform, ID, Name and Surname (or just username).\nNote: mentioning is applied only for generated memes, user-made memes are not public.",
 
 
+
+  "admin-menu.manage-banks": "Manage content banks",
+
+  "manage-bank.back": "<< Back",
+  "manage-bank.info": "ℹ️ Bank information.\n\n\uD83C\uDD94 ID: :Id\n\uD83D\uDCAC Title: :Title\n\uD83D\uDCC4 Description: :Description\n\uD83D\uDD52 Created: :Created_at\n\uD83D\uDD52 Updated: :Updated_at\n\uD83D\uDC64 Conversation ID: :Conversation_id\n\uD83D\uDC64 Conversation title: :conversation_title",
+  "manage-bank.not-found-error": "Bank was internally deleted or moved (not found).",
+
+
   "unknown-command.phrase-type-menu": "\nType 'menu' to view menu options.",
   "unknown-command.phrase-1": "Sorry, but I didn't understand you \uD83D\uDE12",
   "unknown-command.phrase-2": "I can't find the right pattern to answer your request \uD83D\uDE12",
@@ -74,4 +86,7 @@
   "unknown-command.phrase-5": "[COMMAND NOT FOUND]",
   "unknown-command.phrase-6": "Wow... I can't even say anything...",
   "unknown-command.phrase-7": "Unknown command pattern."
+
+
+
 }

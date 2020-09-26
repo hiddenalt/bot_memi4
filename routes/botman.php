@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BotManController;
+use App\Http\Middleware\CheckUpForPermissionOrSkip;
 use App\Http\Middleware\RegisterConversation;
 use BotMan\BotMan\BotMan;
 use BotMan\Drivers\VK\VkCommunityCallbackDriver;
@@ -26,7 +27,7 @@ $botman->middleware->received(new RegisterConversation());
 // Menu
 // TODO: improve patterns for cancelling the conversations (see translation files)
 $botman->hears(
-    __("pattern.cancel-conversation", [".*(cancel|back)"]),
+    __("pattern.cancel-conversation", [".*(cancel)"]),
     BotManController::class . "@sendMenu"
 )->stopsConversation();
 
@@ -48,5 +49,12 @@ $botman->hears(
     BotManController::class . "@startCreateMemeConversation"
 );
 
+// Admin menu
+$botman->group(['middleware' => new CheckUpForPermissionOrSkip("show admin menu")], function(BotMan $bot) {
+    $bot->hears(
+        __("pattern.admin-menu"),
+        BotManController::class . "@adminMenu"
+    );
+});
 
 $botman->fallback('App\Http\Controllers\FallbackController@index');

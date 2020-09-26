@@ -29,7 +29,7 @@ class CreateWordbankTable extends Migration
                 "pending",
                 "denied",
                 "accepted"
-            ]);
+            ])->default("accepted");
             $table->timestamps();
 
             $table->foreign('bank_id')->references('id')->on('banks_list')->onDelete('cascade');

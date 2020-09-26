@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
+use App\System\ApplicationRoles;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -26,8 +27,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // Laravel Passport routes
         Passport::routes(function($router){
             $router->forAccessTokens();
+        });
+
+        // Allow every permission to superadmin
+        // Remove if unnecessary and define custom permissions in console.php
+        // Used only with auth()!
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole(ApplicationRoles::SUPERADMIN) ? true : null;
         });
     }
 }
