@@ -3,16 +3,11 @@
 namespace App\Conversations;
 
 use App\Bot\Image\Meme\WhenMeme;
-use App\TempLink;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 use BotMan\BotMan\Messages\Outgoing\Question;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 use Intervention\Image\ImageManagerStatic;
 
 /**
@@ -99,6 +94,6 @@ class CreateWhenMemeConversation extends Conversation {
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);
-        $this->bot->startConversation(new CreateMemeConversation());
+        $this->bot->startConversation(new CreateMemeConversation(null));
     }
 }

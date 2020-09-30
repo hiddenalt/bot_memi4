@@ -75,12 +75,13 @@ class CreateDemotivationalPosterMemeConversation extends Conversation
             ->setSubtitle($this->subtitle)
             ->draw();
 
+
         $url = $meme->makeTempLink();
         $message = OutgoingMessage::create(__("create-demotivational-poster-meme-conversation.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);
-        $this->bot->startConversation(new CreateMemeConversation());
+        $this->bot->startConversation(new CreateMemeConversation(null));
     }
 
     /**

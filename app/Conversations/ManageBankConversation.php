@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ManageBankConversation extends BackFunctionConversation
 {
@@ -62,9 +63,7 @@ class ManageBankConversation extends BackFunctionConversation
         $conversation_title = $conversation->title;
 
         // Slice description
-        if(mb_strlen($description) > self::DESCRIPTION_MAX_CHARS)
-            $description = mb_substr($description, 0, self::DESCRIPTION_MAX_CHARS - 3, 'UTF-8') . '...';
-
+        $description = Str::limit($description, self::DESCRIPTION_MAX_CHARS);
 
 
         $question = Question::create(__('manage-bank.info', [
@@ -101,6 +100,10 @@ class ManageBankConversation extends BackFunctionConversation
                         $this->showMenu();
                         break;
 
+                    case "edit":
+                        $this->askEditTitle();
+                        break;
+
                     case "back":
                         $this->moveBack();
                         break;
@@ -112,6 +115,62 @@ class ManageBankConversation extends BackFunctionConversation
             }
         });
 
+    }
+
+    /**
+     * Ask the new bank title
+     * @return ManageBankConversation
+     * @throws Exception
+     */
+    public function askEditTitle(){
+        $bank = $this->getBank();
+
+        $question = Question::create(__("manage-bank.enter-new-title", [
+            "title" => $bank->title
+        ]));
+
+        return $this->ask($question, function (Answer $answer) use($bank) {
+
+            $text = trim($answer->getMessage()->getText());
+
+            if($text == ""){
+                $this->askEditTitle();
+            } else {
+                $bank->title = $text;
+                $bank->save();
+
+                $this->askEditBankDescription();
+            }
+
+        });
+    }
+
+    /**
+     * Ask the new bank description
+     * @return ManageBankConversation
+     * @throws Exception
+     */
+    public function askEditBankDescription(){
+        $bank = $this->getBank();
+
+        $question = Question::create(__("manage-bank.enter-new-description", [
+            "description" => $bank->description
+        ]));
+
+        return $this->ask($question, function (Answer $answer) use($bank) {
+
+            $text = trim($answer->getMessage()->getText());
+            if($text == ""){
+                $this->askEditBankDescription();
+            } else {
+                $bank->description = $text;
+                $bank->save();
+
+                $this->say(__("manage-bank.rename-done"));
+                $this->showMenu();
+            }
+
+        });
     }
 
     /**
