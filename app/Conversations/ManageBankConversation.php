@@ -3,17 +3,19 @@
 namespace App\Conversations;
 
 use App\Bank;
+use App\Bot\ConversationHelper\ConversationProxy;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ManageBankConversation extends BackFunctionConversation
 {
+    use ConversationProxy;
+
     // Max chars for bank's description
     const DESCRIPTION_MAX_CHARS = 300;
 
@@ -31,17 +33,21 @@ class ManageBankConversation extends BackFunctionConversation
     }
 
     /**
+     * If got, respond the exception
+     * @param callable $try
+     */
+    public function tryOrSayBankError(callable $try){
+        $this->tryOrSayErrorAndMoveBack($try, __("manage-bank.error-exception"));
+    }
+
+    /**
      * Start the conversation.
      */
     public function run()
     {
-        try {
+        $this->tryOrSayBankError(function(){
             $this->showMenu();
-        } catch (Exception $e) {
-            $this->say($e->getMessage());
-            Log::error(self::class . ": conversation error: " . $e->getMessage() . ", trace:\n" . $e->getTraceAsString());
-            $this->moveBack();
-        }
+        });
     }
 
     // TODO: buttons: "Edit config/properties", "Delete", "Teach a text", "Push an image"
@@ -79,42 +85,54 @@ class ManageBankConversation extends BackFunctionConversation
                 Button::create(__('manage-bank.see-full-description'))->value('see-full-description'),
                 Button::create(__('manage-bank.edit'))->value('edit'),
                 Button::create(__('manage-bank.delete'))->value('delete'),
-                Button::create(__('manage-bank.teach-a-text'))->value('teach-a-text'),
+                Button::create(__('manage-bank.learn-a-text'))->value('learn-a-text'),
                 Button::create(__('manage-bank.push-an-image'))->value('push-an-image'),
                 Button::create(__('manage-bank.refresh-info'))->value('refresh-info'),
                 Button::create(__('menu.back'))->value('back')
             ]);
 
         return $this->ask($question, function (Answer $answer) use($bank) {
-            if ($answer->isInteractiveMessageReply()) {
-                $selectedValue = $answer->getValue();
-
-                switch($selectedValue){
-
-                    case "see-full-description":
-                        $this->say($bank->description);
-                        $this->showMenu();
-                        break;
-
-                    case "refresh-info":
-                        $this->showMenu();
-                        break;
-
-                    case "edit":
-                        $this->askEditTitle();
-                        break;
-
-                    case "back":
-                        $this->moveBack();
-                        break;
-
-                }
-
-            } else {
-//                $message = $answer->getText();
-            }
+            $this->tryOrSayBankError(function() use($answer){
+                $this->respondMenu($answer);
+            });
         });
+    }
 
+    /**
+     * @param Answer $answer
+     * @throws Exception
+     */
+    public function respondMenu(Answer $answer){
+        $bank = $this->getBank();
+
+        if ($answer->isInteractiveMessageReply()) {
+            $selectedValue = $answer->getValue();
+
+            switch($selectedValue){
+
+                case "see-full-description":
+                    $this->say($bank->description);
+                    $this->showMenu();
+                    break;
+
+                case "refresh-info":
+                    $this->showMenu();
+                    break;
+
+                case "edit":
+                    $this->askEditTitle();
+                    break;
+
+                case "back":
+                    $this->moveBack();
+                    break;
+
+            }
+        } else {
+//            $message = $answer->getText();
+            $this->say(__("unknown-option-selected"));
+            $this->showMenu();
+        }
     }
 
     /**
@@ -130,19 +148,29 @@ class ManageBankConversation extends BackFunctionConversation
         ]));
 
         return $this->ask($question, function (Answer $answer) use($bank) {
-
-            $text = trim($answer->getMessage()->getText());
-
-            if($text == ""){
-                $this->askEditTitle();
-            } else {
-                $bank->title = $text;
-                $bank->save();
-
-                $this->askEditBankDescription();
-            }
-
+            $this->tryOrSayBankError(function() use($answer){
+                $this->respondEditTitle($answer);
+            });
         });
+    }
+
+    /**
+     * @param Answer $answer
+     * @throws Exception
+     */
+    public function respondEditTitle(Answer $answer){
+        $bank = $this->getBank();
+
+        $text = trim($answer->getMessage()->getText());
+
+        if($text == ""){
+            $this->askEditTitle();
+        } else {
+            $bank->title = $text;
+            $bank->save();
+
+            $this->askEditBankDescription();
+        }
     }
 
     /**
@@ -158,19 +186,29 @@ class ManageBankConversation extends BackFunctionConversation
         ]));
 
         return $this->ask($question, function (Answer $answer) use($bank) {
-
-            $text = trim($answer->getMessage()->getText());
-            if($text == ""){
-                $this->askEditBankDescription();
-            } else {
-                $bank->description = $text;
-                $bank->save();
-
-                $this->say(__("manage-bank.rename-done"));
-                $this->showMenu();
-            }
-
+            $this->tryOrSayBankError(function() use($answer){
+                $this->respondEditBankDescription($answer);
+            });
         });
+    }
+
+    /**
+     * @param Answer $answer
+     * @throws Exception
+     */
+    public function respondEditBankDescription(Answer $answer){
+        $bank = $this->getBank();
+
+        $text = trim($answer->getMessage()->getText());
+        if($text == ""){
+            $this->askEditBankDescription();
+        } else {
+            $bank->description = $text;
+            $bank->save();
+
+            $this->say(__("manage-bank.rename-done"));
+            $this->showMenu();
+        }
     }
 
     /**
