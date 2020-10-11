@@ -73,6 +73,8 @@
 
   "admin-menu.manage-banks": "Manage content banks",
 
+  "chain.generic-word": "generic",
+
   "manage-bank.back": "<< Back",
   "manage-bank.info": "ℹ️ Bank information.\n\n\uD83C\uDD94 ID: :Id\n\uD83D\uDCAC Title: :Title\n\uD83D\uDCC4 Description: :Description\n\uD83D\uDD52 Created: :Created_at\n\uD83D\uDD52 Updated: :Updated_at\n\uD83D\uDC64 Conversation ID: :Conversation_id\n\uD83D\uDC64 Conversation title: :conversation_title",
   "manage-bank.not-found-error": "Bank was internally deleted or moved (not found).",
@@ -88,6 +90,9 @@
   "manage-bank.enter-new-description": "Enter new description:\n(current description: :Description)",
   "manage-bank.rename-done": "Done.",
   "manage-bank.error-exception": "Sorry, but something went wrong while managing the bank: ",
+
+  "chaining-bank.hint": "chaining-bank.hint",
+  "chaining-bank.random-menu.random-result": "Generated pairs:\n:list",
 
   "unknown-option-selected": "Unknown option selected.",
 

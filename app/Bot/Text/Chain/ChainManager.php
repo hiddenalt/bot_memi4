@@ -5,7 +5,10 @@ namespace App\Bot\Text;
 
 
 use App\Bank;
+use App\Bot\Text\Chain\DraftChain;
 use App\Chain;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ChainManager {
 
@@ -111,6 +114,62 @@ class ChainManager {
                 "target" => $target,
                 "next" => $next
             ]);
+        }
+    }
+
+
+    /**
+     * @return DraftChain
+     * @throws Exception
+     */
+    public function pickRandomUnregisteredPair(){
+        // TODO: SQL request optimization
+
+        try {
+            DB::statement("SET @rows = 0");
+            DB::statement("SET @bank_ids = ?", [implode(",", $this->targetBanks)]);
+            $pair = DB::select('
+                SELECT
+                    *, (@rows := @rows + 1) AS rows_count
+                FROM
+                    (
+                        SELECT *, (@rows := @rows + 1) AS id
+                        FROM
+                        (
+                            SELECT
+                                id as target_id,
+                                text as target_text
+                            FROM
+                                wordbank AS tbl
+                            WHERE
+                                FIND_IN_SET(tbl.bank_id, @bank_ids)
+                            ORDER BY tbl.id
+                        ) AS res1,
+                        (
+                            SELECT
+                                id as next_id,
+                                text as next_text
+                            FROM
+                                wordbank AS tbl
+                            WHERE
+                                FIND_IN_SET(tbl.bank_id, @bank_ids)
+                            ORDER BY tbl.id
+                        ) AS res2
+                        WHERE
+                            CONCAT(res1.target_id, " ", res2.next_id) NOT IN(SELECT CONCAT(target, " ", next) FROM markov_chain)
+                    ) unexisted_pairs
+                
+                WHERE
+                    unexisted_pairs.id >= (SELECT RAND() * MAX(@rows))
+                ORDER BY unexisted_pairs.next_id
+                LIMIT 1
+            ');
+            if(count($pair) <= 0 || !isset($pair[0]) || !isset($pair[0]->target_id) || !isset($pair[0]->next_id))
+                return null;
+
+            return new DraftChain((int)$pair[0]->target_id, (int)$pair[0]->next_id);
+        } catch (Exception $e) {
+            throw $e;
         }
     }
 

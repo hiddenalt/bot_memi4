@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Bot\ConversationHelper;
+namespace App\Bot\Conversation;
 
 
 use Closure;

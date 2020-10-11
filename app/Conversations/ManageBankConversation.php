@@ -3,7 +3,8 @@
 namespace App\Conversations;
 
 use App\Bank;
-use App\Bot\ConversationHelper\ConversationProxy;
+use App\Bot\Conversation\ConversationProxy;
+use App\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -63,7 +64,7 @@ class ManageBankConversation extends BackFunctionConversation
         // Data
         $title = $bank->title;
         $description = $bank->description;
-        /** @var \App\Conversation $conversation */
+        /** @var Conversation $conversation */
         $conversation = $bank->conversation()->first();
         $conversation_id = $conversation->id;
         $conversation_title = $conversation->title;
@@ -109,6 +110,10 @@ class ManageBankConversation extends BackFunctionConversation
             $selectedValue = $answer->getValue();
 
             switch($selectedValue){
+
+                case "learn-a-text":
+                    $this->bot->startConversation(new BankChainingConversation($this, $this->bankID));
+                    break;
 
                 case "see-full-description":
                     $this->say($bank->description);
