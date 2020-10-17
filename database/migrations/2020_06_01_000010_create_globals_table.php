@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateGlobalsTable extends Migration
 {
@@ -15,7 +15,7 @@ class CreateGlobalsTable extends Migration
     {
         Schema::create('globals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("k", 255)->unique();
+            $table->string("k", 191)->unique();
             $table->longText("v");
             $table->timestamps();
         });

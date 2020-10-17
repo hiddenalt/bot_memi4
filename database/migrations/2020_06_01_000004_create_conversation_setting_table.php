@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BotSettings;
+use App\Language;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +18,8 @@ class CreateConversationSettingTable extends Migration
         Schema::create('conversation_setting', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger("conversation_id")->unsigned();
-            $table->enum('type', \App\Http\Controllers\BotSettings::getSettingsTypes());
+            $table->enum('type', BotSettings::getSettingsTypes());
+            $table->enum('language', (new Language())->getAvailableLanguages(true));
             $table->string("value")->default(0);
             $table->timestamps();
 
