@@ -16,7 +16,6 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use BotMan\BotMan\Messages\Matcher;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class ConversationMiddleware implements Received, Captured, Matching, Heard, Sending
 {
@@ -96,7 +95,6 @@ class ConversationMiddleware implements Received, Captured, Matching, Heard, Sen
      */
     public function matching(IncomingMessage $message, $pattern, $regexMatched)
     {
-        LOG::info($pattern);
         return $regexMatched
             // Native-language patterns matcher
             // TODO: native-language matching optimization
