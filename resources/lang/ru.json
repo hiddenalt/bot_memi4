@@ -1,1 +1,115 @@
-{}
+{
+  "greetings": "Хе-хей, привет! Рад, что мне написали.",
+
+  "pattern.cancel-conversation": ".*отмена",
+  "pattern.menu-start": ".*(начать|меню|главное меню|главная|менюшка|менюха|главное_меню|main_menu)",
+  "pattern.create-meme-conversation": ".*((создать|запилить|сделать|разработать|нарисовать|построить|скрафтить|собрать|конструктор).*(мема|мемов|мемы|мем|пикчи|картинки|изображения)|create_meme)",
+  "pattern.generate-meme-conversation": ".*((сгенерировать|сгенерить|вообразить|аи|новый|генерить).*(мема|мемов|мемы|мем|пикчи|картинки|изображения)|generate_meme)",
+  "pattern.admin-menu": ".*(админ|админка|управление|пу|меню админа|модерка|модерация|меню модератора|модератор|администратор)",
+  "pattern.language-selection": ".*(сменить язык|язык|локализация|смена языка|изменить язык|выбор языка)",
+
+  "pagination.previous": "<< Назад",
+  "pagination.next": "Вперёд >>",
+
+  "menu.title": "Главное меню:",
+  "menu.back": "Назад",
+
+  "menu.options.generate-meme": "☺ Сгенерировать мем",
+  "menu.options.create-meme": "\uD83D\uDD8C Создать мем",
+  "menu.options.settings": "⚙ Настройки",
+
+  "when-meme.title": "Мем 'Когда...'",
+  "4-frame-comics-meme.title": "Четырёхблочный мем-комикс",
+  "demotivational-poster-meme.title": "Демотиватор",
+
+  "create-meme-conversation.ask-meme-type": "Выберите мем, который будет создан:",
+  "create-meme-conversation.unsupported-meme": "На текущий момент такие мемы я не умею делать, выбери другую категорию.",
+
+  "create-when-meme-conversation.step-1": "[Шаг 1/3]\nПришли картинку мема.",
+  "create-when-meme-conversation.step-2": "[Шаг 2/3]\nВведи верхний текст мема.",
+  "create-when-meme-conversation.step-3": "[Шаг 3/3]\nВведи нижний текст мема.",
+  "create-when-meme-conversation.done": "Готово:",
+
+  "create-comics-meme-conversation.step-1": "[Шаг 1/8]\nПришли картинку 1го блока.",
+  "create-comics-meme-conversation.step-2": "[Шаг 2/8]\nПришли картинку 2го блока.",
+  "create-comics-meme-conversation.step-3": "[Шаг 3/8]\nПришли картинку 3го блока.",
+  "create-comics-meme-conversation.step-4": "[Шаг 4/8]\nПришли картинку 4го блока.",
+  "create-comics-meme-conversation.step-5": "[Шаг 5/8]\nВведи текст 1го блока.",
+  "create-comics-meme-conversation.step-6": "[Шаг 6/8]\nВведи текст 2го блока.",
+  "create-comics-meme-conversation.step-7": "[Шаг 7/8]\nВведи текст 3го блока.",
+  "create-comics-meme-conversation.step-8": "[Шаг 8/8]\nВведи текст 4го блока.",
+  "create-comics-meme-conversation.done": "Готово:",
+
+  "create-demotivational-poster-meme-conversation.step-1": "[Шаг 1/3]\nПришли картинку мема.",
+  "create-demotivational-poster-meme-conversation.step-2": "[Шаг 2/3]\nВведи заголовок мема.",
+  "create-demotivational-poster-meme-conversation.step-3": "[Шаг 3/3]\nВведи подзаголовок мема.",
+  "create-demotivational-poster-meme-conversation.done": "Готово:",
+
+  "generate-meme-conversation.ask-meme-type": "Выбери мем, который будет сгенерирован:",
+  "generate-meme-conversation.unsupported-meme": "На текущий момент такие мемы я не умею генерировать, выберите другую категорию.",
+
+
+
+
+
+  "settings-types.font.title": "Шрифт текста",
+  "settings-types.font.description": "Шрифт текста в мемах (применяется только для этой беседы).",
+
+  "settings-types.color.title": "Цвет текста",
+  "settings-types.color.description": "Цвет текста в мемах (применяется только для этой беседы).",
+
+  "settings-types.shadow.color.title": "Цвет тени",
+  "settings-types.shadow.color.description": "Цвет тени текста в мемах (применяется только для этой беседы).",
+
+  "settings-types.demotivational.bg.color.title": "Цвет фона демотиватора",
+  "settings-types.demotivational.bg.color.description": "Настройка цвета фона мема-демотиватора.",
+
+  "settings-types.demotivational.border.color.title": "Цвет рамки демотиватора",
+  "settings-types.demotivational.border.color.description": "Настройка цвета рамки мема-демотиватора.",
+
+  "settings-types.show-author.title": "Отметить меня",
+  "settings-types.show-author.description": "Указать платформу чата, ID, имя и фамилию (или просто ник) текущего пользователя в описании мема. \nПримечание: отметка применима только к сгенерированным мемам, созданные пользователями мемы не находятся в публичном доступе.",
+
+
+  "chain.generic-word": "generic",
+
+  "manage-bank.back": "<< Назад",
+  "manage-bank.info": "ℹ️ Информация о банке (дата-сете).\n\n\uD83C\uDD94 ID: :Id\n\uD83D\uDCAC Наименование: :Title\n\uD83D\uDCC4 Описание: :Description\n\uD83D\uDD52 Создано: :Created_at\n\uD83D\uDD52 Обновлено: :Updated_at\n\uD83D\uDC64 ID чата: :Conversation_id\n\uD83D\uDC64 Наименование чата: :conversation_title",
+  "manage-bank.not-found-error": "Дата-сет был перемещен или удалён (не найден).",
+
+  "manage-bank.see-full-description": "\uD83D\uDCC4 Полное описание",
+  "manage-bank.edit": "✏ Редактировать",
+  "manage-bank.delete": "\uD83D\uDDD1 Удалить",
+  "manage-bank.learn-a-text": "\uD83D\uDCDC Обучиться словам",
+  "manage-bank.push-an-image": "\uD83C\uDF05 Добавить картинку",
+  "manage-bank.refresh-info": "\uD83D\uDD01 Обновить",
+
+  "manage-bank.enter-new-title": "Введи новое наименование:\n(текущее: :Title)",
+  "manage-bank.enter-new-description": "Введи новое описание:\n(текущее: :Description)",
+  "manage-bank.rename-done": "Готово.",
+  "manage-bank.error-exception": "Что-то пошло не так: ",
+
+  "chaining-bank.random-menu.random-result": "Созданные пары слов:\n:list",
+
+  "language.selection-empty": "Нет доступных языков.",
+  "language.hint": "Выбери язык:",
+  "language.selection.previous": "<<",
+  "language.selection.next": ">>",
+  "language.selection.done": "Текущий язык был выставлен на: :LOCALE",
+
+  "language.selection-error": "Текущий язык недоступен: по-умолчанию будет использован английский язык. Введи 'lang' для просмотра доступных языков.",
+  "unknown-option-selected": "Неизвестная опция была выбрана.",
+  "unexpected-error": "Что-то пошло не так.",
+
+  "unknown-command.phrase-type-menu": "\nВведи 'меню' для просмотра списка доступных команд.",
+  "unknown-command.phrase-1": "Я тебя не понял \uD83D\uDE12",
+  "unknown-command.phrase-2": "Не могу найти подходящий ответ на твоё сообщение \uD83D\uDE12",
+  "unknown-command.phrase-3": "Неизвестная команда.",
+  "unknown-command.phrase-4": "Ну... звучит неплохо, но я тебя не понял.",
+  "unknown-command.phrase-5": "[КОМАНДА НЕ НАЙДЕНА]",
+  "unknown-command.phrase-6": "Воу... Мне даже нечего сказать...",
+  "unknown-command.phrase-7": "Неверный вызов команды."
+
+
+
+}
