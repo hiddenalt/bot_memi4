@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 
 class Language {
     const DEFAULT_LOCALE = "en";
@@ -16,7 +15,6 @@ class Language {
      */
     public function getAvailableLanguages($onlyCodes = false){
         $available = [];
-        Log::info(print_r(config(self::LOCALES_LIST_OPTION), true));
         foreach (config(self::LOCALES_LIST_OPTION) as $locale => $label){
             if($this->isAvailable($locale)){
                 if($onlyCodes){
