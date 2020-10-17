@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Language;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateConversationsTable extends Migration
 {
@@ -16,6 +17,7 @@ class CreateConversationsTable extends Migration
         Schema::create('conversations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string("conversation_id");
+            $table->enum('language', (new Language())->getAvailableLanguages(true));
             $table->string("local_id");
 
             // Дельта значения в таблице `lastseen`
