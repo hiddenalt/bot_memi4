@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Conversations\AdminMenuConversation;
 use App\Conversations\CreateMemeConversation;
 use App\Conversations\GenerateMemeConversation;
+use App\Conversations\SelectLanguageConversation;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -77,6 +78,14 @@ class BotManController extends Controller
      */
     public function adminMenu(BotMan $bot){
         $bot->startConversation(new AdminMenuConversation(null));
+    }
+
+    /**
+     * Show select language options
+     * @param BotMan $bot
+     */
+    public function startSelectLanguageConversation(BotMan $bot){
+        $bot->startConversation(new SelectLanguageConversation());
     }
 
     /**

@@ -30,6 +30,12 @@ class Conversation extends Model
         return $this->belongsToMany('App\User', 'user_has_conversation')->first();
     }
 
+
+    public function setDefaultLocale(string $langCode){
+        $this->language = $langCode;
+        $this->save();
+    }
+
     // TODO: get native conversation name
 
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Conversation;
+use App\Conversations\SelectLanguageConversation;
+use App\Language;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Exceptions\Base\BotManException;
 use BotMan\BotMan\Interfaces\Middleware\Captured;
@@ -9,10 +12,13 @@ use BotMan\BotMan\Interfaces\Middleware\Heard;
 use BotMan\BotMan\Interfaces\Middleware\Matching;
 use BotMan\BotMan\Interfaces\Middleware\Received;
 use BotMan\BotMan\Interfaces\Middleware\Sending;
+use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
+use BotMan\BotMan\Messages\Matcher;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
-class RegisterConversation implements Received, Captured, Matching, Heard, Sending
+class ConversationMiddleware implements Received, Captured, Matching, Heard, Sending
 {
     /**
      * Handle a captured message.
@@ -40,16 +46,20 @@ class RegisterConversation implements Received, Captured, Matching, Heard, Sendi
      */
     public function received(IncomingMessage $message, $next, BotMan $bot)
     {
-        // TODO: better implementation
+        // TODO: optimize with models
 
         $conversation_id = $message->getConversationIdentifier();
         $recipient = $message->getRecipient();
+
+
 
         // Registering the conversation
         $exists = DB::table("conversations")->where([
             ["conversation_id", $conversation_id],
             ["local_id", $recipient]
         ])->exists();
+
+        $language = new Language();
 
         if(!$exists){
             DB::table("conversations")->insert([
@@ -61,8 +71,19 @@ class RegisterConversation implements Received, Captured, Matching, Heard, Sendi
                 ]
             ]);
 
+            // Set to default system language
+            $language->setLocale(Language::DEFAULT_LOCALE);
+
+            // Say hello and ask the preferred language
             $bot->say(__("greetings"), $recipient);
+            $bot->startConversation(new SelectLanguageConversation(), $recipient, $bot->getDriver()->getName());
+            return $next($message);
         }
+
+        // Set current locale
+        $conversation = Conversation::query()->where("conversation_id", $conversation_id)->first();
+        if(!$language->setLocale($conversation->language ?? Language::DEFAULT_LOCALE))
+            $bot->say(__("language.selection-error"), $recipient);
 
         return $next($message);
     }
@@ -75,7 +96,14 @@ class RegisterConversation implements Received, Captured, Matching, Heard, Sendi
      */
     public function matching(IncomingMessage $message, $pattern, $regexMatched)
     {
-        return $regexMatched;
+        LOG::info($pattern);
+        return $regexMatched
+            // Native-language patterns matcher
+            // TODO: native-language matching optimization
+            || (
+                preg_match("/%%%{{{(.+)}}}%%%/i", $pattern, $matches) &&
+                (new Matcher())->isPatternValid($message, new Answer(), __($matches[1]))
+            );
     }
 
     /**
