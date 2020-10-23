@@ -66,17 +66,17 @@ class CheckUpForPermissionOrSkip implements Received, Captured, Matching, Heard,
 
         /** @var Conversation $conversation */
         $conversation = Conversation::all()->where("conversation_id", $message->getConversationIdentifier())->first();
-
         if($conversation == null)
             return false;
 
         /** @var User $user */
         $user = $conversation->user();
-
-        if($user == null || (!$user->hasPermissionTo($this->permission) && !$user->isSuperAdmin()))
+        if($user == null || !($user->hasPermissionTo($this->permission) || $user->isSuperAdmin()))
             return false;
 
-        return $regexMatched;
+        return $regexMatched
+            // Use middleware to compare the external regexp from JSON files
+            || (new ConversationMiddleware())->matching($message, $pattern, $regexMatched);
     }
 
     /**
