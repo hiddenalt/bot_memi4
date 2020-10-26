@@ -85,22 +85,24 @@ class ChainManager {
             $currentWord = $source[$i] ?? "";
             $nextWord = $source[$i + 1] ?? "";
 
-            switch($i){
-                // Learn the pair
-                default:
-                    $this->learn($currentWord, $nextWord);
-                    break;
+            $regexp = "/^(.*[^.!?])([.!?]|!{3}|\?!|!\?)$/i";
+            preg_match($regexp, $currentWord, $currentWordMatches);
+            preg_match($regexp, $nextWord, $nextWordMatches);
 
+            switch($i){
                 // Define the end of the sentence
                 case $count - 1:
-                    preg_match("/^(.*[^.!?])([.!?]|!{3}|\?!|!\?)$/i", $currentWord, $matches);
-                    $this->learn($matches[1] ?? $currentWord, $matches[2] ?? "");
+                    $this->learn($currentWordMatches[1] ?? $currentWord, $currentWordMatches[2] ?? "");
+                    continue 2;
                     break;
 
                 // Define the start of the sentence
                 case 0:
-                    $this->learn("", $currentWord);
+                    $this->learn("", $currentWordMatches[1] ?? $currentWord);
+                    break;
             }
+            // Learn the pair
+            $this->learn($currentWordMatches[1] ?? $currentWord, $nextWordMatches[1] ?? $nextWord);
         }
     }
 

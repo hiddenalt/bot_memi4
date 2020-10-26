@@ -4,6 +4,8 @@ namespace App\Conversations;
 
 class BankChainListConversation extends BackFunctionConversation
 {
+    // TODO: BankChainListConversation!
+
     private int $bankId = 0;
 
     /**

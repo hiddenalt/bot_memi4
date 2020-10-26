@@ -75,9 +75,6 @@ class BankChainingConversation extends BackFunctionConversation
         });
     }
 
-
-    //TODO: menu "Random", "Learn from text", "Learn the pair" (ask separately target & next)
-
     /**
      * @param Answer $answer
      * @return BankChainingConversation|void
@@ -155,8 +152,7 @@ class BankChainingConversation extends BackFunctionConversation
                 if($answer->isInteractiveMessageReply() and $answer->getValue() == "back")
                     return $this->showMenu();
 
-                // Dot = end of sentence
-                $this->next = ($answer->getText() == ".") ? "" : $answer->getText();
+                $this->next = $answer->getText();
                 return $this->performLearningThePair();
             });
         });
