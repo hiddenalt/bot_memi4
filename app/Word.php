@@ -12,4 +12,6 @@ class Word extends Model
      * @var string
      */
     protected $table = 'wordbank';
+
+    protected $fillable = ["bank_id", "text", "type", "status"];
 }

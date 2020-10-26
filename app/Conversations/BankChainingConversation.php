@@ -80,24 +80,23 @@ class BankChainingConversation extends BackFunctionConversation
 
     /**
      * @param Answer $answer
-     * @return BankChainingConversation
+     * @return BankChainingConversation|void
      * @throws Exception
      */
     public function respondMenu(Answer $answer){
 
-        if(!$answer->isInteractiveMessageReply()){
+        if(!$answer->isInteractiveMessageReply())
             return $this->showMenu();
-        }
 
         switch($answer->getValue()){
             case "random-menu":
                 $this->showRandomMenu();
                 break;
             case "learn-from-text":
-
+                $this->askTextToLearn();
                 break;
             case "learn-the-pair":
-
+                $this->askTargetWordToLearn();
                 break;
             case "edit-chains":
                 $this->bot->startConversation(new BankChainListConversation($this, $this->bankId));
@@ -113,6 +112,114 @@ class BankChainingConversation extends BackFunctionConversation
         }
     }
 
+
+
+
+
+
+    public string $target = "";
+    public string $next = "";
+
+    /**
+     * Ask the first word in the pair to learn
+     * @return BankChainingConversation
+     */
+    public function askTargetWordToLearn(){
+        $question = Question::create(__('chaining-bank.learn-the-pair.type-target-word'))
+            ->addButtons([
+                Button::create(__('menu.back'))->value('back')
+            ]);
+
+        return $this->ask($question, function(Answer $answer){
+            if($answer->isInteractiveMessageReply() and $answer->getValue() == "back")
+                return $this->showMenu();
+
+            // Dot = new sentence
+            $this->target = ($answer->getText() == ".") ? "" : $answer->getText();
+            return $this->askNextWordToLearn();
+        });
+    }
+
+    /**
+     * Ask the second word in the pair to learn
+     * @return BankChainingConversation
+     */
+    public function askNextWordToLearn(){
+        $question = Question::create(__('chaining-bank.learn-the-pair.type-next-word'))
+            ->addButtons([
+                Button::create(__('menu.back'))->value('back')
+            ]);
+
+        return $this->ask($question, function(Answer $answer){
+            $this->tryOrSayBankError(function() use($answer){
+                if($answer->isInteractiveMessageReply() and $answer->getValue() == "back")
+                    return $this->showMenu();
+
+                // Dot = end of sentence
+                $this->next = ($answer->getText() == ".") ? "" : $answer->getText();
+                return $this->performLearningThePair();
+            });
+        });
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function performLearningThePair(){
+        $chainManager = new ChainManager([$this->getBank()]);
+        $chainManager->learn($this->target, $this->next);
+
+        $this->say(__('chaining-bank.learn-the-pair.success'));
+
+        // Loop asking the questions
+        return $this->askTargetWordToLearn();
+    }
+
+
+
+
+
+    /**
+     * @return BankChainingConversation
+     */
+    public function askTextToLearn(){
+        $question = Question::create(__("chaining-bank.learn-the-text.send-the-text"))
+            ->addButtons([
+                Button::create(__('menu.back'))->value('back')
+            ]);
+
+        return $this->ask($question, function(Answer $answer){
+            $this->tryOrSayBankError(function() use($answer){
+                $this->performTextToLearn($answer);
+            });
+        });
+    }
+
+    /**
+     * @param Answer $answer
+     * @return BankChainingConversation
+     * @throws Exception
+     */
+    public function performTextToLearn(Answer $answer){
+        if($answer->isInteractiveMessageReply() and $answer->getValue() == "back")
+            return $this->showMenu();
+
+        $chainManager = new ChainManager([$this->getBank()]);
+        $chainManager->learnText($answer->getText());
+
+        $this->say(__('chaining-bank.learn-the-text.success'));
+
+        // Loop asking the questions
+        return $this->askTextToLearn();
+    }
+
+
+
+
+    /**
+     * Show random pairing menu
+     * @return BankChainingConversation
+     */
     public function showRandomMenu(){
 
         $question = Question::create(__('chaining-bank.random-menu.hint'))
@@ -133,6 +240,7 @@ class BankChainingConversation extends BackFunctionConversation
     }
 
     /**
+     * Perform the user's response
      * @param Answer $answer
      * @return BankChainingConversation
      * @throws Exception
@@ -159,12 +267,15 @@ class BankChainingConversation extends BackFunctionConversation
     }
 
     /**
+     * Create random pairing
      * @param Answer $answer
      * @return BankChainingConversation
      * @throws Exception
      */
     public function performRandom(Answer $answer){
 
+        // Checkup for existence
+        $this->getBank();
 
         $times =
             ((int)$answer->getValue() > self::MAX_RANDOM_PAIRS_PER_REQUEST) ?
@@ -174,6 +285,7 @@ class BankChainingConversation extends BackFunctionConversation
 
         $response = [];
 
+        // TODO: prettify the response
         for($i = 0; $i < $times; $i++){
             /** @var DraftChain|null $pair */
             $pair = $chainManager->pickRandomUnregisteredPair();
@@ -188,7 +300,14 @@ class BankChainingConversation extends BackFunctionConversation
                 "target" => $pair->target,
                 "next" => $pair->next
             ]);
-            $response[] = "#". ($i + 1) . ": " . $chain->target()->first()->text . " " . $chain->next()->first()->text;
+
+            $target = $chain->target()->first();
+            $next = $chain->next()->first();
+
+            $targetText = ($target->text == "") ? __("new-sentence") : $target->text;
+            $nextText = ($next->text == "") ? __("end-of-sentence") : $next->text;
+
+            $response[] = "#". ($i + 1) . ": " . $targetText . " " . $nextText;
         }
 
         $this->bot->reply(__("chaining-bank.random-menu.random-result", [
@@ -196,6 +315,22 @@ class BankChainingConversation extends BackFunctionConversation
         ]));
         return $this->showRandomMenu();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Retrieves the bank instance (throws error if null)

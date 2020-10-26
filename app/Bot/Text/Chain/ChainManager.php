@@ -7,6 +7,7 @@ namespace App\Bot\Text;
 use App\Bank;
 use App\Bot\Text\Chain\DraftChain;
 use App\Chain;
+use App\Word;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -67,6 +68,7 @@ class ChainManager {
      */
     public function learnFromString(string $sourceText, string $delimiter = self::SPACE_DELIMITER){
         $sourceTextAsArray = explode($delimiter, $sourceText);
+
         $this->learnFromArray($sourceTextAsArray);
     }
 
@@ -75,10 +77,13 @@ class ChainManager {
      * @param array $source
      */
     public function learnFromArray(array $source){
+
+        // TODO: optimize SQL request
+
         $count = count($source);
         for($i = 0; $i < $count; $i++){
-            $currentWord = $sourceTextAsArray[0] ?? "";
-            $nextWord = $sourceTextAsArray[$i] ?? "";
+            $currentWord = $source[$i] ?? "";
+            $nextWord = $source[$i + 1] ?? "";
 
             switch($i){
                 // Learn the pair
@@ -88,7 +93,8 @@ class ChainManager {
 
                 // Define the end of the sentence
                 case $count - 1:
-                    $this->learn($currentWord, "");
+                    preg_match("/^(.*[^.!?])([.!?]|!{3}|\?!|!\?)$/i", $currentWord, $matches);
+                    $this->learn($matches[1] ?? $currentWord, $matches[2] ?? "");
                     break;
 
                 // Define the start of the sentence
@@ -109,10 +115,20 @@ class ChainManager {
 
             // TODO: log learning, "restore" function
 
+            $targetModel = Word::query()->firstOrCreate([
+                "bank_id" => $bank->id,
+                "text" => $target
+            ]);
+
+            $nextModel = Word::query()->firstOrCreate([
+                "bank_id" => $bank->id,
+                "text" => $next
+            ]);
+
             Chain::query()->firstOrCreate([
                 "bank_id" => $bank->id,
-                "target" => $target,
-                "next" => $next
+                "target" => $targetModel->id,
+                "next" => $nextModel->id
             ]);
         }
     }
