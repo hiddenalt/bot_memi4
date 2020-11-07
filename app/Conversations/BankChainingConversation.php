@@ -2,8 +2,8 @@
 
 namespace App\Conversations;
 
+use App\Bot\Bank\Text\Chain\ChainManager;
 use App\Bot\Text\Chain\DraftChain;
-use App\Bot\Text\ChainManager;
 use App\Chain;
 use App\Conversations\Type\BankConversation;
 use BotMan\BotMan\Messages\Incoming\Answer;

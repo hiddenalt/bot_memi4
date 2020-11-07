@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Bot\Text;
+namespace App\Bot\Bank\Text\Chain;
 
 
 use App\Bank;
