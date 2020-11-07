@@ -14,6 +14,8 @@ class Bank extends Model
      */
     protected $table = 'banks_list';
 
+    protected $fillable = ["id"];
+
     /**
      * Get the words of the current bank.
      */

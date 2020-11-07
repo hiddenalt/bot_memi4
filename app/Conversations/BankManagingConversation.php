@@ -2,60 +2,23 @@
 
 namespace App\Conversations;
 
-use App\Bank;
-use App\Bot\Conversation\ConversationProxy;
 use App\Conversation;
+use App\Conversations\Type\BankConversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ManageBankConversation extends BackFunctionConversation
+class BankManagingConversation extends BankConversation
 {
-    use ConversationProxy;
 
     // Max chars for bank's description
     const DESCRIPTION_MAX_CHARS = 300;
 
-
-    public int $bankID = 0;
-
-    /**
-     * ManageBankConversation constructor.
-     * @param $previousConversation
-     * @param int $bankID
-     */
-    public function __construct($previousConversation, int $bankID) {
-        parent::__construct($previousConversation);
-        $this->bankID = $bankID;
-    }
-
-    /**
-     * If got, respond the exception
-     * @param callable $try
-     */
-    public function tryOrSayBankError(callable $try){
-        $this->tryOrSayErrorAndMoveBack($try, __("manage-bank.error-exception"));
-    }
-
-    /**
-     * Start the conversation.
-     */
-    public function run()
-    {
-        $this->tryOrSayBankError(function(){
-            $this->showMenu();
-        });
-    }
-
-    // TODO: buttons: "Edit config/properties", "Delete", "Teach a text", "Push an image"
-
     /**
      * Show main menu
-     * @return ManageBankConversation
+     * @return BankManagingConversation
      * @throws Exception
      */
     public function showMenu(){
@@ -76,7 +39,7 @@ class ManageBankConversation extends BackFunctionConversation
         $question = Question::create(__('manage-bank.info', [
             "title" => $title,
             "description" => $description,
-            "id" => $this->bankID,
+            "id" => $this->bankId,
             "created_at" => $bank->created_at,
             "updated_at" => $bank->updated_at,
             "conversation_id" => $conversation_id,
@@ -112,7 +75,7 @@ class ManageBankConversation extends BackFunctionConversation
             switch($selectedValue){
 
                 case "learn-a-text":
-                    $this->bot->startConversation(new BankChainingConversation($this, $this->bankID));
+                    $this->bot->startConversation(new BankChainingConversation($this, $this->bankId));
                     break;
 
                 case "see-full-description":
@@ -122,6 +85,10 @@ class ManageBankConversation extends BackFunctionConversation
 
                 case "refresh-info":
                     $this->showMenu();
+                    break;
+
+                case "push-an-image":
+                    $this->bot->startConversation(new BankPicturesConversation($this, $this->bankId));
                     break;
 
                 case "edit":
@@ -142,7 +109,7 @@ class ManageBankConversation extends BackFunctionConversation
 
     /**
      * Ask the new bank title
-     * @return ManageBankConversation
+     * @return BankManagingConversation
      * @throws Exception
      */
     public function askEditTitle(){
@@ -180,7 +147,7 @@ class ManageBankConversation extends BackFunctionConversation
 
     /**
      * Ask the new bank description
-     * @return ManageBankConversation
+     * @return BankManagingConversation
      * @throws Exception
      */
     public function askEditBankDescription(){
@@ -216,17 +183,4 @@ class ManageBankConversation extends BackFunctionConversation
         }
     }
 
-    /**
-     * Retrieves the bank instance (throws error if null)
-     * @return Builder|Model|object|null
-     * @throws Exception
-     */
-    public function getBank(){
-        $bank = Bank::query()->where("id", $this->bankID)->first();
-
-        if($bank == null || $bank->conversation() == null)
-            throw new Exception(__("manage-bank.not-found-error"));
-
-        return $bank;
-    }
 }

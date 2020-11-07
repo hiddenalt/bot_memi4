@@ -98,7 +98,7 @@ class ShowBankListConversation extends BackFunctionConversation
                 preg_match('/bank-([0-9+])/', $selectedValue, $matches);
                 if(isset($matches[1])){
                     $id = $matches[1];
-                    $this->bot->startConversation(new ManageBankConversation($this, $id));
+                    $this->bot->startConversation(new BankManagingConversation($this, $id));
                     return;
                 }
 
@@ -129,7 +129,7 @@ class ShowBankListConversation extends BackFunctionConversation
                     "title" => $result->title,
                     "id" => $id
                 ]));
-                $this->bot->startConversation(new ManageBankConversation($this, $id));
+                $this->bot->startConversation(new BankManagingConversation($this, $id));
             }
         });
     }

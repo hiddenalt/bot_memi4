@@ -2,30 +2,13 @@
 
 namespace App\Conversations;
 
-class BankChainListConversation extends BackFunctionConversation
+use App\Conversations\Type\BankConversation;
+
+class BankChainListConversation extends BankConversation
 {
     // TODO: BankChainListConversation!
 
-    private int $bankId = 0;
-
-    /**
-     * BankChainListConversation constructor.
-     * @param $conversation
-     * @param int $bankId
-     */
-    public function __construct($conversation, int $bankId) {
-        parent::__construct($conversation);
-        $this->bankId = $bankId;
-    }
-
-
-    /**
-     * Start the conversation.
-     *
-     * @return mixed
-     */
-    public function run()
-    {
-        //
+    public function showMenu() {
+        // TODO: Implement showMenu() method.
     }
 }

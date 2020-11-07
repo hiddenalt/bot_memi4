@@ -12,7 +12,7 @@ return [
     | the cache.
     |
     */
-    'conversation_cache_time' => 40,
+    'conversation_cache_time' => 60 * 24 * 31,
 
     /*
     |--------------------------------------------------------------------------

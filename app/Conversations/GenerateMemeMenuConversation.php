@@ -10,7 +10,7 @@ use BotMan\BotMan\Messages\Outgoing\Question;
  * Class GenerateMemeConversation
  * @package App\Conversations
  */
-class GenerateMemeConversation extends BackFunctionConversation
+class GenerateMemeMenuConversation extends BackFunctionConversation
 {
 
     /**
@@ -57,7 +57,7 @@ class GenerateMemeConversation extends BackFunctionConversation
                         break;
 
                     case "when-meme":
-                        $this->sendWhenMeme();
+                        $this->bot->startConversation(new GenerateWhenMemeConversation($this));
                         break;
 
                     default:
@@ -70,11 +70,6 @@ class GenerateMemeConversation extends BackFunctionConversation
                 $this->askType();
             }
         });
-    }
-
-
-    public function sendWhenMeme(){
-        // TODO: generate meme
     }
 
 }

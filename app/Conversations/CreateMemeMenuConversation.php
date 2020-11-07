@@ -11,7 +11,7 @@ use BotMan\BotMan\Messages\Outgoing\Question;
  * @package App\Conversations
  *
  */
-class CreateMemeConversation extends BackFunctionConversation
+class CreateMemeMenuConversation extends BackFunctionConversation
 {
     /**
      * Start the conversation.
@@ -22,7 +22,7 @@ class CreateMemeConversation extends BackFunctionConversation
         $this->askType();
     }
 
-    public function askType(): CreateMemeConversation {
+    public function askType(): CreateMemeMenuConversation {
         //TODO: attachments (all types supported), voice mail, buttons
 
         $question = Question::create(__('create-meme-conversation.ask-meme-type'))

@@ -2,63 +2,24 @@
 
 namespace App\Conversations;
 
-use App\Bank;
-use App\Bot\Conversation\ConversationProxy;
 use App\Bot\Text\Chain\DraftChain;
 use App\Bot\Text\ChainManager;
 use App\Chain;
+use App\Conversations\Type\BankConversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
-class BankChainingConversation extends BackFunctionConversation
+class BankChainingConversation extends BankConversation
 {
-    use ConversationProxy;
-
     const MAX_RANDOM_PAIRS_PER_REQUEST = 10;
-
-    public int $bankId = 0;
-
-    /**
-     * BankChainingConversation constructor.
-     * @param $previousConversation
-     * @param int $bankId
-     */
-    public function __construct($previousConversation, int $bankId) {
-        parent::__construct($previousConversation);
-        $this->bankId = $bankId;
-    }
-
-    /**
-     * Start the conversation.
-     */
-    public function run()
-    {
-        $this->tryOrSayBankError(function(){
-            $this->showMenu();
-        });
-    }
-
-    /**
-     * If got, respond the exception
-     * @param callable $try
-     */
-    public function tryOrSayBankError(callable $try){
-        $this->tryOrSayErrorAndMoveBack($try, __("manage-bank.error-exception"));
-    }
 
     /**
      * @return BankChainingConversation
      * @throws Exception
      */
     public function showMenu(){
-//        $bank = $this->getBank();
-
-
-
         $question = Question::create(__('chaining-bank.hint'))
             ->addButtons([
                 Button::create(__('chaining-bank.random-menu'))->value('random-menu'),
@@ -68,10 +29,8 @@ class BankChainingConversation extends BackFunctionConversation
                 Button::create(__('menu.back'))->value('back')
             ]);
 
-        return $this->ask($question, function (Answer $answer) {
-            $this->tryOrSayBankError(function() use($answer){
-                $this->respondMenu($answer);
-            });
+        return $this->askOrSayBankError($question, function (Answer $answer) {
+            $this->respondMenu($answer);
         });
     }
 
@@ -133,7 +92,9 @@ class BankChainingConversation extends BackFunctionConversation
 
             // Dot = new sentence
             $this->target = ($answer->getText() == ".") ? "" : $answer->getText();
-            return $this->askNextWordToLearn();
+
+
+            $this->askNextWordToLearn();
         });
     }
 
@@ -147,14 +108,12 @@ class BankChainingConversation extends BackFunctionConversation
                 Button::create(__('menu.back'))->value('back')
             ]);
 
-        return $this->ask($question, function(Answer $answer){
-            $this->tryOrSayBankError(function() use($answer){
-                if($answer->isInteractiveMessageReply() and $answer->getValue() == "back")
-                    return $this->showMenu();
+        return $this->askOrSayBankError($question, function(Answer $answer){
+            if($answer->isInteractiveMessageReply() and $answer->getValue() == "back")
+                return $this->showMenu();
 
-                $this->next = $answer->getText();
-                return $this->performLearningThePair();
-            });
+            $this->next = $answer->getText();
+            return $this->performLearningThePair();
         });
     }
 
@@ -176,7 +135,7 @@ class BankChainingConversation extends BackFunctionConversation
 
 
     /**
-     * @return BankChainingConversation
+     * @return BankConversation
      */
     public function askTextToLearn(){
         $question = Question::create(__("chaining-bank.learn-the-text.send-the-text"))
@@ -184,16 +143,14 @@ class BankChainingConversation extends BackFunctionConversation
                 Button::create(__('menu.back'))->value('back')
             ]);
 
-        return $this->ask($question, function(Answer $answer){
-            $this->tryOrSayBankError(function() use($answer){
-                $this->performTextToLearn($answer);
-            });
+        return $this->askOrSayBankError($question, function(Answer $answer){
+            $this->performTextToLearn($answer);
         });
     }
 
     /**
      * @param Answer $answer
-     * @return BankChainingConversation
+     * @return BankConversation
      * @throws Exception
      */
     public function performTextToLearn(Answer $answer){
@@ -214,7 +171,6 @@ class BankChainingConversation extends BackFunctionConversation
 
     /**
      * Show random pairing menu
-     * @return BankChainingConversation
      */
     public function showRandomMenu(){
 
@@ -227,10 +183,8 @@ class BankChainingConversation extends BackFunctionConversation
                 Button::create(__('menu.back'))->value('back')
             ]);
 
-        return $this->ask($question, function (Answer $answer) {
-            $this->tryOrSayBankError(function() use($answer){
-                $this->performRandomMenu($answer);
-            });
+        return $this->askOrSayBankError($question, function (Answer $answer) {
+            $this->performRandomMenu($answer);
         });
 
     }
@@ -260,6 +214,7 @@ class BankChainingConversation extends BackFunctionConversation
                 break;
         }
 
+        return $this;
     }
 
     /**
@@ -311,37 +266,4 @@ class BankChainingConversation extends BackFunctionConversation
         ]));
         return $this->showRandomMenu();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Retrieves the bank instance (throws error if null)
-     * @return Builder|Model|object|null
-     * @throws Exception
-     */
-    public function getBank(){
-        $bank = Bank::query()->where("id", $this->bankId)->first();
-
-        if($bank == null || $bank->conversation() == null)
-            throw new Exception(__("manage-bank.not-found-error"));
-
-        return $bank;
-    }
-
-
-
 }

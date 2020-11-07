@@ -5,60 +5,26 @@ namespace App\Bot\Text;
 
 
 use App\Bank;
+use App\Bot\Bank\BankRelated;
 use App\Bot\Text\Chain\DraftChain;
 use App\Chain;
 use App\Word;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class ChainManager {
+class ChainManager extends BankRelated {
 
     const SPACE_DELIMITER = " ";
-
-    /** @var array $targetBanks */
-    private array $targetBanks = [];
-
-    /**
-     * TextTeach constructor.
-     * @param array $targetBanks
-     */
-    public function __construct(array $targetBanks) {
-        $this->targetBanks = $targetBanks;
-    }
-
-
-    /**
-     * Push target banks to be set
-     * @param array $banks
-     */
-    public function addTargetBanks(array $banks){
-        foreach($banks as $bank) $this->targetBanks[] = $bank;
-    }
-
-    /**
-     * Set the only bank to be set
-     * @param Bank $bank
-     */
-    public function setTargetBank(Bank $bank){
-        $this->targetBanks[0] = $bank;
-    }
-
-    /**
-     *
-     * @return array
-     */
-    public function getTargetBanks(){
-        return $this->targetBanks;
-    }
-
-
 
     /**
      * Default learn of text (delimiter = space)
      * @param string $sourceText
      */
     public function learnText(string $sourceText){
-        $this->learnFromString($sourceText, self::SPACE_DELIMITER);
+        $sentences = preg_split('/(?<=[.?!])\s+/', $sourceText, -1, PREG_SPLIT_NO_EMPTY);
+
+        foreach($sentences as $sentence)
+            $this->learnSentence($sentence, self::SPACE_DELIMITER);
     }
 
     /**
@@ -66,7 +32,7 @@ class ChainManager {
      * @param string $sourceText
      * @param string $delimiter
      */
-    public function learnFromString(string $sourceText, string $delimiter = self::SPACE_DELIMITER){
+    public function learnSentence(string $sourceText, string $delimiter = self::SPACE_DELIMITER){
         $sourceTextAsArray = explode($delimiter, $sourceText);
 
         $this->learnFromArray($sourceTextAsArray);

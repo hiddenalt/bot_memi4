@@ -29,10 +29,10 @@ trait ConversationProxy {
      * @param string $errorPrefix
      * @return mixed
      */
-    public function tryOrSayErrorAndMoveBack(callable $method, string $errorPrefix){
+    public function tryOrSayErrorAndMoveBack(callable $method, string $errorPrefix = ""){
         return $this->try($method, function(Exception $e) use($errorPrefix){
             // TODO: application debug settings property (true/false)
-            $this->say($errorPrefix . $e->getMessage());
+//            $this->say($errorPrefix . $e->getMessage());
             Log::error(self::class . ": conversation error: " . $e->getMessage() . ", trace:\n" . $e->getTraceAsString());
             $this->moveBack();
         });

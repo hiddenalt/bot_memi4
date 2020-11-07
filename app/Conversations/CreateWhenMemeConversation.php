@@ -94,6 +94,6 @@ class CreateWhenMemeConversation extends Conversation {
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);
-        $this->bot->startConversation(new CreateMemeConversation(null));
+        $this->bot->startConversation(new CreateMemeMenuConversation(null));
     }
 }

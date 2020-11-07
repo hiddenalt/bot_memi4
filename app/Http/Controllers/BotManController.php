@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Conversations\AdminMenuConversation;
-use App\Conversations\CreateMemeConversation;
-use App\Conversations\GenerateMemeConversation;
+use App\Conversations\CreateMemeMenuConversation;
+use App\Conversations\GenerateMemeMenuConversation;
 use App\Conversations\SelectLanguageConversation;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
@@ -61,7 +61,7 @@ class BotManController extends Controller
      * @param BotMan $bot
      */
     public function startGenerateMemeConversation(BotMan $bot){
-        $bot->startConversation(new GenerateMemeConversation(null));
+        $bot->startConversation(new GenerateMemeMenuConversation(null));
     }
 
     /**
@@ -69,7 +69,7 @@ class BotManController extends Controller
      * @param BotMan $bot
      */
     public function startCreateMemeConversation(BotMan $bot){
-        $bot->startConversation(new CreateMemeConversation(null));
+        $bot->startConversation(new CreateMemeMenuConversation(null));
     }
 
     /**
