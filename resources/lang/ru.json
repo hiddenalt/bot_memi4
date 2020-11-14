@@ -46,8 +46,14 @@
   "create-demotivational-poster-meme-conversation.done": "Готово:",
 
   "generate-meme-conversation.ask-meme-type": "Выбери мем, который будет сгенерирован:",
+  "generate-meme.hint": "Меню генерации мема:",
+  "generate-meme.execute": "\uD83D\uDE03 Сгенерировать новый мем",
+  "generate-meme.edit-bank-list": "✏️Изменить список дата-паков",
+  "generate-meme-conversation.generating-error": "Ошибка генерации мема.",
   "generate-meme-conversation.unsupported-meme": "На текущий момент такие мемы я не умею генерировать, выберите другую категорию.",
+  "generate-meme-conversation.unknown-command": "Такого пункта меню я не знаю.",
 
+  "generate-meme.regexp.when-word": "Когда",
 
 
 
@@ -74,8 +80,8 @@
   "chain.generic-word": "generic",
 
   "manage-bank.back": "<< Назад",
-  "manage-bank.info": "ℹ️ Информация о банке (дата-сете).\n\n\uD83C\uDD94 ID: :Id\n\uD83D\uDCAC Наименование: :Title\n\uD83D\uDCC4 Описание: :Description\n\uD83D\uDD52 Создано: :Created_at\n\uD83D\uDD52 Обновлено: :Updated_at\n\uD83D\uDC64 ID чата: :Conversation_id\n\uD83D\uDC64 Наименование чата: :conversation_title",
-  "manage-bank.not-found-error": "Дата-сет был перемещен или удалён (не найден).",
+  "manage-bank.info": "ℹ️ Информация о банке (дата-паке).\n\n\uD83C\uDD94 ID: :Id\n\uD83D\uDCAC Наименование: :Title\n\uD83D\uDCC4 Описание: :Description\n\uD83D\uDD52 Создано: :Created_at\n\uD83D\uDD52 Обновлено: :Updated_at\n\uD83D\uDC64 ID чата: :Conversation_id\n\uD83D\uDC64 Наименование чата: :conversation_title",
+  "manage-bank.not-found-error": "Дата-пак был перемещен или удалён (не найден).",
 
   "manage-bank.see-full-description": "\uD83D\uDCC4 Полное описание",
   "manage-bank.edit": "✏ Редактировать",
@@ -90,6 +96,23 @@
   "manage-bank.error-exception": "Что-то пошло не так: ",
 
   "chaining-bank.random-menu.random-result": "Созданные пары слов:\n:list",
+
+  "chaining-bank.random-menu": "Случайная выборка",
+  "chaining-bank.learn-from-text": "Обучиться тексту",
+  "chaining-bank.learn-the-pair": "Обучиться словосочетанию",
+  "chaining-bank.edit-chains": "Редактировать цепочки пар",
+
+  "chaining-bank.learn-the-pair.type-target-word": "Введи первое слово (словосочетание) из пары:",
+  "chaining-bank.learn-the-pair.type-next-word": "Введи второе слово (словосочетание) из пары:",
+  "chaining-bank.learn-the-pair.success": "Готово, пара создана.",
+  "chaining-bank.learn-the-text.send-the-text": "Пришли мне текст, который необходимо изучить (разбить по парам и запомнить).\n\nЗнаки пунктуации для разделения предложений: . ... ! ? ?! !?",
+  "chaining-bank.learn-the-text.success": "Неплохо.",
+
+  "chaining-bank.random-menu.hint": "Выбери количество случайно генерируемых пар слов:",
+  "chaining-bank.random-menu.do-once": "1 пара",
+  "chaining-bank.random-menu.do-3-times": "3 пары",
+  "chaining-bank.random-menu.do-5-times": "5 пар",
+  "chaining-bank.random-menu.do-10-times": "10 пар",
 
   "language.selection-empty": "Нет доступных языков.",
   "language.hint": "Выбери язык:",

@@ -46,8 +46,15 @@
   "create-demotivational-poster-meme-conversation.done": "Here it is:",
 
   "generate-meme-conversation.ask-meme-type": "Choose the meme to be generated:",
-  "generate-meme-conversation.unsupported-meme": "Can't make such meme for now, choose another category.",
 
+  "generate-meme.hint": "Generating meme menu:",
+  "generate-meme.execute": "\uD83D\uDE03 Generate new meme",
+  "generate-meme.edit-bank-list": "✏️Edit used data-packs",
+  "generate-meme-conversation.generating-error": "Error generating meme =(",
+  "generate-meme-conversation.unsupported-meme": "Can't make such meme for now, choose another category.",
+  "generate-meme-conversation.unknown-command": "Couldn't find that menu option, sorry.",
+
+  "generate-meme.regexp.when-word": "When",
 
 
 
@@ -77,8 +84,8 @@
   "chain.generic-word": "generic",
 
   "manage-bank.back": "<< Back",
-  "manage-bank.info": "ℹ️ Bank information.\n\n\uD83C\uDD94 ID: :Id\n\uD83D\uDCAC Title: :Title\n\uD83D\uDCC4 Description: :Description\n\uD83D\uDD52 Created: :Created_at\n\uD83D\uDD52 Updated: :Updated_at\n\uD83D\uDC64 Conversation ID: :Conversation_id\n\uD83D\uDC64 Conversation title: :conversation_title",
-  "manage-bank.not-found-error": "Bank was internally deleted or moved (not found).",
+  "manage-bank.info": "ℹ️ Bank (data-pack) information.\n\n\uD83C\uDD94 ID: :Id\n\uD83D\uDCAC Title: :Title\n\uD83D\uDCC4 Description: :Description\n\uD83D\uDD52 Created: :Created_at\n\uD83D\uDD52 Updated: :Updated_at\n\uD83D\uDC64 Conversation ID: :Conversation_id\n\uD83D\uDC64 Conversation title: :conversation_title",
+  "manage-bank.not-found-error": "Bank (data-pack) was internally deleted or moved (not found).",
 
   "manage-bank.see-full-description": "\uD83D\uDCC4 See full description",
   "manage-bank.edit": "✏ Edit",
@@ -94,6 +101,24 @@
 
   "chaining-bank.hint": "chaining-bank.hint",
   "chaining-bank.random-menu.random-result": "Generated pairs:\n:list",
+
+  "chaining-bank.random-menu": "Random picking",
+  "chaining-bank.learn-from-text": "Learn the text",
+  "chaining-bank.learn-the-pair": "Learn the pair",
+  "chaining-bank.edit-chains": "Edit chains",
+
+  "chaining-bank.learn-the-pair.type-target-word": "Enter the first word (phrase) of the pair:",
+  "chaining-bank.learn-the-pair.type-next-word": "Enter the second word (phrase) of the pair:",
+  "chaining-bank.learn-the-pair.success": "Done, the pair is remembered.",
+  "chaining-bank.learn-the-text.send-the-text": "Send me text to learn (to make pairs and remember).\n\nPunctuation marks to divide sentences: . ... ! ? ?! !?",
+  "chaining-bank.learn-the-text.success": "Not bad.",
+
+  "chaining-bank.random-menu.hint": "Choose the number of pairs to be generated:",
+  "chaining-bank.random-menu.do-once": "1 pair",
+  "chaining-bank.random-menu.do-3-times": "3 pairs",
+  "chaining-bank.random-menu.do-5-times": "5 pairs",
+  "chaining-bank.random-menu.do-10-times": "10 pairs",
+
 
   "language.selection-empty": "No languages available.",
   "language.hint": "Select language:",
