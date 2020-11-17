@@ -10,7 +10,10 @@
 
 Built with Laravel, Botman, Lighthouse and Vue.js.
 
-This repo is a redux version of a bot, originally hosted at [vk.com/bot_memi4](https://vk.com/bot_memi4).
+This repo is a redux version of the classic version of the bot.
+
+Hosted at (dev-branch):
+- [VK community (RU)](https://vk.com/bot_memi4_beta)
 
 ## Implemented features
 
