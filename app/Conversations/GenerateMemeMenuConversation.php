@@ -32,7 +32,7 @@ class GenerateMemeMenuConversation extends BackFunctionConversation
                 Button::create(__('when-meme.title'))->value('when-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create(__('4-block-comics-meme.title'))->value('4-block-comics-meme')->additionalParameters([
+                Button::create(__('4-frame-comics-meme.title'))->value('4-frame-comics-meme')->additionalParameters([
                     "color" => "primary"
                 ]),
 
@@ -58,6 +58,14 @@ class GenerateMemeMenuConversation extends BackFunctionConversation
 
                     case "when-meme":
                         $this->bot->startConversation(new GenerateWhenMemeConversation($this));
+                        break;
+
+                    case "demotivational-poster-meme":
+                        $this->bot->startConversation(new GenerateDemotivationalPosterMemeConversation($this));
+                        break;
+
+                    case "4-frame-comics-meme":
+                        $this->bot->startConversation(new GenerateSimpleComicsMemeConversation($this));
                         break;
 
                     default:

@@ -243,7 +243,7 @@ class SimpleComicsMeme extends Meme {
         for($i = 0; $i < 2; $i++){
             for($y = 0 ; $y < 2; $y++){
                 $textBrush->setShadowColor("#000");                 // TODO: custom shadow color
-                $textBrush->setSize(22);                                  // TODO: custom font size
+                $textBrush->setSize(36);                                  // TODO: custom font size
                 $textBrush->setFontFile("arial.ttf");                   // TODO: custom font file
                 $textBrush->setTextColor("#fff");                     // TODO: custom font color
                 $textBrush->setAlign("center");

@@ -5,11 +5,15 @@ namespace App\Bot\Bank\Text;
 
 
 use App\Bot\Bank\BankRelated;
+use App\Bot\Bank\Text\Chain\ChainManager;
 use App\Chain;
 use App\Word;
 use Exception;
 
 class TextGenerator extends BankRelated {
+
+
+    const ANY_WORD = "";
 
     /** @var string $startWith */
     private string $startWith = "";
@@ -102,7 +106,12 @@ class TextGenerator extends BankRelated {
             }
 
             $nextWord = $chain->next()->first();
-            $result[] = $nextWord->text ?? "generic";
+            $result[] =
+                ($nextWord->text == ChainManager::END_OF_SENTENCE
+                    ? (new \Illuminate\Support\Collection(ChainManager::SENTENCE_END))->random(1)->toArray()[0]
+                    : null)
+                ?? $nextWord->text
+                ?? "generic";
             $currentWord = $nextWord;
         }
 

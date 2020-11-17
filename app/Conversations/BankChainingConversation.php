@@ -3,7 +3,7 @@
 namespace App\Conversations;
 
 use App\Bot\Bank\Text\Chain\ChainManager;
-use App\Bot\Text\Chain\DraftChain;
+use App\Bot\Bank\Text\Chain\DraftChain;
 use App\Chain;
 use App\Conversations\Type\BankConversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -255,8 +255,8 @@ class BankChainingConversation extends BankConversation
             $target = $chain->target()->first();
             $next = $chain->next()->first();
 
-            $targetText = ($target->text == "") ? __("new-sentence") : $target->text;
-            $nextText = ($next->text == "") ? __("end-of-sentence") : $next->text;
+            $targetText = ($target->text == "") ? ChainManager::NEW_SENTENCE : $target->text;
+            $nextText = ($next->text == "") ? ChainManager::END_OF_SENTENCE : $next->text;
 
             $response[] = "#". ($i + 1) . ": " . $targetText . " " . $nextText;
         }

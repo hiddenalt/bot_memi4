@@ -87,7 +87,7 @@ class DemotivationalMeme extends Meme{
         $imageHeight = $image->getHeight();
 
         // TODO: customization
-        $borderSize                   = 5;                              // Border size in px
+        $borderSize                   = 3;                              // Border size in px
         $margin                       = 50;                             // Edges offset
         $padding                      = 7;                              // Offset between border and image
         $borderBottomOffset           = 20;                             // Border bottom offset
@@ -105,7 +105,7 @@ class DemotivationalMeme extends Meme{
 
         /* Configure & draw subtitle */
         $textBrush->setShadowColor(TextBrush::SHADOWLESS); // TODO: custom shadow color
-        $textBrush->setSize(24);                                  // TODO: custom subtitle font size
+        $textBrush->setSize(46);                                  // TODO: custom subtitle font size
         $textBrush->setFontFile("times_new_roman.ttf");        // TODO: custom subtitle font file
         $textBrush->setTextColor("#fff");                     // TODO: custom subtitle font color
         $textBrush->setAlign("center");

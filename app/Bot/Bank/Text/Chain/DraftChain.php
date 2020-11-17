@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Bot\Text\Chain;
+namespace App\Bot\Bank\Text\Chain;
 
 
 class DraftChain {

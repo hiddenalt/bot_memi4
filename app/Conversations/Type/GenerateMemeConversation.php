@@ -15,6 +15,9 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
 
     use ConversationProxy;
 
+    abstract public function getStartKeyWord(): string;
+
+
     /** @var Bank[] $usedBanks */
     public array $usedBanks = [];
 
@@ -31,9 +34,9 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
                 Button::create(__('generate-meme.execute'))->value('execute')->additionalParameters([
                     "color" => "primary"
                 ]),
-                Button::create(__('generate-meme.edit-bank-list'))->value('edit-bank-list')->additionalParameters([
-                    "color" => "primary"
-                ]),
+//                Button::create(__('generate-meme.edit-bank-list'))->value('edit-bank-list')->additionalParameters([
+//                    "color" => "primary"
+//                ]),
                 Button::create(__('menu.back'))->value('back')->additionalParameters([
                     "color" => "secondary"
                 ])

@@ -6,7 +6,6 @@ namespace App\Bot\Bank\Text\Chain;
 
 use App\Bank;
 use App\Bot\Bank\BankRelated;
-use App\Bot\Text\Chain\DraftChain;
 use App\Chain;
 use App\Word;
 use Exception;
@@ -14,13 +13,23 @@ use Illuminate\Support\Facades\DB;
 
 class ChainManager extends BankRelated {
 
+    const SENTENCE_END = [
+        "!",
+        "?!",
+        "?",
+        ".",
+        "..."
+    ];
     const SPACE_DELIMITER = " ";
+    const END_OF_SENTENCE = "";
+    const NEW_SENTENCE = "";
 
     /**
      * Default learn of text (delimiter = space)
      * @param string $sourceText
      */
     public function learnText(string $sourceText){
+        // TODO: merge pattern with self::SENTENCE_END
         $sentences = preg_split('/(?<=[.?!])\s+/', $sourceText, -1, PREG_SPLIT_NO_EMPTY);
 
         foreach($sentences as $sentence)
@@ -51,7 +60,8 @@ class ChainManager extends BankRelated {
             $currentWord = $source[$i] ?? "";
             $nextWord = $source[$i + 1] ?? "";
 
-            $regexp = "/^(.*[^.!?])([.!?]|!{3}|\?!|!\?)$/i";
+//            $regexp = "/^(.*[^.!?])([.!?]|!{3}|\?!|!\?)$/i";
+            $regexp = "/^(" . preg_quote(implode("|", self::SENTENCE_END)) . ")$/i";
             preg_match($regexp, $currentWord, $currentWordMatches);
             preg_match($regexp, $nextWord, $nextWordMatches);
 

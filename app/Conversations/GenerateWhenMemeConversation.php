@@ -26,6 +26,7 @@ class GenerateWhenMemeConversation extends GenerateMemeConversation
             return;
         }
 
+        $textGenerator->setStartWith($this->getStartKeyWord());
         $textGenerator->setMaxWords(20);
 
         $text = $textGenerator->generateText();
@@ -43,9 +44,13 @@ class GenerateWhenMemeConversation extends GenerateMemeConversation
             ->draw();
 
         $url = $meme->makeTempLink();
-        $message = OutgoingMessage::create(__("create-when-meme-conversation.done"))
+        $message = OutgoingMessage::create(__("generate-meme-conversation.when-meme.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);
+    }
+
+    public function getStartKeyWord(): string {
+        return __("generate-meme.regexp.when-word");
     }
 }
