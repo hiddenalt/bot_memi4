@@ -65,7 +65,7 @@ class CheckUpForPermissionOrSkip implements Received, Captured, Matching, Heard,
 //        $user = System::getUserFromConversation($message->getConversationIdentifier());
 
         /** @var Conversation $conversation */
-        $conversation = Conversation::all()->where("conversation_id", $message->getConversationIdentifier())->first();
+        $conversation = Conversation::ofID($message->getConversationIdentifier())->first();
         if($conversation == null)
             return false;
 

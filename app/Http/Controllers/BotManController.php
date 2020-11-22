@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversation;
 use App\Conversations\AdminMenuConversation;
 use App\Conversations\CreateMemeMenuConversation;
 use App\Conversations\GenerateMemeMenuConversation;
 use App\Conversations\SelectLanguageConversation;
+use App\System\ApplicationPermissions;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -47,10 +49,22 @@ class BotManController extends Controller
                 Button::create(__("menu.options.create-meme"))->value("create_meme")->additionalParameters([
                     "color" => "positive"
                 ]),
-                Button::create(__("menu.options.settings"))->value("settings")->additionalParameters([
-                    "color" => "primary"
-                ])
+//                Button::create(__("menu.options.settings"))->value("settings")->additionalParameters([
+//                    "color" => "primary"
+//                ])
             ]);
+
+        try{
+            if(Conversation::ofID($bot->getMessage()->getConversationIdentifier())
+                ->first()->user()->hasPermissionTo(ApplicationPermissions::SHOW_ADMIN_MENU))
+                $question->addButtons([
+                    Button::create(__("menu.options.admin"))->value("admin")->additionalParameters([
+                        "color" => "negative"
+                    ])
+                ]);
+        } catch (\Exception $e){
+
+        }
 
         $bot->reply($question);
     }

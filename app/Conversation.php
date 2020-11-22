@@ -3,6 +3,7 @@
 namespace App;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,6 +35,18 @@ class Conversation extends Model
     public function setDefaultLocale(string $langCode){
         $this->language = $langCode;
         $this->save();
+    }
+
+
+    /**
+     * Scope a query to find a conversation by its ID
+     *
+     * @param Builder $query
+     * @param $conversationID
+     * @return Builder
+     */
+    public function scopeOfID($query, $conversationID){
+        return $query->where("conversation_id", $conversationID);
     }
 
     // TODO: get native conversation name
