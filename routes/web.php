@@ -18,6 +18,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get("/assets{any}", function($pathToFile){
+//    return response()
+//        ->header('Content-Type', 'text/plain')
+//        ->download(asset($pathToFile, false));
+//    return response("sad");
+//})
+//    ->where('any', '.*')
+//    ->name("public.assets");
+
+//Route::match(['get', 'post'], '/assets/{filename}', function ($filename){
+//    $path = asset($filename);
+//
+//    try{
+//        $file = File::get($path);
+//        $type = File::mimeType($path);
+//
+//        $response = Response::make($file, 200);
+//        $response->header("Content-Type", $type);
+//    } catch (Exception $exception){
+//        abort(404);
+//    }
+//
+//
+//    return \response("asd");
+//
+//    return $response;
+//})->where('filename', '.*');
+
 // Bot API
 Route::match(['get', 'post'], '/api', 'BotManController@handle');
 //Route::post('/api', 'BotManController@handle');
