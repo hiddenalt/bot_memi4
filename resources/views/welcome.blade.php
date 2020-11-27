@@ -62,8 +62,8 @@
             @media all and (max-width: 500px) {
                 .links {
                     display: flex;
-                    flex-direction: column;
-                    width: auto;
+                    width: 100%;
+                    flex-wrap: wrap;
                 }
                 .logo{
                     width: 100%;
@@ -87,6 +87,11 @@
                 60% {
                     transform: translate(calc(50vw * -1), calc(50vh - 36px)) rotate(30deg);
                 }
+
+                80% {
+                    transform: translate(calc(30vw * -1), calc(-10vh)) rotate(10deg);
+                }
+
                 to {
                     transform: translate(0, 0) rotate(0deg);
                 }
@@ -145,6 +150,18 @@
                 animation-fill-mode: forwards;
             }
 
+            .link{
+                transition-duration: .1s;
+            }
+
+            .link:hover{
+                transform: scale(1.2);
+            }
+
+            .link:active{
+                color: #2779bd;
+            }
+
             html, body{
                 overflow: hidden;
                 animation: scroll .1s 1 ease-in-out;
@@ -162,7 +179,7 @@
                     <img src="/logo.png" class="logo" alt="Logo">
                     <h2 class="title">Memer the Bot</h2>
                     <label class="subtitle">@version</label>
-                    <label class="subtitle">Powered by PHP 7.4, BotMan (Laravel)</label>
+                    <label class="subtitle">Powered by PHP {{ phpversion() }}, BotMan (Laravel)</label>
                 </div>
 
                 <div class="links">

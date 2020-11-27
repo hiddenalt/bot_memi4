@@ -3,6 +3,7 @@
 use App\Http\Controllers\BotManController;
 use App\Http\Middleware\CheckUpForPermissionOrSkip;
 use App\Http\Middleware\ConversationMiddleware;
+use App\System\ApplicationPermissions;
 use BotMan\BotMan\BotMan;
 use BotMan\Drivers\VK\VkCommunityCallbackDriver;
 
@@ -69,7 +70,7 @@ $botman->hears(
 );
 
 // Admin menu
-$botman->group(['middleware' => new CheckUpForPermissionOrSkip("show admin menu")], function(BotMan $bot) {
+$botman->group(['middleware' => new CheckUpForPermissionOrSkip(ApplicationPermissions::SHOW_ADMIN_MENU)], function(BotMan $bot) {
     $bot->hears(
         "%%%{{{pattern.admin-menu}}}%%%",
         BotManController::class . "@adminMenu"
