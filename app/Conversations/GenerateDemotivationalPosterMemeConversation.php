@@ -13,6 +13,10 @@ use Intervention\Image\ImageManagerStatic;
 
 class GenerateDemotivationalPosterMemeConversation extends GenerateMemeConversation
 {
+    public function getMemeScreenName(): string {
+        return __("demotivational-poster-meme.title");
+    }
+
     /**
      * @throws \Exception
      */

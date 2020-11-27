@@ -46,7 +46,7 @@
   "create-demotivational-poster-meme-conversation.done": "Готово:",
 
   "generate-meme-conversation.ask-meme-type": "Выбери мем, который будет сгенерирован:",
-  "generate-meme.hint": "Меню генерации мема:",
+  "generate-meme.hint": "Меню генерации мема ':screenName':",
   "generate-meme.execute": "\uD83D\uDE03 Сгенерировать новый мем",
   "generate-meme.edit-bank-list": "✏️Изменить список дата-паков",
   "generate-meme-conversation.generating-error": "Ошибка генерации мема.",

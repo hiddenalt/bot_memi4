@@ -47,7 +47,7 @@
 
   "generate-meme-conversation.ask-meme-type": "Choose the meme to be generated:",
 
-  "generate-meme.hint": "Generating meme menu:",
+  "generate-meme.hint": "Generating ':screenName' meme menu:",
   "generate-meme.execute": "\uD83D\uDE03 Generate new meme",
   "generate-meme.edit-bank-list": "✏️Edit used data-packs",
   "generate-meme-conversation.generating-error": "Error generating meme =(",

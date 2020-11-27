@@ -12,6 +12,10 @@ use Intervention\Image\ImageManagerStatic;
 
 class GenerateSimpleComicsMemeConversation extends GenerateMemeConversation
 {
+    public function getMemeScreenName(): string {
+        return __("4-frame-comics-meme.title");
+    }
+
     /**
      * @throws \Exception
      */

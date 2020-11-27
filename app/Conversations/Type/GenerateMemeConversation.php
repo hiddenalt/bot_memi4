@@ -16,7 +16,7 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
     use ConversationProxy;
 
     abstract public function getStartKeyWord(): string;
-
+    abstract public function getMemeScreenName(): string;
 
     /** @var Bank[] $usedBanks */
     public array $usedBanks = [];
@@ -29,7 +29,9 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
     }
 
     public function showMenu(){
-        $question = Question::create(__('generate-meme.hint'))
+        $question = Question::create(__('generate-meme.hint', [
+            "screenName" => $this->getMemeScreenName()
+        ]))
             ->addButtons([
                 Button::create(__('generate-meme.execute'))->value('execute')->additionalParameters([
                     "color" => "primary"

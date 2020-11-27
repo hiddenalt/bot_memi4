@@ -13,6 +13,10 @@ use Intervention\Image\ImageManagerStatic;
 
 class GenerateWhenMemeConversation extends GenerateMemeConversation
 {
+    public function getMemeScreenName(): string {
+        return __("when-meme.title");
+    }
+
     /**
      * @throws \Exception
      */
