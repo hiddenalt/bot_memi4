@@ -1,10 +1,13 @@
 {
+  "about": "About the release:\n\nMemer the Bot\nℹ️ Version: :version\n\uD83D\uDDA5 Powered by PHP :php_version, Botman (Laravel)\n\nLinks:\n\uD83D\uDD38 Wiki - :wiki\n\uD83D\uDD38 Telegram - :tg\n\uD83D\uDD38 VK - :vk\n\uD83D\uDD38 Github - :github\n",
+
   "greetings": "He-hey, howdy! Nice to meet you.",
 
   "pattern.cancel-conversation": ".*cancel",
   "pattern.menu-start": ".*(start|menu|main menu|main_menu)",
   "pattern.create-meme-conversation": ".*((create|make|new|my|draw|construct|build).*(a meme|meme|the meme|meme|mem|cool pic|pic|picture)|create_meme)",
   "pattern.generate-meme-conversation": ".*((generate|gen|imagine|ai|send|do).*(a meme|meme|the meme|meme|mem|cool pic|pic|picture)|generate_meme)",
+  "pattern.about-conversation": ".*(about|version|bot version|ver)",
   "pattern.admin-menu": ".*(admin|adm|admn|adn|manage|admin menu|moderate|moderator|administrator)",
   "pattern.language-selection": ".*(language|lang|change language|locale|localization|loc|change locale|\uD83C\uDF10|\uD83C\uDF0D|\uD83C\uDF0E|\uD83C\uDF0F)",
 
@@ -17,6 +20,7 @@
   "menu.options.generate-meme": "☺ Generate a meme",
   "menu.options.create-meme": "\uD83D\uDD8C Create a meme",
   "menu.options.settings": "⚙ Settings",
+  "menu.options.about-release": "ℹ️ About",
 
   "when-meme.title": "'When...' meme",
   "4-frame-comics-meme.title": "4-frame comics meme",

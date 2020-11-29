@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Conversation;
+use App\Conversations\AboutConversation;
 use App\Conversations\AdminMenuConversation;
 use App\Conversations\CreateMemeMenuConversation;
 use App\Conversations\GenerateMemeMenuConversation;
@@ -49,6 +50,9 @@ class BotManController extends Controller
                 Button::create(__("menu.options.create-meme"))->value("create_meme")->additionalParameters([
                     "color" => "positive"
                 ]),
+                Button::create(__("menu.options.about-release"))->value("ver")->additionalParameters([
+                    "color" => "positive"
+                ]),
 //                Button::create(__("menu.options.settings"))->value("settings")->additionalParameters([
 //                    "color" => "primary"
 //                ])
@@ -90,8 +94,16 @@ class BotManController extends Controller
      * Show admin menu
      * @param BotMan $bot
      */
-    public function adminMenu(BotMan $bot){
+    public function showAdminMenu(BotMan $bot){
         $bot->startConversation(new AdminMenuConversation(null));
+    }
+
+    /**
+     * Show "about" menu
+     * @param BotMan $bot
+     */
+    public function startAboutConversation(BotMan $bot){
+        $bot->startConversation(new AboutConversation(null));
     }
 
     /**

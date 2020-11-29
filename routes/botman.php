@@ -60,6 +60,12 @@ $botman->hears(
     BotManController::class . "@startCreateMemeConversation"
 );
 
+// "About" conversation
+$botman->hears(
+    "%%%{{{pattern.about-conversation}}}%%%",
+    BotManController::class . "@startAboutConversation"
+);
+
 // Language selection
 $botman->hears(
     [
@@ -73,7 +79,7 @@ $botman->hears(
 $botman->group(['middleware' => new CheckUpForPermissionOrSkip(ApplicationPermissions::SHOW_ADMIN_MENU)], function(BotMan $bot) {
     $bot->hears(
         "%%%{{{pattern.admin-menu}}}%%%",
-        BotManController::class . "@adminMenu"
+        BotManController::class . "@showAdminMenu"
     );
 });
 

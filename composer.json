@@ -37,7 +37,7 @@
         "ralouphie/mimey": "^2.1",
         "spatie/laravel-permission": "2.38.0",
         "symfony/string": "^5.1",
-        "yageorgiy/botman-vk-community-callback-driver": "^1.7.2"
+        "yageorgiy/botman-vk-community-callback-driver": "^1.7.4"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",
@@ -88,7 +88,7 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover",
-            "@php artisan version:refresh"
+            "@php artisan version:absorb"
         ]
     },
     "config": {

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Memer the Bot v.{{ env("version") }}</title>
+        <title>Memer the Bot</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -189,9 +189,9 @@
                     <span class="flex-separator"></span>
                     <a class="link" href="{{ env("WELCOME_PAGE_VK_URL") }}"><span class="mdi mdi-36px mdi-vk"></span></a>
                     <span class="flex-separator"></span>
-                    <a class="link" href="https://github.com/hiddenalt/memer-the-bot"><span class="mdi mdi-36px mdi-github"></span></a>
+                    <a class="link" href="{{ env("WELCOME_PAGE_GITHUB_URL") }}"><span class="mdi mdi-36px mdi-github"></span></a>
                     <span class="flex-separator"></span>
-                    <a class="link" href="https://github.com/hiddenalt/memer-the-bot/wiki"><span class="mdi mdi-36px mdi-book-open-variant"></span></a>
+                    <a class="link" href="{{ env("WELCOME_PAGE_WIKI") }}"><span class="mdi mdi-36px mdi-book-open-variant"></span></a>
                 </div>
             </div>
         </div>

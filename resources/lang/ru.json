@@ -1,10 +1,13 @@
 {
+  "about": "О версии:\n\nБот Мемич\nℹ️ Версия: :version\n\uD83D\uDDA5 Работает на PHP :php_version, Botman (Laravel)\n\nСсылки:\n\uD83D\uDD38 Вики (справка) - :wiki\n\uD83D\uDD38 Telegram - :tg\n\uD83D\uDD38 VK - :vk\n\uD83D\uDD38 Github - :github\n",
+
   "greetings": "Хе-хей, привет! Рад, что мне написали.",
 
   "pattern.cancel-conversation": ".*отмена",
   "pattern.menu-start": ".*(начать|меню|главное меню|главная|менюшка|менюха|главное_меню|main_menu)",
   "pattern.create-meme-conversation": ".*((создать|запилить|сделать|разработать|нарисовать|построить|скрафтить|собрать|конструктор).*(мема|мемов|мемы|мем|пикчи|картинки|изображения)|create_meme)",
   "pattern.generate-meme-conversation": ".*((сгенерировать|сгенерить|вообразить|аи|новый|генерить).*(мема|мемов|мемы|мем|пикчи|картинки|изображения)|generate_meme)",
+  "pattern.about-conversation": ".*(о боте|о проекте|версия|вер|ver)",
   "pattern.admin-menu": ".*(админ|админка|управление|пу|меню админа|модерка|модерация|меню модератора|модератор|администратор|admin)",
   "pattern.language-selection": ".*(сменить язык|язык|локализация|смена языка|изменить язык|выбор языка)",
 
@@ -17,6 +20,7 @@
   "menu.options.generate-meme": "☺ Сгенерировать мем",
   "menu.options.create-meme": "\uD83D\uDD8C Создать мем",
   "menu.options.settings": "⚙ Настройки",
+  "menu.options.about-release": "ℹ️ О версии",
 
   "when-meme.title": "Мем 'Когда...'",
   "4-frame-comics-meme.title": "Четырёхблочный мем-комикс",
