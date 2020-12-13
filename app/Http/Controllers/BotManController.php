@@ -68,6 +68,8 @@ class BotManController extends Controller
                 ]);
         } catch (\Exception $e){
 
+        } catch (\Throwable $e) {
+
         }
 
         $bot->reply($question);
