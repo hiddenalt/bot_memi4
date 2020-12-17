@@ -1,0 +1,38 @@
+{
+  "language": "\uD83C\uDDFA\uD83C\uDDF8/\uD83C\uDDEC\uD83C\uDDE7 English",
+  "app": {
+    "postfix": " | Memer Web Access",
+    "dark_mode_off": "Dark Mode Off",
+    "dark_mode_on": "Dark Mode On",
+
+    "dark_mode_is_off": "Light theme",
+    "dark_mode_is_on": "Dark theme",
+
+    "menu_options": {
+      "home": "Home",
+      "meme_builder": "Meme builder",
+      "data_packs": "My data-packs",
+      "conversations": "My conversations",
+      "mood": "Bot's mood",
+      "usage": "Usage info",
+      "api": "API"
+    }
+  },
+  "screens": {
+    "home": {
+      "page_title": "Home",
+      "title": "Menutify",
+      "hint": "This is what it can do:",
+
+      "menu_options": {
+        "meme_builder": "Meme builder",
+        "data_packs": "My data-packs",
+        "conversations": "My conversations",
+        "mood": "Bot's mood",
+        "usage": "Usage info",
+        "api": "API"
+      }
+    }
+  }
+
+}

@@ -9,18 +9,16 @@
             justify="center"
         >
 
-            <h1 class="display-2 mb-2">Менюшечка</h1>
+            <h1 class="display-2 mb-2">{{$t("screens.home.title")}}</h1>
             <p class="text-center">
-                Разбита по категориям.<br>
-                Где надо залогиниться - покажет,<br>
-                где не надо - юзейте без авторизации.
+                {{$t("screens.home.hint")}}
             </p>
 
             <v-col class="text-center d-flex flex-row justify-center flex-wrap" cols="1">
                 <div class="my-2" v-for="item in menu">
                     <v-btn large :color="item.color" @click="$router.push(item.path)" width="350px">
                         <v-icon left>{{item.icon}}</v-icon>
-                        {{item.label}}
+                        {{$t(item.label)}}
                     </v-btn>
                 </div>
             </v-col>
@@ -41,37 +39,37 @@
         data: () => ({
             menu: [
                 {
-                    label: "Конструктор мемов",
+                    label: "screens.home.menu_options.meme_builder",
                     color: "info",
                     path: "/create-meme/",
                     icon: "mdi-creation"
                 },
                 {
-                    label: "Мои словари",
+                    label: "screens.home.menu_options.data_packs",
                     color: "success",
                     path: "/vocabulary/",
                     icon: "mdi-book-multiple"
                 },
                 {
-                    label: "Мои беседы",
+                    label: "screens.home.menu_options.conversations",
                     color: "success",
                     path: "/conversations/",
                     icon: "mdi-message"
                 },
                 {
-                    label: "Настроение бота",
+                    label: "screens.home.menu_options.mood",
                     color: "primary",
-                    path: "/create-meme/",
+                    path: "/mood/",
                     icon: "mdi-emoticon-wink"
                 },
                 {
-                    label: "Как использовать бота",
+                    label: "screens.home.menu_options.usage",
                     color: "primary",
                     path: "/create-meme/",
                     icon: "mdi-account-question"
                 },
                 {
-                    label: "API",
+                    label: "screens.home.menu_options.api",
                     color: "error",
                     path: "/api/",
                     icon: "mdi-api"

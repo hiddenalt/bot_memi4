@@ -1,0 +1,38 @@
+{
+  "language": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+  "app": {
+    "postfix": " | Меню Мемича",
+    "dark_mode_off": "Выключить тёмную тему",
+    "dark_mode_on": "Включить тёмную тему",
+
+    "dark_mode_is_off": "Светлая тема",
+    "dark_mode_is_on": "Темная тема",
+
+    "menu_options": {
+      "home": "Главная",
+      "meme_builder": "Конструктор мемов",
+      "data_packs": "Мои дата-паки",
+      "conversations": "Мои беседы",
+      "mood": "Настроение бота",
+      "usage": "Как использовать бота",
+      "api": "API"
+    }
+  },
+  "screens": {
+    "home": {
+      "page_title": "Главная",
+      "title": "Менюшечка",
+      "hint1": "Вот что здесь есть:",
+
+      "menu_options": {
+        "meme_builder": "Конструктор мемов",
+        "data_packs": "Мои дата-паки",
+        "conversations": "Мои беседы",
+        "mood": "Настроение бота",
+        "usage": "Как использовать бота",
+        "api": "API"
+      }
+    }
+  }
+
+}

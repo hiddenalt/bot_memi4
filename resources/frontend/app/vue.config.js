@@ -1,7 +1,5 @@
 module.exports = {
-
     devServer: {
-        proxy: "http://memi4.frontend/menu/",
         port: 9090
     },
 
@@ -19,6 +17,7 @@ module.exports = {
         : 'index.html',
 
     lintOnSave: false,
+
     transpileDependencies: [
         "vuetify"
     ],
@@ -30,5 +29,14 @@ module.exports = {
                 args[0].title = '...';
                 return args;
             });
+    },
+
+    pluginOptions: {
+      i18n: {
+        locale: 'en',
+        fallbackLocale: 'en',
+        localeDir: 'locales',
+        enableInSFC: true
+      }
     }
 };
