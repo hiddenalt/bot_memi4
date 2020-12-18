@@ -4,6 +4,7 @@ namespace App\Conversations;
 
 use App\Bot\Bank\Text\Chain\ChainManager;
 use App\Bot\Bank\Text\Chain\DraftChain;
+use App\Bot\Message\Button\Custom\BackButton;
 use App\Chain;
 use App\Conversations\Type\BankConversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -26,7 +27,7 @@ class BankChainingConversation extends BankConversation
                 Button::create(__('chaining-bank.learn-from-text'))->value('learn-from-text'),
                 Button::create(__('chaining-bank.learn-the-pair'))->value('learn-the-pair'),
                 Button::create(__('chaining-bank.edit-chains'))->value('edit-chains'),
-                Button::create(__('menu.back'))->value('back')
+                new BackButton()
             ]);
 
         return $this->askOrSayBankError($question, function (Answer $answer) {

@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\Bot\Message\Button\Custom\BackButton;
 use App\Conversation;
 use App\Conversations\Type\BankConversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -52,7 +53,7 @@ class BankManagingConversation extends BankConversation
                 Button::create(__('manage-bank.learn-a-text'))->value('learn-a-text'),
                 Button::create(__('manage-bank.push-an-image'))->value('push-an-image'),
                 Button::create(__('manage-bank.refresh-info'))->value('refresh-info'),
-                Button::create(__('menu.back'))->value('back')
+                new BackButton()
             ]);
 
         return $this->ask($question, function (Answer $answer) use($bank) {

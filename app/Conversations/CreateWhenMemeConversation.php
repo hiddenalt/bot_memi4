@@ -3,6 +3,7 @@
 namespace App\Conversations;
 
 use App\Bot\Image\Meme\WhenMeme;
+use App\Bot\Message\Button\Custom\SkipButton;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -45,7 +46,13 @@ class CreateWhenMemeConversation extends Conversation {
     public function askTopString(){
         $question = Question::create(__("create-when-meme-conversation.step-2"));
 
+        $question->addButton(new SkipButton());
+
         return $this->ask($question, function (Answer $answer) {
+
+            if($answer->isInteractiveMessageReply() && $answer->getValue() == SkipButton::SKIP_VALUE){
+                return $this->askBottomString();
+            }
 
             $text = trim($answer->getMessage()->getText());
 
@@ -62,7 +69,13 @@ class CreateWhenMemeConversation extends Conversation {
     public function askBottomString(){
         $question = Question::create(__("create-when-meme-conversation.step-3"));
 
+        $question->addButton(new SkipButton());
+
         return $this->ask($question, function (Answer $answer) {
+
+            if($answer->isInteractiveMessageReply() && $answer->getValue() == SkipButton::SKIP_VALUE){
+                return $this->sendMeme();
+            }
 
             $text = trim($answer->getMessage()->getText());
 

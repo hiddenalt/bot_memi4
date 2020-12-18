@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\Bot\Message\Button\Custom\BackButton;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -40,9 +41,7 @@ class GenerateMemeMenuConversation extends BackFunctionConversation
                     "color" => "primary"
                 ]),
 
-                Button::create(__('menu.back'))->value('back')->additionalParameters([
-                    "color" => "secondary"
-                ])
+                new BackButton()
             ]);
 
         return $this->ask($question, function (Answer $answer) {

@@ -3,8 +3,11 @@
 namespace App\Conversations;
 
 use App\Bank;
+use App\Bot\Message\Button\Custom\BackButton;
+use App\Bot\Message\Button\Custom\NextPageButton;
+use App\Bot\Message\Button\Custom\PreviousPageButton;
+use App\Bot\Message\Button\Primitive\PositiveButton;
 use BotMan\BotMan\Messages\Incoming\Answer;
-use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
 
 class ShowBankListConversation extends BackFunctionConversation
@@ -53,25 +56,12 @@ class ShowBankListConversation extends BackFunctionConversation
         }
 
         $buttons = [];
-        foreach($paginator->items() as $item){
-            $buttons[] =  Button::create($item["title"])->value('bank-' . $item["id"])->additionalParameters([
-                "color" => "primary"
-            ]);
-        }
+        foreach($paginator->items() as $item)
+            $buttons[] = PositiveButton::create($item["title"])->value('bank-' . $item["id"]);
 
-        if($page < $paginator->lastPage())
-            $buttons[] =  Button::create(__('pagination.next'))->value('next-page')->additionalParameters([
-                "color" => "secondary"
-            ]);
-
-        if($page > 1)
-            $buttons[] =  Button::create(__('pagination.previous'))->value('previous-page')->additionalParameters([
-                "color" => "secondary"
-            ]);
-
-        $buttons[] =  Button::create(__('menu.back'))->value('back')->additionalParameters([
-            "color" => "secondary"
-        ]);
+        if($page < $paginator->lastPage()) $buttons[] = new NextPageButton();
+        if($page > 1) $buttons[] = new PreviousPageButton();
+        $buttons[] =  new BackButton();
 
         $question = Question::create(__('bank-list.hint'))
             ->addButtons($buttons);
@@ -81,15 +71,15 @@ class ShowBankListConversation extends BackFunctionConversation
                 $selectedValue = $answer->getValue();
 
                 switch($selectedValue){
-                    case "previous-page":
+                    case PreviousPageButton::PREVIOUS_PAGE_VALUE:
                         return $this->showPage($page - 1);
                         break;
 
-                    case "next-page":
+                    case NextPageButton::NEXT_PAGE_VALUE:
                         return $this->showPage($page + 1);
                         break;
 
-                    case "back":
+                    case BackButton::BACK_VALUE:
                         return $this->moveBack();
                         break;
                 }

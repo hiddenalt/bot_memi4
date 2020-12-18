@@ -3,6 +3,7 @@
 namespace App\Conversations;
 
 use App\Bot\Image\Meme\SimpleComicsMeme;
+use App\Bot\Message\Button\Custom\SkipButton;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
@@ -88,7 +89,14 @@ class CreateSimpleComicsMemeConversation extends Conversation
     public function askLabel1(){
         $question = Question::create(__("create-comics-meme-conversation.step-5"));
 
+        $question->addButton(new SkipButton());
+
         return $this->ask($question, function (Answer $answer) {
+
+
+            if($answer->isInteractiveMessageReply() && $answer->getValue() == SkipButton::SKIP_VALUE){
+                return $this->askLabel2();
+            }
 
             $text = trim($answer->getMessage()->getText());
 
@@ -105,7 +113,13 @@ class CreateSimpleComicsMemeConversation extends Conversation
     public function askLabel2(){
         $question = Question::create(__("create-comics-meme-conversation.step-6"));
 
+        $question->addButton(new SkipButton());
+
         return $this->ask($question, function (Answer $answer) {
+
+            if($answer->isInteractiveMessageReply() && $answer->getValue() == SkipButton::SKIP_VALUE){
+                return $this->askLabel3();
+            }
 
             $text = trim($answer->getMessage()->getText());
 
@@ -122,7 +136,13 @@ class CreateSimpleComicsMemeConversation extends Conversation
     public function askLabel3(){
         $question = Question::create(__("create-comics-meme-conversation.step-7"));
 
+        $question->addButton(new SkipButton());
+
         return $this->ask($question, function (Answer $answer) {
+
+            if($answer->isInteractiveMessageReply() && $answer->getValue() == SkipButton::SKIP_VALUE){
+                return $this->askLabel4();
+            }
 
             $text = trim($answer->getMessage()->getText());
 
@@ -139,7 +159,13 @@ class CreateSimpleComicsMemeConversation extends Conversation
     public function askLabel4(){
         $question = Question::create(__("create-comics-meme-conversation.step-8"));
 
+        $question->addButton(new SkipButton());
+
         return $this->ask($question, function (Answer $answer) {
+
+            if($answer->isInteractiveMessageReply() && $answer->getValue() == SkipButton::SKIP_VALUE){
+                return $this->sendMeme();
+            }
 
             $text = trim($answer->getMessage()->getText());
 

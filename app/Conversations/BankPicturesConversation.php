@@ -2,6 +2,7 @@
 
 namespace App\Conversations;
 
+use App\Bot\Message\Button\Custom\BackButton;
 use App\Conversations\Type\BankConversation;
 use App\Picture;
 use BotMan\BotMan\Messages\Attachments\Image;
@@ -23,9 +24,7 @@ class BankPicturesConversation extends BankConversation
                 ]),
 
 
-                Button::create(__('menu.back'))->value('back')->additionalParameters([
-                    "color" => "secondary"
-                ])
+                new BackButton()
             ]);
 
         return $this->ask($question, function (Answer $answer) {
@@ -48,7 +47,6 @@ class BankPicturesConversation extends BankConversation
 
                     default:
                         $this->showMenu();
-
                         break;
                 }
             } else {
@@ -61,7 +59,14 @@ class BankPicturesConversation extends BankConversation
 
 
     public function askForPictures(){
-        $this->askOrSayBankError(__("bank.pictures.add.hint"), function(Answer $answer){
+
+        $question = Question::create(__("bank.pictures.add.hint"))
+            ->addButtons([
+                new BackButton()
+            ]);
+
+
+        $this->askOrSayBankError($question, function(Answer $answer){
             $this->performNewPictures($answer);
         });
     }
@@ -72,6 +77,10 @@ class BankPicturesConversation extends BankConversation
 //        $documents = $message->getFiles();
 
         //TODO: documents upload
+
+        if($answer->isInteractiveMessageReply() && $answer->getValue() == "back"){
+            return $this->showMenu();
+        }
 
         if(count($images) <= 0){
             $this->say(__("bank.pictures.add.no-pictures-found"));
