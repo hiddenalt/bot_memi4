@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Artisan [cache:clear]" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/artisan" scriptParameters="cache:clear">
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Artisan [logs:clear]" run_configuration_type="PhpLocalRunConfigurationType" />
+    </method>
+  </configuration>
+</component>
