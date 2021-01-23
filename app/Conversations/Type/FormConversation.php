@@ -6,14 +6,10 @@ namespace App\Conversations\Type;
 
 use App\Conversations\BackFunctionConversation;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\Log;
 
 class FormConversation extends BackFunctionConversation {
 
     public function sayValidationDetails(Validator $v){
-
-        Log::info(app()->getLocale());
-
         $errors = $v->errors();
         $list = [];
         $details = $errors->getMessages();
