@@ -4,8 +4,12 @@
 namespace App\Conversations;
 
 
+use App\Bot\Message\Button\Custom\BackButton;
 use App\Http\Controllers\BotManController;
 use BotMan\BotMan\Messages\Conversations\Conversation;
+use BotMan\BotMan\Messages\Incoming\Answer;
+use BotMan\BotMan\Messages\Outgoing\Question;
+use Closure;
 
 class BackFunctionConversation extends Conversation {
 
@@ -41,4 +45,19 @@ class BackFunctionConversation extends Conversation {
      * Replaceable method.
      */
     public function run(){}
+
+    public function ask($question, $next, $additionalParameters = []) {
+        if(is_string($question)){
+            return parent::ask(Question::create($question)->addButton(new BackButton()), function(Answer $answer) use($next){
+                if($answer->isInteractiveMessageReply() && $answer->getValue() == BackButton::BACK_VALUE)
+                    return $this->moveBack();
+
+                return (Closure::bind($next, $this))($answer);
+            }, $additionalParameters);
+        }
+
+        return parent::ask($question, $next, $additionalParameters);
+    }
+
+
 }

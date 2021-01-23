@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Bot\Message\Button\Primitive\PositiveButton;
 use App\Conversation;
 use App\Conversations\AboutConversation;
 use App\Conversations\AdminMenuConversation;
 use App\Conversations\CreateMemeMenuConversation;
 use App\Conversations\GenerateMemeMenuConversation;
 use App\Conversations\SelectLanguageConversation;
+use App\Conversations\ShowBankListConversation;
 use App\System\ApplicationPermissions;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
+use Throwable;
 
 class BotManController extends Controller
 {
@@ -44,15 +48,10 @@ class BotManController extends Controller
 
         $question = Question::create(__("menu.title"))
             ->addButtons([
-                Button::create(__("menu.options.generate-meme"))->value("generate_meme")->additionalParameters([
-                    "color" => "positive"
-                ]),
-                Button::create(__("menu.options.create-meme"))->value("create_meme")->additionalParameters([
-                    "color" => "positive"
-                ]),
-                Button::create(__("menu.options.about-release"))->value("ver")->additionalParameters([
-                    "color" => "positive"
-                ]),
+                PositiveButton::create(__("menu.options.generate-meme"))->value("generate_meme"),
+                PositiveButton::create(__("menu.options.create-meme"))->value("create_meme"),
+                PositiveButton::create(__("menu.options.manage-banks"))->value("manage_banks"),
+                PositiveButton::create(__("menu.options.about-release"))->value("ver"),
 //                Button::create(__("menu.options.settings"))->value("settings")->additionalParameters([
 //                    "color" => "primary"
 //                ])
@@ -66,9 +65,9 @@ class BotManController extends Controller
                         "color" => "negative"
                     ])
                 ]);
-        } catch (\Exception $e){
+        } catch (Exception $e){
 
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
 
         }
 
@@ -114,6 +113,20 @@ class BotManController extends Controller
      */
     public function startSelectLanguageConversation(BotMan $bot){
         $bot->startConversation(new SelectLanguageConversation());
+    }
+
+    /**
+     * Start managing user's banks
+     * @param BotMan $bot
+     */
+    public function startManageBanksConversation(BotMan $bot){
+
+        $conversation = Conversation::ofID($bot->getMessage()->getConversationIdentifier())
+            ->first();
+
+        $id = $conversation->id;
+
+        $bot->startConversation(new ShowBankListConversation(null, $id));
     }
 
     /**

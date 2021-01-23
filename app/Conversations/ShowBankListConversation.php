@@ -6,6 +6,7 @@ use App\Bank;
 use App\Bot\Message\Button\Custom\BackButton;
 use App\Bot\Message\Button\Custom\NextPageButton;
 use App\Bot\Message\Button\Custom\PreviousPageButton;
+use App\Bot\Message\Button\Primitive\DefaultButton;
 use App\Bot\Message\Button\Primitive\PositiveButton;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
@@ -47,26 +48,42 @@ class ShowBankListConversation extends BackFunctionConversation
         if($this->conversationID > -1)
             $query->where("conversation_id" , $this->conversationID);
 
+        $question = Question::create(__('bank-list.hint'));
         $paginator = $query->paginate($this->perPage, ["*"], 'page', $page);
 
         if($paginator->total() == 0){
-            $this->say(__("bank-list.empty-hint"));
-            $this->bot->startConversation(new AdminMenuConversation(null));
-            return;
+            $question = Question::create(__('bank-list.empty-hint'));
+        } else {
+            foreach($paginator->items() as $item)
+                $question->addButton(PositiveButton::create($item["title"])->value('bank-' . $item["id"]));
+
+            if($page < $paginator->lastPage()) $question->addButton(new NextPageButton());
+            if($page > 1) $question->addButton(new PreviousPageButton());
         }
+        $question->addButton(DefaultButton::create(__("bank-list.create-new-bank"))->value("create_bank"));
+        $question->addButton(new BackButton());
 
-        $buttons = [];
-        foreach($paginator->items() as $item)
-            $buttons[] = PositiveButton::create($item["title"])->value('bank-' . $item["id"]);
 
-        if($page < $paginator->lastPage()) $buttons[] = new NextPageButton();
-        if($page > 1) $buttons[] = new PreviousPageButton();
-        $buttons[] =  new BackButton();
+        return $this->ask($question, function (Answer $answer) use($page, $paginator) {
 
-        $question = Question::create(__('bank-list.hint'))
-            ->addButtons($buttons);
+            if($answer->isInteractiveMessageReply()){
+                switch($answer->getValue()){
+                    case BackButton::BACK_VALUE:
+                        return $this->moveBack();
+                        break;
+                    case "create_bank":
+                        $this->bot->startConversation(new BankCreateConversation($this, $this->conversationID));
+                        return;
+                        break;
+                }
+            }
 
-        return $this->ask($question, function (Answer $answer) use($page) {
+            // List is empty
+            if($paginator->total() == 0)
+                return $this->showPage();
+
+
+            // List has items
             if ($answer->isInteractiveMessageReply()) {
                 $selectedValue = $answer->getValue();
 
@@ -77,10 +94,6 @@ class ShowBankListConversation extends BackFunctionConversation
 
                     case NextPageButton::NEXT_PAGE_VALUE:
                         return $this->showPage($page + 1);
-                        break;
-
-                    case BackButton::BACK_VALUE:
-                        return $this->moveBack();
                         break;
                 }
 

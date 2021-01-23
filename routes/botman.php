@@ -66,6 +66,12 @@ $botman->hears(
     BotManController::class . "@startAboutConversation"
 );
 
+// Manage banks conversation
+$botman->hears(
+    "%%%{{{pattern.manage-banks}}}%%%",
+    BotManController::class . "@startManageBanksConversation"
+);
+
 // Language selection
 $botman->hears(
     [
