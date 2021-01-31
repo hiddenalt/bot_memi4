@@ -53,7 +53,7 @@
     "generate-meme-conversation.generating-error": "Error generating meme =(",
     "generate-meme-conversation.unknown-command": "Couldn't find that menu option, sorry.",
     "generate-meme-conversation.unsupported-meme": "Can't make such meme for now, choose another category.",
-    "generate-meme.edit-bank-list": "✏️Edit used data-packs",
+    "generate-meme.edit-bank-list": "✏ ️Edit used data-packs",
     "generate-meme.execute": "😃 Generate new meme",
     "generate-meme.hint": "Generating ':screenName' meme menu:",
     "generate-meme.regexp.when-word": "When",

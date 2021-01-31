@@ -54,6 +54,8 @@ class AdminMenuConversation extends BackFunctionConversation
     }
 
     public function startBanksManagementConversation(): void{
-        $this->bot->startConversation(new ShowBankListConversation($this, -1));
+        $conversation = new ShowBankListConversation($this, []);
+        $conversation->setShowAll(true);
+        $this->bot->startConversation($conversation);
     }
 }

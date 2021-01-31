@@ -8,25 +8,90 @@ use App\Bot\Message\Button\Custom\NextPageButton;
 use App\Bot\Message\Button\Custom\PreviousPageButton;
 use App\Bot\Message\Button\Primitive\DefaultButton;
 use App\Bot\Message\Button\Primitive\PositiveButton;
+use App\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 
 class ShowBankListConversation extends BackFunctionConversation
 {
 
-    // -1 = all banks (for admin)
-    public int $conversationID = -1;
     // Banks per page
     public int $perPage = 5;
+    // Whitelist of conversations to show
+    public array $conversationsIDs = [];
+    // Whether to show all conversations in database or not (admin mode)
+    public bool $showAll = false;
+    // Whether to show all public conversations or not
+    public bool $showPublic = true;
+
+
+    /**
+     * @return bool
+     */
+    public function isShowAll(): bool {
+        return $this->showAll;
+    }
+
+    /**
+     * @param bool $showAll
+     */
+    public function setShowAll(bool $showAll): void {
+        $this->showAll = $showAll;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPerPage(): int {
+        return $this->perPage;
+    }
+
+    /**
+     * @param int $perPage
+     */
+    public function setPerPage(int $perPage): void {
+        $this->perPage = $perPage;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConversationsIDs(): array {
+        return $this->conversationsIDs;
+    }
+
+    /**
+     * @param array $conversationsIDs
+     */
+    public function setConversationsIDs(array $conversationsIDs): void {
+        $this->conversationsIDs = $conversationsIDs;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowPublic(): bool {
+        return $this->showPublic;
+    }
+
+    /**
+     * @param bool $showPublic
+     */
+    public function setShowPublic(bool $showPublic): void {
+        $this->showPublic = $showPublic;
+    }
+
+
+
 
     /**
      * ShowBankListConversation constructor.
      * @param $previousConversation
-     * @param int $conversationID
+     * @param array $conversationsID
      */
-    public function __construct($previousConversation, int $conversationID) {
+    public function __construct($previousConversation, array $conversationsID = []) {
         parent::__construct($previousConversation);
-        $this->conversationID = $conversationID;
+        $this->conversationsIDs = $conversationsID;
     }
 
     /**
@@ -44,12 +109,21 @@ class ShowBankListConversation extends BackFunctionConversation
      */
     public function showPage(int $page = 1){
         $query = Bank::query();
+        $localConversation = Conversation::ofID($this->bot->getMessage()->getConversationIdentifier())->first();
 
-        if($this->conversationID > -1)
-            $query->where("conversation_id" , $this->conversationID);
+        if(count($this->conversationsIDs) <= 0) $this->conversationsIDs[] = $localConversation->id;
 
-        $question = Question::create(__('bank-list.hint'));
+        if(!$this->showAll){
+            if($this->showPublic){
+                $query->where("is_private" , 0);
+                $query->orWhereIn("conversation_id", $this->conversationsIDs);
+            } else {
+                $query->whereIn("conversation_id", $this->conversationsIDs);
+            }
+        }
+
         $paginator = $query->paginate($this->perPage, ["*"], 'page', $page);
+        $question = Question::create(__('bank-list.hint'));
 
         if($paginator->total() == 0){
             $question = Question::create(__('bank-list.empty-hint'));
@@ -57,14 +131,13 @@ class ShowBankListConversation extends BackFunctionConversation
             foreach($paginator->items() as $item)
                 $question->addButton(PositiveButton::create($item["title"])->value('bank-' . $item["id"]));
 
-            if($page < $paginator->lastPage()) $question->addButton(new NextPageButton());
-            if($page > 1) $question->addButton(new PreviousPageButton());
+            if($page < $paginator->lastPage())  $question->addButton(new NextPageButton());
+            if($page > 1)                       $question->addButton(new PreviousPageButton());
         }
         $question->addButton(DefaultButton::create(__("bank-list.create-new-bank"))->value("create_bank"));
         $question->addButton(new BackButton());
 
-
-        return $this->ask($question, function (Answer $answer) use($page, $paginator) {
+        return $this->ask($question, function (Answer $answer) use($page, $paginator, $localConversation) {
 
             if($answer->isInteractiveMessageReply()){
                 switch($answer->getValue()){
@@ -72,7 +145,11 @@ class ShowBankListConversation extends BackFunctionConversation
                         return $this->moveBack();
                         break;
                     case "create_bank":
-                        $this->bot->startConversation(new BankCreateConversation($this, $this->conversationID));
+                        $this->bot->startConversation(
+                            new BankCreateConversation($this,
+                                $localConversation->id
+                            )
+                        );
                         return;
                         break;
                 }
@@ -81,7 +158,6 @@ class ShowBankListConversation extends BackFunctionConversation
             // List is empty
             if($paginator->total() == 0)
                 return $this->showPage();
-
 
             // List has items
             if ($answer->isInteractiveMessageReply()) {
@@ -101,7 +177,7 @@ class ShowBankListConversation extends BackFunctionConversation
                 preg_match('/bank-([0-9+])/', $selectedValue, $matches);
                 if(isset($matches[1])){
                     $id = $matches[1];
-                    $this->bot->startConversation(new BankManagingConversation($this, $id));
+                    $this->chosen(Bank::ofID($id)->first());
                     return;
                 }
 
@@ -127,13 +203,18 @@ class ShowBankListConversation extends BackFunctionConversation
                 }
 
                 // If found
-                $id = $result->id;
-                $this->say(__("bank-list.found-conversation", [
-                    "title" => $result->title,
-                    "id" => $id
-                ]));
-                $this->bot->startConversation(new BankManagingConversation($this, $id));
+                $this->chosen($result);
             }
         });
     }
+
+    public function chosen(Bank $result){
+        $id = $result->id;
+        $this->say(__("bank-list.selected-conversation", [
+            "title" => $result->title,
+            "id" => $id
+        ]));
+        $this->bot->startConversation(new BankManagingConversation($this, $id));
+    }
+
 }

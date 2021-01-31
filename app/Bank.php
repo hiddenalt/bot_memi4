@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +17,17 @@ class Bank extends Model
     protected $table = 'banks_list';
 
     protected $fillable = ["id"];
+
+    /**
+     * Scope a query to find a bank by its ID
+     *
+     * @param Builder $query
+     * @param $id
+     * @return Builder
+     */
+    public function scopeOfID($query, $id){
+        return $query->where("id", $id);
+    }
 
     /**
      * Get the words of the current bank.

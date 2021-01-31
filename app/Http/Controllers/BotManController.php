@@ -126,7 +126,7 @@ class BotManController extends Controller
 
         $id = $conversation->id;
 
-        $bot->startConversation(new ShowBankListConversation(null, $id));
+        $bot->startConversation(new ShowBankListConversation(null, [$id]));
     }
 
     /**
