@@ -28,6 +28,8 @@
                 <div class="links">
                     <a class="link" href="{{ asset("menu") }}"><span class="mdi mdi-36px mdi-application-export"></span></a>
                     <span class="flex-separator"></span>
+                    <a class="link" href="{{ asset("graphql-playground") }}"><span class="mdi mdi-36px mdi-graphql"></span></a>
+                    <span class="flex-separator"></span>
                     <a class="link" href="{{ env("WELCOME_PAGE_TELEGRAM_URL") }}"><span class="mdi mdi-36px mdi-telegram"></span></a>
                     <span class="flex-separator"></span>
                     <a class="link" href="{{ env("WELCOME_PAGE_VK_URL") }}"><span class="mdi mdi-36px mdi-vk"></span></a>

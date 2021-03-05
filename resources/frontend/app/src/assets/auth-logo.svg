@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135.467 84.667" height="320" width="512">
+  <defs/>
+  <path fill-opacity=".2" paint-order="stroke fill markers" d="M0 0h135.467v84.667H0z"/>
+  <g transform="matrix(-.1619 0 0 .16263 40.74 3.718)" stroke="#000">
+    <ellipse cx="-283.227" cy="246.128" rx="246.822" ry="246.798" fill="#ff0" stroke-width="18.356"/>
+    <path d="M-350.001 330.082c45.588 8.388 92.236 15.44 144.78-23.376m4.306-18.54c-3.319 11.517-3.689 22.878 6.48 33.682" fill="none" stroke-width="15.653" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="-271.605" cy="139.875" stroke-width="15.652" r="5.007"/>
+    <circle cx="-189.289" cy="132.621" stroke-width="15.653" r="5.007"/>
+  </g>
+  <path style="mix-blend-mode:normal" d="M197.66 165.695v-13.262l-181.992-.124v13.386" fill="gray" stroke="#000" stroke-width="2.91" stroke-linecap="round" stroke-linejoin="round" transform="matrix(.75887 0 0 .76225 -13.21 -40.628)"/>
+  <g style="mix-blend-mode:normal" fill="gray" stroke-width="11" stroke="#000">
+    <path d="M274.357 1051.468l61.872-3.536 34.295-1.768-.354-21.213-35.708-8.485-142.66 1.945-32.35 32.173M47.73 814.587l-2.122-48.437 22.628-23.688 199.404 2.829 46.315 229.81-24.041 26.516-28.992-.354" stroke-linecap="round" stroke-linejoin="round" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M45.608 766.15l196.93 1.414 47.376 234.053" stroke-linecap="round" stroke-linejoin="round" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M88.035 1000.91l172.887.353-39.598-184.201-173.594-2.475z" stroke-linecap="round" stroke-linejoin="round" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M195.869 863.377l15.556 40.305-20.771 125.335-11.049 3.359" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M79.196 1030.962l-18.385 29.698 128.694-5.303-9.9-22.981" stroke-linecap="round" stroke-linejoin="round" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M97.58 861.963l98.289 1.414-16.264 168.999-100.409-1.414z" stroke-linecap="round" stroke-linejoin="round" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M189.505 1055.357l84.852-3.89-15.556-18.738" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M334.462 1016.466l-.354 32.173" stroke-linejoin="round" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+    <path d="M221.324 817.062l21.214-49.498m-51.884 261.453l68.147 3.712 9.449-14.979" stroke-linecap="round" stroke-linejoin="round" transform="matrix(.20078 0 0 .20168 -4.833 -133.88)"/>
+  </g>
+  <path fill="none" stroke="#000006" stroke-width="1.579" stroke-linecap="round" paint-order="stroke fill markers" d="M.79.79h133.888v83.088H.79z"/>
+</svg>

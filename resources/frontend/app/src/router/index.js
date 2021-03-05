@@ -1,6 +1,8 @@
 import Home from "../components/views/Home"
 import VueRouter from "vue-router"
-import i18n from '../plugins/i18n' //i18n.locale
+import i18n from '../plugins/i18n'
+import Auth from "../components/views/Auth";
+//i18n.locale
 
 const postfix = i18n.t("app.postfix");
 
@@ -9,6 +11,11 @@ const routes = [
         path: '/',
         component: Home,
         name: "home"
+    },
+    {
+        path: '/auth/',
+        component: Auth,
+        name: "auth"
     },
 ];
 
@@ -26,7 +33,7 @@ router.beforeEach((to, from, next) => {
     // }
 
     let name = to.name;
-    if(name != null && name != undefined){
+    if(name != null){
         document.title = i18n.t("screens."+name+".page_title") + postfix;
     }
 

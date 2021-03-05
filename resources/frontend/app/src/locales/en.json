@@ -32,6 +32,9 @@
         "usage": "Usage info",
         "api": "API"
       }
+    },
+    "auth": {
+      "page_title": "Auth"
     }
   }
 
