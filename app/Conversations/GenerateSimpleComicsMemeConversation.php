@@ -8,6 +8,7 @@ use App\Bot\Image\Meme\SimpleComicsMeme;
 use App\Conversations\Type\GenerateMemeConversation;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use Exception;
 use Intervention\Image\ImageManagerStatic;
 
 class GenerateSimpleComicsMemeConversation extends GenerateMemeConversation
@@ -17,7 +18,7 @@ class GenerateSimpleComicsMemeConversation extends GenerateMemeConversation
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateMeme() {
 
@@ -51,7 +52,7 @@ class GenerateSimpleComicsMemeConversation extends GenerateMemeConversation
             ->setFrameLabel4($labels[3])
             ->draw();
 
-        $url = $meme->makeTempLink();
+        $url = $meme->makeTempPublic();
         $message = OutgoingMessage::create(__("generate-meme-conversation.simple-comics-poser-meme.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 

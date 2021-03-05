@@ -4,10 +4,11 @@ namespace App\Conversations;
 
 use App\Bot\Bank\Image\ImagePicker;
 use App\Bot\Bank\Text\TextGenerator;
-use App\Bot\Image\Meme\DemotivationalMeme;
+use App\Bot\Image\Meme\DemotivationalPosterMeme;
 use App\Conversations\Type\GenerateMemeConversation;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use Exception;
 use Illuminate\Support\Collection;
 use Intervention\Image\ImageManagerStatic;
 
@@ -18,7 +19,7 @@ class GenerateDemotivationalPosterMemeConversation extends GenerateMemeConversat
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateMeme() {
 
@@ -40,14 +41,14 @@ class GenerateDemotivationalPosterMemeConversation extends GenerateMemeConversat
 
         $image = $imagePicker->pickRandom();
 
-        $meme = new DemotivationalMeme();
+        $meme = new DemotivationalPosterMeme();
         $meme
             ->setBaseImage(ImageManagerStatic::make($image->getPublicURL()))
             ->setTitle($topText)
             ->setSubtitle($bottomText)
             ->draw();
 
-        $url = $meme->makeTempLink();
+        $url = $meme->makeTempPublic();
         $message = OutgoingMessage::create(__("generate-meme-conversation.demotivational-poser-meme.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 

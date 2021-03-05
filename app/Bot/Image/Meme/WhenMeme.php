@@ -10,6 +10,9 @@ use Intervention\Image\ImageManagerStatic;
 
 class WhenMeme extends Meme {
 
+    // TODO: image URL
+    protected array $dataSerializers = ["getTopText", "getBottomText"];
+
     /**
      * @var Image
      */

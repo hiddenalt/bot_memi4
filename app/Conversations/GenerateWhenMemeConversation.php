@@ -8,6 +8,7 @@ use App\Bot\Image\Meme\WhenMeme;
 use App\Conversations\Type\GenerateMemeConversation;
 use BotMan\BotMan\Messages\Attachments\Image;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+use Exception;
 use Illuminate\Support\Collection;
 use Intervention\Image\ImageManagerStatic;
 
@@ -18,7 +19,7 @@ class GenerateWhenMemeConversation extends GenerateMemeConversation
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateMeme() {
 
@@ -47,7 +48,7 @@ class GenerateWhenMemeConversation extends GenerateMemeConversation
             ->setBottomText($bottomText)
             ->draw();
 
-        $url = $meme->makeTempLink();
+        $url = $meme->makeTempPublic();
         $message = OutgoingMessage::create(__("generate-meme-conversation.when-meme.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 

@@ -45,6 +45,9 @@ class SimpleComicsMeme extends Meme {
      */
     protected string $frameLabel4;
 
+    // TODO: image URL
+    protected array $dataSerializers = ["getFrameLabel1", "getFrameLabel2", "getFrameLabel3", "getFrameLabel4"];
+
     /**
      * SimpleComicsMeme constructor.
      */

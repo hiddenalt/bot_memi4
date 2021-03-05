@@ -108,9 +108,40 @@ abstract class Meme {
     }
 
 
+    protected array $dataSerializers = [];
+
+    /**
+     * @return array
+     */
+    public function getDataSerializers(): array {
+        return $this->dataSerializers;
+    }
+
+    /**
+     * @param array $dataSerializers
+     */
+    public function setDataSerializers(array $dataSerializers): void {
+        $this->dataSerializers = $dataSerializers;
+    }
+
+    public function getMemeData(): array {
+        $response = [];
+
+        foreach($this->dataSerializers as $field){
+            $response[$field] = $this->{$field}();
+        }
+
+        $response["type"] = $this->getType();
+        $response["isPublic"] = $this->isPublic();
+        $response["influencedBy"] = $this->getInfluencedBy();
+        $response["category"] = $this->getCategory();
+
+        return $response;
+    }
 
 
-    public function makeTempLink(): string {
+
+    public function makeTempPublic(): string {
         $filename = $this->save();
 
         $this->register();

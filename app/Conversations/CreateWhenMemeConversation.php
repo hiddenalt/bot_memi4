@@ -102,7 +102,7 @@ class CreateWhenMemeConversation extends Conversation {
             ->setBottomText($this->bottomText)
             ->draw();
 
-        $url = $meme->makeTempLink();
+        $url = $meme->makeTempPublic();
         $message = OutgoingMessage::create(__("create-when-meme-conversation.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 

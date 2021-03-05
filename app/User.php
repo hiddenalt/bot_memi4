@@ -3,6 +3,7 @@
 namespace App;
 
 use App\System\ApplicationRoles;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -49,6 +50,11 @@ class User extends Authenticatable
         return $this->hasRole(ApplicationRoles::SUPERADMIN);
     }
 
+    public function scopeVerified(Builder $query): Builder
+    {
+        // TODO: scopeVerified
+        return $query->whereNotNull('name');
+    }
 
     // TODO: proxify the permission management methods with isSuperAdmin() checkup
 

@@ -1,0 +1,58 @@
+interface Meme {
+    url: String!
+}
+
+type WhenMeme implements Meme @node(resolver: "App\\GraphQL\\Types\\WhenMeme") {
+    top_text: String!
+    bottom_text: String!
+
+    url: String!
+}
+
+type SimpleComicsMeme implements Meme @node(resolver: "App\\GraphQL\\Types\\SimpleComicsMeme") {
+    label1: String!
+    label2: String!
+    label3: String!
+    label4: String!
+
+    url: String!
+}
+
+type DemotivationalPosterMeme implements Meme @node(resolver: "App\\GraphQL\\Types\\DemotivationalPosterMeme") {
+    title_text: String!
+    subtitle_text: String!
+
+    url: String!
+}
+
+
+input WhenMemeInput {
+    top_text: String
+    bottom_text: String
+    image: Upload!
+}
+
+
+input DemotivationalPosterMemeInput {
+    title_text: String
+    subtitle_text: String
+    image: Upload!
+}
+
+input SimpleComicsMemeInput {
+    label1: String
+    label2: String
+    label3: String
+    label4: String
+    image1: Upload!
+    image2: Upload!
+    image3: Upload!
+    image4: Upload!
+}
+
+
+extend type Mutation {
+    customWhenMeme(input: WhenMemeInput! @spread): Meme! @field(resolver: "App\\GraphQL\\Mutations\\CustomWhenMeme")
+    customSimpleComicsMeme(input: SimpleComicsMemeInput! @spread): Meme! @field(resolver: "App\\GraphQL\\Mutations\\CustomSimpleComicsMeme")
+    customDemotivationalPosterMeme(input: DemotivationalPosterMemeInput! @spread): Meme! @field(resolver: "App\\GraphQL\\Mutations\\CustomDemotivationalPosterMeme")
+}

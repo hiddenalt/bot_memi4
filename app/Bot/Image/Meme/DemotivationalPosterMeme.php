@@ -9,7 +9,10 @@ use Intervention\Image\AbstractShape;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
 
-class DemotivationalMeme extends Meme{
+class DemotivationalPosterMeme extends Meme{
+
+    // TODO: image URL
+    protected array $dataSerializers = ["getTitle", "getSubtitle"];
 
     /**
      * @var Image
@@ -33,9 +36,9 @@ class DemotivationalMeme extends Meme{
 
     /**
      * @param Image $baseImage
-     * @return DemotivationalMeme
+     * @return DemotivationalPosterMeme
      */
-    public function setBaseImage(Image $baseImage): DemotivationalMeme {
+    public function setBaseImage(Image $baseImage): DemotivationalPosterMeme {
         $this->baseImage = $baseImage;
         return $this;
     }
@@ -49,9 +52,9 @@ class DemotivationalMeme extends Meme{
 
     /**
      * @param string $title
-     * @return DemotivationalMeme
+     * @return DemotivationalPosterMeme
      */
-    public function setTitle(string $title): DemotivationalMeme {
+    public function setTitle(string $title): DemotivationalPosterMeme {
         $this->title = $title;
         return $this;
     }
@@ -65,9 +68,9 @@ class DemotivationalMeme extends Meme{
 
     /**
      * @param string $subtitle
-     * @return DemotivationalMeme
+     * @return DemotivationalPosterMeme
      */
-    public function setSubtitle(string $subtitle): DemotivationalMeme {
+    public function setSubtitle(string $subtitle): DemotivationalPosterMeme {
         $this->subtitle = $subtitle;
         return $this;
     }
@@ -78,7 +81,7 @@ class DemotivationalMeme extends Meme{
 
     /**
      * Drawing the meme
-     * @return DemotivationalMeme
+     * @return DemotivationalPosterMeme
      */
     public function draw() {
 
