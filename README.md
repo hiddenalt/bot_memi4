@@ -4,6 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![gitlocalized ](https://gitlocalize.com/repo/5206/whole_project/badge.svg)](https://gitlocalize.com/repo/5206/whole_project?utm_source=badge)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/68d22ecf9646ed9788c3)
 
 ## About
 **Memer the Bot** _(Bot Memich)_ is a cross-platform bot focused on generating random memes. Oriented to be hosted on VK and Telegram.
@@ -12,17 +13,25 @@ Built with Laravel, Botman, Lighthouse and Vue.js.
 
 This repo is a redux version of the classic version of the bot.
 
-Hosted at (dev-branch):
-- [VK community (RU)](https://vk.com/bot_memi4_beta)
+Known instances:
+- [Official Memer the Bot Instance](https://vk.com/bot_memi4_beta)
 
 ## Implemented features
 
 ⚠️The redux version hasn't got all the features of the original version yet.
 
 Yet we have:
-- ✅ Drawing user-made memes ("When...", demotivational memes, 4-frame comics)
+- ✅ Rendering generated memes (in conversation)
+- ✅ Rendering custom memes (GraphQL + in conversation)
 
 See [TODO issues](https://github.com/hiddenalt/memer-the-bot/labels/todo) for more info.
+
+## Testing
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/68d22ecf9646ed9788c3)
+
+Some tests are available in Postman Collection.
+
+TODO: more tests
 
 ## Requirements
 
@@ -40,7 +49,7 @@ TODO: documentation (dedicated wiki)
 
 ## Localization
 
-[![gitlocalized ](https://gitlocalize.com/repo/5206/ru/badge.svg)](https://gitlocalize.com/repo/5206/ru?utm_source=badge)
+[![gitlocalized](https://gitlocalize.com/repo/5206/ru/badge.svg)](https://gitlocalize.com/repo/5206/ru?utm_source=badge)
 
 - __Source language__: English
 - __Target languages__: Russian 
