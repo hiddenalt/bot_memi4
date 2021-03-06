@@ -53,7 +53,7 @@ class Bank extends Model
     }
 
     private $rules = [
-        'title' => 'required|min:1|max:10',
+        'title' => 'required|min:1|max:100',
         'description'  => 'required|min:1|max:3000',
     ];
 

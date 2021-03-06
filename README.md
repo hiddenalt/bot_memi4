@@ -3,8 +3,7 @@
 <p align="center"><img height="256" width="256" src="https://github.com/hiddenalt/bot_memi4/blob/master/resources/images/logo.png?raw=true"></p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![gitlocalized ](https://gitlocalize.com/repo/5206/whole_project/badge.svg)](https://gitlocalize.com/repo/5206/whole_project?utm_source=badge)
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/68d22ecf9646ed9788c3)
+[![gitlocalized](https://gitlocalize.com/repo/5206/whole_project/badge.svg)](https://gitlocalize.com/repo/5206/whole_project?utm_source=badge)
 
 ## About
 **Memer the Bot** _(Bot Memich)_ is a cross-platform bot focused on generating random memes. Oriented to be hosted on VK and Telegram.
