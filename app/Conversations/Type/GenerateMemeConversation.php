@@ -28,14 +28,31 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
     /** @var Bank[] $usedBanks */
     public array $usedBanks = [];
 
+    const SCREEN_MENU = "menu";
+    const SCREEN_BANKS = "banks";
+
+    public string $currentScreen = self::SCREEN_MENU;
+
     public function run() {
         if(count($this->usedBanks) <= 0)
             $this->usedBanks[] = Bank::ofId(1)->first();
 
-        $this->showMenu();
+        switch($this->currentScreen){
+            case self::SCREEN_MENU:
+                $this->showMenu();
+                break;
+
+            case self::SCREEN_BANKS:
+                $this->selectBanks();
+                break;
+        }
+
     }
 
     public function showMenu(){
+
+        $this->currentScreen = self::SCREEN_MENU;
+
         $question = Question::create(__('generate-meme.hint', [
             "screenName" => $this->getMemeScreenName()
         ]))
@@ -87,10 +104,15 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
 
     public function selectBanks($page = 0){
 
+        $this->currentScreen = self::SCREEN_BANKS;
+
         $collection = collect($this->usedBanks);
         $chunks = $collection->chunk($this->chunkSize);
 
-        $question = Question::create(__("generate-meme-conversation.selecting-banks"));
+        $question = Question::create(__("generate-meme-conversation.selecting-banks", [
+            "page" => ($page + 1),
+            "max_page" => ($chunks->count() + 1)
+        ]));
 
         if($page < 0) $page = 0;
         if($page >= $chunks->count()) $page = 0;
@@ -165,7 +187,7 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
 
             switch($answer->getValue()){
                 case YesButton::YES_VALUE:
-                    unset($this->usedBanks[$pos]);
+                    $this->removeBank($pos);
                     $this->showMenu();
                     break;
 
@@ -180,6 +202,21 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
             }
         });
 
+    }
+
+    /**
+     * @param array<Bank> ...$banks
+     */
+    public function addBank(...$banks){
+        if($banks instanceof Bank) return;
+
+        foreach($banks as $bank){
+            $this->usedBanks[] = $bank;
+        }
+    }
+
+    public function removeBank(int $pos){
+        if(isset($this->usedBanks[$pos])) unset($this->usedBanks[$pos]);
     }
 
     abstract public function generateMeme();

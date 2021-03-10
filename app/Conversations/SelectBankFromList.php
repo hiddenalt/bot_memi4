@@ -10,9 +10,8 @@ class SelectBankFromList extends ShowBankListConversation
     public function chosen(Bank $result) {
         /** @var GenerateMemeConversation $parent */
         $parent = &$this->previousConversation;
-        $parent->usedBanks[] = $result;
+        $parent->addBank($result);
         $this->moveBack();
-        $parent->selectBanks();
     }
 
 }

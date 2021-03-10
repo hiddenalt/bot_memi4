@@ -49,7 +49,7 @@ class GenerateDemotivationalPosterMemeConversation extends GenerateMemeConversat
             ->draw();
 
         $url = $meme->makeTempPublic();
-        $message = OutgoingMessage::create(__("generate-meme-conversation.demotivational-poser-meme.done"))
+        $message = OutgoingMessage::create(__("generate-meme-conversation.demotivational-poster-meme.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);

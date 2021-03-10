@@ -1,5 +1,7 @@
 <?php
 
+use Nuwave\Lighthouse\Tracing\TracingServiceProvider;
+
 return [
 
     /*
@@ -184,6 +186,9 @@ return [
 
         // User Permissions
         Spatie\Permission\PermissionServiceProvider::class,
+
+        // Apollo Tracing
+        TracingServiceProvider::class,
     ],
 
     /*

@@ -53,7 +53,7 @@ class GenerateSimpleComicsMemeConversation extends GenerateMemeConversation
             ->draw();
 
         $url = $meme->makeTempPublic();
-        $message = OutgoingMessage::create(__("generate-meme-conversation.simple-comics-poser-meme.done"))
+        $message = OutgoingMessage::create(__("generate-meme-conversation.simple-comics-poster-meme.done"))
             ->withAttachment(new Image(env('APP_URL') . "/" . $url));
 
         $this->bot->reply($message);

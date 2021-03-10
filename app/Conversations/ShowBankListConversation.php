@@ -123,7 +123,10 @@ class ShowBankListConversation extends BackFunctionConversation
         }
 
         $paginator = $query->paginate($this->perPage, ["*"], 'page', $page);
-        $question = Question::create(__('bank-list.hint'));
+        $question = Question::create(__('bank-list.hint', [
+            "page" => $page,
+            "max_page" => $paginator->lastPage()
+        ]));
 
         if($paginator->total() == 0){
             $question = Question::create(__('bank-list.empty-hint'));
