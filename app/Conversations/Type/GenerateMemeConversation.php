@@ -20,6 +20,8 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 
 abstract class GenerateMemeConversation extends BackFunctionConversation {
 
+    const LAST_SELECTED_BANKS_STORAGE_KEY = "meme_generator.last_selected_banks";
+
     use ConversationProxy;
 
     abstract public function getStartKeyWord(): string;
@@ -34,6 +36,19 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
     public string $currentScreen = self::SCREEN_MENU;
 
     public function run() {
+
+
+        // Load last-selected bank list
+        $data = $this->getBot()->userStorage()->find($this::LAST_SELECTED_BANKS_STORAGE_KEY);
+        if(isset($data) && $data != null) {
+            $this->usedBanks = [];
+            foreach($data as $bank) {
+                $bank = Bank::ofId($bank)->first();
+                if($bank != null) $this->usedBanks[] = $bank;
+            }
+        }
+
+
         if(count($this->usedBanks) <= 0)
             $this->usedBanks[] = Bank::ofId(1)->first();
 
@@ -217,6 +232,19 @@ abstract class GenerateMemeConversation extends BackFunctionConversation {
 
     public function removeBank(int $pos){
         if(isset($this->usedBanks[$pos])) unset($this->usedBanks[$pos]);
+    }
+
+
+    /*
+     * Save last selected bank list to local storage
+     */
+    public function beforeGoBack() {
+        $storage = $this->getBot()->userStorage();
+
+        $storage->delete($this::LAST_SELECTED_BANKS_STORAGE_KEY);
+        $storage->save(collect($this->usedBanks)->map(function ($item){
+            return $item["id"];
+        })->toArray(), $this::LAST_SELECTED_BANKS_STORAGE_KEY);
     }
 
     abstract public function generateMeme();

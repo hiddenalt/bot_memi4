@@ -30,6 +30,9 @@ class BackFunctionConversation extends Conversation {
      * @return bool
      */
     public function moveBack(){
+
+        $this->beforeGoBack();
+
         // Move back if found
         if($this->previousConversation instanceof Conversation) {
             $this->bot->startConversation($this->previousConversation);
@@ -40,6 +43,9 @@ class BackFunctionConversation extends Conversation {
         (new BotManController())->sendMenu($this->bot);
         return false;
     }
+
+    public function beforeGoBack(){}
+
 
     /**
      * Replaceable method.
